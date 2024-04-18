@@ -1,0 +1,21 @@
+﻿<Application x:Class="QLNH.GR.Desktop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:QLNH.GR.Desktop.UI"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="BaseController/Button.xaml"/>
+                <ResourceDictionary Source="BaseController/TextBox.xaml"/>
+                <ResourceDictionary Source="BaseController/Combobox.xaml"/>
+                <ResourceDictionary Source="BaseController/Label.xaml"/>
+                <ResourceDictionary Source="BaseController/TextBlock.xaml"/>
+                <ResourceDictionary Source="BaseController/Color.xaml"/>
+                <ResourceDictionary Source="ShareResource/Share.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+      
+    </Application.Resources>
+    
+</Application>
