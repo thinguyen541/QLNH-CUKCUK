@@ -10,7 +10,7 @@ namespace QLNH.GR.Desktop.Common
         public static string BranchID { get; set; }
         public static string Token { get; set; } = "";
 
-        public static List<FeatureApp> ListFeatureApp  { get; set; }
+        public static List<FeatureApp> ListFeatureApp { get; set; } = null;
 
 }
 }

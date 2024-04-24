@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Security;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,7 +38,11 @@ namespace QLNH.GR.Desktop.UI
             {
                 if (validateInput())
                 {
-                    HttpResponseMessage response = await authService.Login(txtUserName.Text, txtPassword.Text);
+                    SecureString securePassword = txtPassword.SecurePassword;
+
+                    // Convert the SecureString to a regular string (not recommended for security reasons)
+                    string password = new System.Net.NetworkCredential(string.Empty, securePassword).Password;
+                    HttpResponseMessage response = await authService.Login(txtUserName.Text, password);
                     if (response != null && response.IsSuccessStatusCode)
                     {
                         // Read the response content as a string
@@ -44,6 +50,11 @@ namespace QLNH.GR.Desktop.UI
 
                         // Deserialize the response body to the specified type
                         LoginResponse result = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginResponse>(responseBody);
+                        if(result != null && result.token != null)
+                        {
+                            Session.Token = result.token;
+                            WriteToFile(result);
+                        }
                         CommonFunctionUI.NavigateToPage(AppPage.MainScreen);
                     }
                     else
@@ -56,8 +67,13 @@ namespace QLNH.GR.Desktop.UI
             }
             catch (Exception)
             {
-                CommonFunctionUI.ShowToast("Error", ToastType.Warning);
+                CommonFunctionUI.ShowToast("Cnnection fail!", ToastType.Warning);
             }
+        }
+
+        private static void WriteToFile(LoginResponse result)
+        {
+            JsonFileManager.WriteToJson<LoginResponse>(result, "E:\\Documents\\git_local\\QLNH.GR.Desktop\\QLNH.GR.Desktop.UI\\FileRerource\\account.json");
         }
 
         public bool validateInput()

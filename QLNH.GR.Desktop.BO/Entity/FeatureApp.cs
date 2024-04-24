@@ -13,6 +13,8 @@ namespace QLNH.GR.Desktop.BO
         public string? FeatureKey { get; set; }
         public int SortOrder { get; set; }
 
+        public string IconName { get; set; }
+
 
     }
 }

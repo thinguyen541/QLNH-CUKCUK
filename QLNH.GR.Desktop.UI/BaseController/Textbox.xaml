@@ -4,6 +4,7 @@
     <Style x:Key="NormalTextbox" TargetType="{x:Type TextBox}">
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="4,0,0,0"/>
         <Setter Property="FontFamily" Value="Arial"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -13,6 +14,24 @@
                                 BorderThickness="{TemplateBinding BorderThickness}">
                         <ScrollViewer x:Name="PART_ContentHost"
                                           VerticalContentAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="PasswordBox" x:Key="CenteredPasswordBoxStyle">
+        <Setter Property="Padding" Value="4,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                    HorizontalContentAlignment="Center"
+                                       VerticalContentAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

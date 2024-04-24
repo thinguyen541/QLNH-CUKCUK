@@ -16,4 +16,8 @@
     <ProjectReference Include="..\QLNH.GR.Desktop.Common\QLNH.GR.Desktop.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="FileRerource\Resources\Icon\" />
+  </ItemGroup>
+
 </Project>

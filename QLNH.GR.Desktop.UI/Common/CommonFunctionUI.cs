@@ -21,9 +21,10 @@ namespace QLNH.GR.Desktop.UI.Common
             switch (page)
             {
                 case AppPage.MainScreen:
-                    var homePage = new MainScreen();
-                 
+                    var homePage = new HomeScreen();
+                    homePage.PreviousPage = previousPage;
                     frame.Navigate(homePage);
+                    
                     if (arguments != null && arguments.ContainsKey("SomeArgument"))
                     {
                         

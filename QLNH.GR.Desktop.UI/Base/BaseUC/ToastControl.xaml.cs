@@ -17,6 +17,7 @@ namespace QLNH.GR.Desktop.UI
             InitializeComponent();
             _timer = new Timer(3000); // 3000 milliseconds = 3 seconds
             _timer.Elapsed += TimerElapsed;
+            DataContext = this;
         }
 
         // Dependency property for message

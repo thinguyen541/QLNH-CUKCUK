@@ -1,5 +1,4 @@
-﻿using QLNH.GR.Desktop;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QLNH.GR.Desktop.UI
+namespace QLNH.GR.Desktop.UI.ShareResource
 {
     /// <summary>
-    /// Interaction logic for MainScreen.xaml
+    /// Interaction logic for Path.xaml
     /// </summary>
-    public partial class MainScreen : BaseUserControl
+    public partial class Path : UserControl
     {
-        public MainScreen()
+        public Path()
         {
             InitializeComponent();
         }

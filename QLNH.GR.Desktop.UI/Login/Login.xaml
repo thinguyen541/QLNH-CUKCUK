@@ -48,20 +48,22 @@
                     <TextBlock 
                 x:Name="tbPassword"
                 Width="Auto" 
+
                 Text="Password"
                 Margin="20,0,20,20"
                 VerticalAlignment="Center"
                 Style="{StaticResource HeaderTextBlock}"
                 />
-                    <TextBox 
+                    <PasswordBox        
                 x:Name="txtPassword"
                 Width="Auto" 
                 Height="36"
                 Margin="20,0,20,0"
+                Padding="6,6,0,0"
+                Style="{StaticResource CenteredPasswordBoxStyle}"
                 VerticalAlignment="Center"
+
                 FontSize="14"
- 
-                Style="{StaticResource NormalTextbox}"
                 />
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
