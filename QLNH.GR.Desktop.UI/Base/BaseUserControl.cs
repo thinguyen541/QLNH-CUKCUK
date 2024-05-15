@@ -1,4 +1,5 @@
-﻿using QLNH.GR.Desktop.Common;
+﻿using QLNH.GR.Desktop.BO;
+using QLNH.GR.Desktop.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace QLNH.GR.Desktop.UI
             if (!_isDataLoaded)
             {
                 // Process data here
-                ProcessData();
+                ProcessDataAsync();
 
                 // Set flag to indicate data is loaded
                 _isDataLoaded = true;
@@ -37,7 +38,7 @@ namespace QLNH.GR.Desktop.UI
         }
 
         // Method to process data
-        public virtual void ProcessData()
+        public virtual void ProcessDataAsync()
         {
             // Implement data processing logic in derived classes
         }

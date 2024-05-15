@@ -24,14 +24,15 @@ namespace QLNH.GR.Desktop.Common
         public BaseService(string endPoint) {
             this.Route = endPoint;
             _configuration = ConfigurationProvider.LoadConfiguration();
+            Token = Session.Token;
         }
         public string Route { get; set; }
 
         // Your authentication token
-        public static string Token { get; set; } = Session.Token;
+        public string Token { get; set; } = Session.Token;
 
         // Create HttpClient with TokenHandler configured
-        public HttpClient httpClient = HttpClientConfigurator.ConfigureHttpClient(Token);
+        public HttpClient httpClient = HttpClientConfigurator.ConfigureHttpClient(Session.Token);
 
         public async Task<HttpResponseMessage> GetAsync(string endpoint) {
             return await httpClient.GetAsync(_configuration["BaseUrl"].ToString() + this.Route + "/" + endpoint);
@@ -49,7 +50,7 @@ namespace QLNH.GR.Desktop.Common
                 var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
                 if (!string.IsNullOrEmpty(endpont))
                 {
-                    endpont = "\"" + endpont;
+                    endpont = "/" + endpont;
                 }
                 return await httpClient.PostAsync(_configuration["BaseUrl"].ToString() + this.Route + endpont, content);
             }
@@ -69,7 +70,7 @@ namespace QLNH.GR.Desktop.Common
 
             if (!string.IsNullOrEmpty(endpont))
             {
-                endpont = "\"" + endpont;
+                endpont = "/" + endpont;
             }
 
             return await httpClient.PutAsync(_configuration["BaseUrl"].ToString() + this.Route + endpont, content);
@@ -82,12 +83,12 @@ namespace QLNH.GR.Desktop.Common
 
         public async Task<HttpResponseMessage> Filter(object pagination)
         {
-            return await this.PostAsync(pagination, endpont: "/Filter");
+            return await this.PostAsync(pagination, endpont: "Filter");
         }
 
         public async Task<HttpResponseMessage> SaveData(object data)
         {
-            return await this.PostAsync(data, endpont: "/Savedata");
+            return await this.PostAsync(data, endpont: "Savedata");
         }
 
         public async Task<HttpResponseMessage> GetById(string id)

@@ -1,4 +1,5 @@
-﻿using QLNH.GR.Desktop.Common;
+﻿using QLNH.GR.Desktop.BO;
+using QLNH.GR.Desktop.Common;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;

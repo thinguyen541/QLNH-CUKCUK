@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows;
 using QLNH.GR.Desktop.UI;
 using System.Windows.Input;
+using QLNH.GR.Desktop.BO;
 
 namespace QLNH.GR.Desktop.UI.Common
 {
@@ -40,6 +41,12 @@ namespace QLNH.GR.Desktop.UI.Common
                 case AppPage.LoginBranch:
                     var loginBranchPage = new LoginBranch();
                     frame.Navigate(loginBranchPage);
+                    break;
+                case AppPage.Table:
+                    
+                    var chooseTable = new ChooseTable();
+                    chooseTable.PreviousPage = previousPage;
+                    frame.Navigate(chooseTable);
                     break;
                 default:
                     throw new ArgumentException("Invalid page enum value");

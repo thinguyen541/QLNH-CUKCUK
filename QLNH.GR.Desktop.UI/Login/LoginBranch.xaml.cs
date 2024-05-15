@@ -1,5 +1,6 @@
 ﻿
 
+using QLNH.GR.Desktop.BO;
 using QLNH.GR.Desktop.Common;
 using QLNH.GR.Desktop.UI.Common;
 using System.Windows.Controls;

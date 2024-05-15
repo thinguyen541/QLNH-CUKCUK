@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QLNH.GR.Desktop.BO.Entity
 {
-    public class Session
+    public class Invoice
     {
     }
 }

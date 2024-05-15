@@ -1,5 +1,6 @@
 ﻿using QLNH.GR.Desktop.BO;
 using QLNH.GR.Desktop.Common;
+using QLNH.GR.Desktop.UI.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -88,8 +89,28 @@ namespace QLNH.GR.Desktop.UI
                 ListFeatureApp.Add(new FeatureApp { FeatureKey = "Employee", FeatureName = "Employee", SortOrder = 0, IconName = "Employee" });
                 ListFeatureApp.Add(new FeatureApp { FeatureKey = "Reciept", FeatureName = "Reciept", SortOrder = 0, IconName = "Reciept" });
                 Session.ListFeatureApp = ListFeatureApp;
-                itemsControl.ItemsSource = ListFeatureApp;
             }
+                itemsControl.ItemsSource = ListFeatureApp;
+        }
+
+        private void DineInClick(object sender, MouseButtonEventArgs e)
+        {
+            CommonFunctionUI.NavigateToPage(AppPage.Table, previousPage:AppPage.MainScreen);
+        }
+
+        private void DeliveryClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void TogoClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void LogOut_click(object sender, MouseButtonEventArgs e)
+        {
+            CommonFunctionUI.NavigateToPage(AppPage.Login);
         }
     }
 }

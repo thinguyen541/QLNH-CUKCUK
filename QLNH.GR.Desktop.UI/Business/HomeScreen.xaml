@@ -50,7 +50,7 @@
 
             <!-- Main content -->
             <Border Grid.Row="1" >
-                <Border Background="Black" Width="800" Height="600">
+                <Border Background="Black" Opacity="0.9" Width="800" Height="600" CornerRadius="8">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
@@ -58,10 +58,22 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <!-- Header row -->
-                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="3*" />
                             <!-- Main content row -->
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="1">
+                            <Button
+                                
+                                HorizontalAlignment="Right"
+                                Width="36"
+                                Height="36"
+                                Margin="6"
+                                PreviewMouseDown="LogOut_click"
+                                Style="{StaticResource ButtonLogOut}">
+                                
+                            </Button>
+                        </StackPanel>
                         <ItemsControl x:Name="itemsControl" Grid.Row="1">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -77,6 +89,30 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                    <Border Grid.Column="2" Grid.Row="1">
+                            <Border Padding="0,36,24,0">
+                                <StackPanel>
+                                    <Border x:Name="bdDineIn" Background="CornflowerBlue" Margin="0,0,0,24" Padding="24,16,0,16" CornerRadius="4"  PreviewMouseDown="DineInClick">
+                                        <StackPanel Orientation="Horizontal">
+                                                <Image HorizontalAlignment="Left" Source="E:/Documents/git_local/QLNH.GR.Desktop/QLNH.GR.Desktop.UI/FileRerource/Resources/Icon/DineIn.png" Width="48" Height="48"/>
+                                            <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="Dine-in" FontSize="28"  Margin="36,0,0,0"></Label>
+                                         </StackPanel>
+                                    </Border>
+                                    <Border x:Name="bdDelivery"  Background="Orange" Margin="0,0,0,24" Padding="24,16,0,16"  CornerRadius="4"  PreviewMouseDown="DeliveryClick">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image HorizontalAlignment="Left"  Source="E:/Documents/git_local/QLNH.GR.Desktop/QLNH.GR.Desktop.UI/FileRerource/Resources/Icon/Delivery.png" Width="48" Height="48"/>
+                                            <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="Delivery" FontSize="28"  Margin="36,0,0,0"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border x:Name="bdToGo" Background="ForestGreen" Margin="0,0,0,24" Padding="24,16,0,16"  CornerRadius="4"  PreviewMouseDown="TogoClick">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image HorizontalAlignment="Left"  Source="E:/Documents/git_local/QLNH.GR.Desktop/QLNH.GR.Desktop.UI/FileRerource/Resources/Icon/To-go.png" Width="48" Height="48"/>
+                                            <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="To-go" FontSize="28"  Margin="36,0,0,0"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                        </Border>
                     </Grid>
                 </Border>
             </Border>
