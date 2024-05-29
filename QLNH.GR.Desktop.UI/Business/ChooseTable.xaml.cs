@@ -100,7 +100,15 @@ namespace QLNH.GR.Desktop.UI
             // If the clickedItem is null, it means no ListViewItem was clicked.
             if (clickedItem != null)
             {
-               
+                Dictionary<string, object> navigateDictionary = new Dictionary<string, object>();
+                navigateDictionary.Add("TableID", clickedItem.TableID);
+                navigateDictionary.Add("TableName", clickedItem.TableName);
+                navigateDictionary.Add("IsCreateNewOrder", true);
+                Session.IsCreateNewOrder = true;
+                Session.TableName = clickedItem.TableName;
+                Session.TableID = clickedItem.TableID;
+                Session.SelectingOrderType = EnumOrderType.DineIn;
+                CommonFunctionUI.NavigateToPage(AppPage.Order, previousPage: AppPage.Table, navigateDictionary);
             }
         }
 

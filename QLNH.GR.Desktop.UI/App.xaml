@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="BaseController/TextBlock.xaml"/>
                 <ResourceDictionary Source="BaseController/Color.xaml"/>
                 <ResourceDictionary Source="ShareResource/Share.xaml" />
+                <ResourceDictionary Source="BaseController/ScrollViewer.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
       

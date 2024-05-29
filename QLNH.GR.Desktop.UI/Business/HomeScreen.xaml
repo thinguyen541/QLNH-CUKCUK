@@ -82,29 +82,37 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Vertical" Margin="28">
-                                        <Image Source="{Binding IconName, Converter={StaticResource IconConverter}}" Width="48" Height="48"/>
-                                        <TextBlock Text="{Binding FeatureName}" Margin="0,24,0,0" Style="{StaticResource FeatureAppTextBlock}"/>
-                                    </StackPanel>
+                                    <Border Margin="28" x:Name="border" BorderThickness="0"  MouseDown="FetureApp_click">
+                                        <StackPanel Orientation="Vertical" >
+                                            <Image Source="{Binding IconName, Converter={StaticResource IconConverter}}" Width="48" Height="48"/>
+                                            <TextBlock Text="{Binding FeatureName}" Padding="0,24,0,0" Style="{StaticResource FeatureAppTextBlock}"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <DataTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Cursor" Value="Hand"/>
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
                                 </DataTemplate>
+                                
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     <Border Grid.Column="2" Grid.Row="1">
                             <Border Padding="0,36,24,0">
                                 <StackPanel>
-                                    <Border x:Name="bdDineIn" Background="CornflowerBlue" Margin="0,0,0,24" Padding="24,16,0,16" CornerRadius="4"  PreviewMouseDown="DineInClick">
+                                    <Border Cursor="Hand" x:Name="bdDineIn" Background="CornflowerBlue" Margin="0,0,0,24" Padding="24,16,0,16" CornerRadius="4"  PreviewMouseDown="DineInClick">
                                         <StackPanel Orientation="Horizontal">
                                                 <Image HorizontalAlignment="Left" Source="E:/Documents/git_local/QLNH.GR.Desktop/QLNH.GR.Desktop.UI/FileRerource/Resources/Icon/DineIn.png" Width="48" Height="48"/>
                                             <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="Dine-in" FontSize="28"  Margin="36,0,0,0"></Label>
                                          </StackPanel>
                                     </Border>
-                                    <Border x:Name="bdDelivery"  Background="Orange" Margin="0,0,0,24" Padding="24,16,0,16"  CornerRadius="4"  PreviewMouseDown="DeliveryClick">
+                                    <Border x:Name="bdDelivery" Cursor="Hand" Background="Orange" Margin="0,0,0,24" Padding="24,16,0,16"  CornerRadius="4"  PreviewMouseDown="DeliveryClick">
                                         <StackPanel Orientation="Horizontal">
                                             <Image HorizontalAlignment="Left"  Source="E:/Documents/git_local/QLNH.GR.Desktop/QLNH.GR.Desktop.UI/FileRerource/Resources/Icon/Delivery.png" Width="48" Height="48"/>
                                             <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="Delivery" FontSize="28"  Margin="36,0,0,0"></Label>
                                         </StackPanel>
                                     </Border>
-                                    <Border x:Name="bdToGo" Background="ForestGreen" Margin="0,0,0,24" Padding="24,16,0,16"  CornerRadius="4"  PreviewMouseDown="TogoClick">
+                                    <Border x:Name="bdToGo" Cursor="Hand" Background="ForestGreen" Margin="0,0,0,24" Padding="24,16,0,16"  CornerRadius="4"  PreviewMouseDown="TogoClick">
                                         <StackPanel Orientation="Horizontal">
                                             <Image HorizontalAlignment="Left"  Source="E:/Documents/git_local/QLNH.GR.Desktop/QLNH.GR.Desktop.UI/FileRerource/Resources/Icon/To-go.png" Width="48" Height="48"/>
                                             <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="To-go" FontSize="28"  Margin="36,0,0,0"></Label>

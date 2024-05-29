@@ -14,7 +14,9 @@ namespace QLNH.GR.Desktop.BO
         Order,
         Table,
         Eployee,
-        Menu
+        Menu,
+        OrderList,
+        PaymentScreen
     }
 
     public enum ToastType
@@ -68,8 +70,16 @@ namespace QLNH.GR.Desktop.BO
     public enum EnumOrderStatus
     {
         Serving,
+        Fired,
         Canceled,
         Hold
+    }
+
+    public enum EnumOrderType
+    {
+        DineIn,
+        Delivery,
+        Pickup
     }
     public enum EnumPaymentStatus
     {
@@ -83,6 +93,14 @@ namespace QLNH.GR.Desktop.BO
         NotSentKitchen,
         Send,
         Hold
+    }
+    public enum EnumCardType
+    {
+        Cash,
+        Card,
+        Papal,
+        Vemmo,
+        OtherCard
     }
     public enum EnumDetailItemType
     {

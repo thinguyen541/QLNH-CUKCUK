@@ -1,4 +1,5 @@
 ﻿using QLNH.GR.Desktop.BO;
+using QLNH.GR.Desktop.BO.Entity;
 using QLNH.GR.Desktop.Common;
 using QLNH.GR.Desktop.UI.Common;
 using System;
@@ -100,17 +101,40 @@ namespace QLNH.GR.Desktop.UI
 
         private void DeliveryClick(object sender, MouseButtonEventArgs e)
         {
-
+            Dictionary<string, object> navigateDictionary = new Dictionary<string, object>();
+            Session.IsCreateNewOrder = true;
+            Session.SelectingOrderType = EnumOrderType.Delivery;
+            CommonFunctionUI.NavigateToPage(AppPage.Order, previousPage: AppPage.MainScreen, navigateDictionary);
         }
 
         private void TogoClick(object sender, MouseButtonEventArgs e)
         {
-
+            Dictionary<string, object> navigateDictionary = new Dictionary<string, object>();
+            Session.IsCreateNewOrder = true;
+            Session.SelectingOrderType = EnumOrderType.Pickup;
+            CommonFunctionUI.NavigateToPage(AppPage.Order, previousPage: AppPage.MainScreen, navigateDictionary);
         }
 
         private void LogOut_click(object sender, MouseButtonEventArgs e)
         {
             CommonFunctionUI.NavigateToPage(AppPage.Login);
+        }
+
+        private void FetureApp_click(object sender, MouseButtonEventArgs e)
+        {
+            // Find the clicked item
+            var originalSource = e.OriginalSource as FrameworkElement;
+            if (originalSource != null)
+            {
+                var clickedItem = originalSource.DataContext as FeatureApp;
+                if (clickedItem != null)
+                {
+                    if(clickedItem.FeatureKey == "Orders")
+                    {
+                        CommonFunctionUI.NavigateToPage(AppPage.OrderList, previousPage: AppPage.MainScreen);
+                    }
+                }
+            }
         }
     }
 }

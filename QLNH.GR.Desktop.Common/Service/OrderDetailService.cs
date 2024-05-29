@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace QLNH.GR.Desktop.Common
 {
-    public class DishService: BaseService
+    public class OrderDetailService : BaseService
     {
-        static string Route { get; set; } = "Dish";
-        public DishService() : base(Route)
+        static string Route { get; set; } = "OrderDetail";
+        public OrderDetailService() : base(Route)
         {
         }
-    
+
     }
 }

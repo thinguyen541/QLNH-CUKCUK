@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace QLNH.GR.Desktop.Common
 {
-    public class DishGruopService : BaseService
+    public class DishGroupService : BaseService
     {
-        public DishGruopService() : base("DishGroup") { }
+
+        public DishGroupService() : base("DishGroup") { }
 
         public async Task<HttpResponseMessage> getNewCode(string name)
         {

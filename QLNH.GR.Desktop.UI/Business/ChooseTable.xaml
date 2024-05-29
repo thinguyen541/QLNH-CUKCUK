@@ -132,7 +132,7 @@
                 >
                 <StackPanel Orientation="Horizontal">
                     <Button
-                        Width="36"
+                        Width="48"
                         Style="{StaticResource ButtonBack}"
                         PreviewMouseDown="Return_Click"
                         VerticalAlignment="Center"

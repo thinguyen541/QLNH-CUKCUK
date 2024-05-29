@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
+using QLNH.GR.Desktop.BO;
 
 namespace QLNH.GR.Desktop.UI.Converter
 {
@@ -42,7 +44,7 @@ namespace QLNH.GR.Desktop.UI.Converter
     }
 
 
- 
+
     public class NotBooleanToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -115,10 +117,10 @@ namespace QLNH.GR.Desktop.UI.Converter
             if (value is string iconName)
             {
                 // Construct the path to the PNG file based on the iconName
-                return  $"E:/Documents/git_local/QLNH.GR.Desktop/QLNH.GR.Desktop.UI/FileRerource/Resources/Icon/{iconName}.png";
+                return $"E:/Documents/git_local/QLNH.GR.Desktop/QLNH.GR.Desktop.UI/FileRerource/Resources/Icon/{iconName}.png";
 
                 // Load the PNG file as a BitmapImage
-               
+
             }
             return "";
         }
@@ -126,6 +128,110 @@ namespace QLNH.GR.Desktop.UI.Converter
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+    }
+
+
+
+    public class DecimalToQuantityStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is decimal decimalValue)
+            {
+                return decimalValue.ToString("G29", culture); // "G29" removes unnecessary trailing zeros while preserving precision
+            }
+            return string.Empty;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string stringValue && decimal.TryParse(stringValue, NumberStyles.Any, culture, out decimal result))
+            {
+                return result;
+            }
+            return 0m;
+        }
+    }
+
+
+    public class DecimalToAmountStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is decimal decimalValue)
+            {
+                return decimalValue.ToString("F2", culture); // "G29" removes unnecessary trailing zeros while preserving precision
+            }
+            return "0.0";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string stringValue && decimal.TryParse(stringValue, NumberStyles.Any, culture, out decimal result))
+            {
+                return result;
+            }
+            return 0m;
+        }
+    }
+
+
+    public class RandomBrushConverter : IValueConverter
+    {
+        private static Random random = new Random();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(Brush))
+                throw new InvalidOperationException("The target must be a Brush");
+
+            Color randomColor = Color.FromRgb(
+                (byte)random.Next(256),
+                (byte)random.Next(256),
+                (byte)random.Next(256)
+            );
+
+            return new SolidColorBrush(randomColor);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+
+    }
+
+    public class EnumOrderTypeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value != null && value is EnumOrderType OrderType)
+            {
+                if (OrderType == EnumOrderType.DineIn)
+                {
+                    return "Dine-In";
+                }
+                if (OrderType == EnumOrderType.Delivery)
+                {
+                    return "Delivery";
+                }
+                if (OrderType == EnumOrderType.Pickup)
+                {
+                    return "To-go";
+                }
+                return OrderType;
+
+            }
+
+            // If the value is not a boolean, default to Collapsed
+            return "";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
         }
     }
 }

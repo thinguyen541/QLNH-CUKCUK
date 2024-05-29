@@ -38,6 +38,12 @@ namespace QLNH.GR.Desktop.BO
         /// </summary>
         public DateTime? DeletedDate { get; set; }
 
+        /// <summary>
+        /// Người chỉnh sửa
+        /// </summary>
+        public int? EntityMode { get; set; } = 1;//0 = add, 1 = edit ... 
+
+
 
         /// <summary>
         /// hàm set giá trị cho property

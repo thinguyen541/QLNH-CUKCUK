@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using System.Text.Json.Serialization;
 using System.Net.Http.Json;
 using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace QLNH.GR.Desktop.Common
 {
@@ -44,7 +45,7 @@ namespace QLNH.GR.Desktop.Common
             // Serialize object to JSON
             try
             {
-                string jsonBody = JsonConvert.SerializeObject(objToSend);
+                string jsonBody = System.Text.Json.JsonSerializer.Serialize(objToSend);
 
                 // Create the request content
                 var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
@@ -86,9 +87,46 @@ namespace QLNH.GR.Desktop.Common
             return await this.PostAsync(pagination, endpont: "Filter");
         }
 
-        public async Task<HttpResponseMessage> SaveData(object data)
+        public async Task<HttpResponseMessage> SaveData(List<object> objToSend)
         {
-            return await this.PostAsync(data, endpont: "Savedata");
+            try
+            {
+                var endpont = "SaveData";
+                string jsonBody = System.Text.Json.JsonSerializer.Serialize(objToSend);
+
+                // Create the request content
+                var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+                if (!string.IsNullOrEmpty(endpont))
+                {
+                    endpont = "/" + endpont;
+                }
+                return await httpClient.PostAsync(_configuration["BaseUrl"].ToString() + this.Route + endpont, content);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public async Task<HttpResponseMessage> SaveAndUpdateData(List<object> objToSend)
+        {
+            try
+            {
+                var endpont = "SaveAndUpdateData";
+                string jsonBody = System.Text.Json.JsonSerializer.Serialize(objToSend);
+
+                // Create the request content
+                var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+                if (!string.IsNullOrEmpty(endpont))
+                {
+                    endpont = "/" + endpont;
+                }
+                return await httpClient.PostAsync(_configuration["BaseUrl"].ToString() + this.Route + endpont, content);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<HttpResponseMessage> GetById(string id)

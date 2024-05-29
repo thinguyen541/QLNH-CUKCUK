@@ -9,8 +9,10 @@ namespace QLNH.GR.Desktop.BO.Entity
 {
     public class DetailItem : BaseEntity
     {
-        public Guid? DetailItemID { get; set; }
+        public Guid? DetailItemId { get; set; }
         public Guid? DishId { get; set; }
+
+        public Guid? OrderDetailId { get; set; }
         public string? DishName { get; set; }
         public decimal? Quantity { get; set; }
         public decimal? MaxQuantity { get; set; }

@@ -9,4 +9,11 @@
     <converters:DateTimeToDateString x:Key="DateTimeToDateString" />
 
     <converters:IconConverter x:Key="IconConverter" />
+
+    <converters:DecimalToQuantityStringConverter x:Key="DecimalToQuantityStringConverter" />
+    <converters:DecimalToAmountStringConverter x:Key="DecimalToAmountStringConverter" />
+    
+    <converters:EnumOrderTypeConverter x:Key="EnumOrderTypeConverter" />
+
+    <converters:RandomBrushConverter x:Key="RandomBrushConverter" />
 </ResourceDictionary>

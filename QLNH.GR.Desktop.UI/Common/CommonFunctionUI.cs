@@ -48,6 +48,38 @@ namespace QLNH.GR.Desktop.UI.Common
                     chooseTable.PreviousPage = previousPage;
                     frame.Navigate(chooseTable);
                     break;
+                case AppPage.Order:
+
+                    var order = new OrderScreen();
+                    if (arguments != null) {
+                        if (arguments.ContainsKey("IsCreateNewOrder") && order.CurrentOrder == null)
+                        {
+                            order.IsCreateNewOrder = true; 
+                        }
+                        if (arguments.ContainsKey("TableID") && order.CurrentOrder != null)
+                        {
+                            object value = arguments["TableID"];
+                            order.CurrentOrder.TableID = (Guid)value;
+                        }
+                        if (arguments.ContainsKey("TableName") && order.CurrentOrder != null)
+                        {
+                            object value = arguments["TableName"];
+                            order.CurrentOrder.TableName = value.ToString();
+                        }
+                    }
+                    order.PreviousPage = previousPage;
+                    frame.Navigate(order);
+                    break;
+                case AppPage.OrderList:
+                    var OrderList = new OrderList();
+                    OrderList.PreviousPage = previousPage;
+                    frame.Navigate(OrderList);
+                    break;
+                case AppPage.PaymentScreen:
+                    var payment = new PaymentScreen();
+                    payment.PreviousPage = previousPage;
+                    frame.Navigate(payment);
+                    break;
                 default:
                     throw new ArgumentException("Invalid page enum value");
             }
