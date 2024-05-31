@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace QLNH.GR.Desktop.BO
 {
-    public class BaseEntity
+    public class BaseEntity:  INotifyPropertyChanged
     {
         /// <summary>
         /// Ngày tạo
@@ -63,6 +64,12 @@ namespace QLNH.GR.Desktop.BO
         public object? GetValue(string propertyName)
         {
             return this.GetType().GetProperty(propertyName)?.GetValue(this, null);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

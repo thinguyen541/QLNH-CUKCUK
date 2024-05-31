@@ -9,6 +9,7 @@ using System.Windows;
 using QLNH.GR.Desktop.UI;
 using System.Windows.Input;
 using QLNH.GR.Desktop.BO;
+using QLNH.GR.Desktop.UI;
 
 namespace QLNH.GR.Desktop.UI.Common
 {
@@ -79,6 +80,16 @@ namespace QLNH.GR.Desktop.UI.Common
                     var payment = new PaymentScreen();
                     payment.PreviousPage = previousPage;
                     frame.Navigate(payment);
+                    break;
+                case AppPage.Receipt:
+                    var receipt = new Receipt();
+                    receipt.PreviousPage = previousPage;
+                    frame.Navigate(receipt);
+                    break;
+                case AppPage.Transaction:
+                    var transaction = new Transaction();
+                    transaction.PreviousPage = previousPage;
+                    frame.Navigate(transaction);
                     break;
                 default:
                     throw new ArgumentException("Invalid page enum value");

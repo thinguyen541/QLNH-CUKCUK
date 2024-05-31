@@ -13,9 +13,8 @@ namespace QLNH.GR.Desktop.BO
         public decimal? AmountBeforeTax { get; set; } = 0;
         public decimal? AmountAfterTax { get; set; } = 0;
         public decimal? Amount { get; set; } = 0;
-        
+        public decimal? RemainAmount { get; set; } = 0;
         public EnumPaymentStatus? PaymentStatus { get; set; }
-
         public EnumOrderStatus? OrderStatus { get; set; }
         public EnumOrderType? OrderType { get; set; }
 

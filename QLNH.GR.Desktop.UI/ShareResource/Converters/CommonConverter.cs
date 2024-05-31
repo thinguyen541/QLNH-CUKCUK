@@ -176,6 +176,28 @@ namespace QLNH.GR.Desktop.UI.Converter
         }
     }
 
+    
+    public class AmountToPayContents : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is decimal decimalValue)
+            {
+                return $"PAY - {decimalValue.ToString("F2", culture)}"; // "G29" removes unnecessary trailing zeros while preserving precision
+            }
+            return "Pay - 0.0";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string stringValue && decimal.TryParse(stringValue, NumberStyles.Any, culture, out decimal result))
+            {
+                return result;
+            }
+            return 0m;
+        }
+    }
+
 
     public class RandomBrushConverter : IValueConverter
     {

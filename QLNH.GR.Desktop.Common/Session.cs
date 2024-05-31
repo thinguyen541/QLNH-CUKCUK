@@ -6,7 +6,7 @@ namespace QLNH.GR.Desktop.Common
     {
         public static string ReccentDomain { get; set; }
         public static string UserName { get; set; }
-        public static string UserID { get; set; }
+        public static Guid? UserID { get; set; }
         public static string BranchID { get; set; }
         public static string Token { get; set; } = "";
 

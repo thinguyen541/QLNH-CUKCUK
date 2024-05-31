@@ -11,7 +11,10 @@
     <converters:IconConverter x:Key="IconConverter" />
 
     <converters:DecimalToQuantityStringConverter x:Key="DecimalToQuantityStringConverter" />
+    
     <converters:DecimalToAmountStringConverter x:Key="DecimalToAmountStringConverter" />
+
+    <converters:AmountToPayContents x:Key="AmountToPayContents" />
     
     <converters:EnumOrderTypeConverter x:Key="EnumOrderTypeConverter" />
 

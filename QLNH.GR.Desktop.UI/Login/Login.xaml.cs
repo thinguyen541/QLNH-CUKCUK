@@ -52,6 +52,8 @@ namespace QLNH.GR.Desktop.UI
                         LoginResponse result = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginResponse>(responseBody);
                         if(result != null && result.token != null)
                         {
+                            Session.UserID = result.user?.EmployeeId;
+                            Session.UserName = result.user?.AccountName;
                             Session.Token = result.token;
                             WriteToFile(result);
                         }

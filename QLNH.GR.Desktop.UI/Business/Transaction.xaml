@@ -1,0 +1,166 @@
+﻿<local:BaseUserControl x:Class="QLNH.GR.Desktop.UI.Transaction"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:QLNH.GR.Desktop.UI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Background="#ffffff"
+      >
+    <local:BaseUserControl.Resources>
+        <Style x:Key="TransactionListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Border Height="48" x:Name="border" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="0,0,0,1" Background="Transparent" SnapsToDevicePixels="True">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="240"></ColumnDefinition>
+                                    <ColumnDefinition Width="120"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding TransactionID}"
+                                           Style="{StaticResource HeaderTextBlock}"
+                                           FontSize="13"/>
+                                <TextBlock Text="{Binding OrderNo}"
+                                           Grid.Column="1"
+                                           Style="{StaticResource HeaderTextBlock}"
+                                           FontSize="13"/>
+                                <TextBlock Grid.Column="2" 
+                                           Text="{Binding CardName}"
+                                           Style="{StaticResource HeaderTextBlock}"
+                                             FontSize="13"/>
+                                <TextBlock Grid.Column="3"  
+                                           Text="{ Binding CreatedDate}"
+                                           Style="{StaticResource HeaderTextBlock}"
+                                             FontSize="13"/>
+                                <TextBlock Grid.Column="4"  
+                                           Text="{ Binding UserName}"
+                                           Style="{StaticResource HeaderTextBlock}"
+                                             FontSize="13"/>
+                                <TextBlock Grid.Column="5"  
+                                           Text="{ Binding TipAmount, Converter={StaticResource DecimalToAmountStringConverter}}"
+                                           Style="{StaticResource HeaderTextBlock}"
+                                             FontSize="13"/>
+                                <TextBlock Grid.Column="6"  
+                                           Text="{Binding CoverAmount, Converter={StaticResource DecimalToAmountStringConverter}}"
+                                           Style="{StaticResource HeaderTextBlock}"
+                                             FontSize="13"/>
+
+
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="LightGray"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="SkyBlue"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </local:BaseUserControl.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <!--header-->
+            <Border BorderBrush="{StaticResource MainBorderColor}"
+                    BorderThickness="0,0,0,1"
+                >
+                <StackPanel Orientation="Horizontal">
+                    <Button
+                        Width="48"
+                        Style="{StaticResource ButtonBack}"
+                        PreviewMouseDown="Return_Click"
+                        VerticalAlignment="Center"
+                        Margin="0,0,16,0"
+                        />
+                    <Label 
+                        Style="{StaticResource HeaderLabel}"
+                        VerticalAlignment="Center"
+                        Content="Transaction"
+                        Height="36"
+                           ></Label>
+                </StackPanel>
+            </Border>
+            <!--main-->
+            <Border Grid.Row="1" BorderBrush="{StaticResource MainBorderColor}"
+                    BorderThickness="0,0,0,1"
+                >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="48"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Border  x:Name="border" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="0,0,0,1" Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid  >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="240"></ColumnDefinition>
+                                <ColumnDefinition Width="120"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Transaction ID"
+                                       Style="{StaticResource HeaderTextBlock}"
+                                       FontSize="16"/>
+                            <TextBlock Text="OrderNo"
+                                       Grid.Column="1" 
+                                       Style="{StaticResource HeaderTextBlock}"
+                                       FontSize="16"/>
+                            <TextBlock Grid.Column="2"  
+                                       Text="Payment method" 
+                                        FontSize="16"
+                                       Style="{StaticResource HeaderTextBlock}"/>
+                            <TextBlock Grid.Column="3"  
+                                       Text="Created time" 
+                                        FontSize="16"
+                                       Style="{StaticResource HeaderTextBlock}"/>
+                            <TextBlock Grid.Column="4"  
+                                       Text="Cashier"
+                                        FontSize="16"
+                                       Style="{StaticResource HeaderTextBlock}"/>
+                            <TextBlock Grid.Column="5" 
+                                       Text="Tip amount"
+                                        FontSize="16"
+                                       Style="{StaticResource HeaderTextBlock}"/>
+                            <TextBlock Grid.Column="6" 
+                                       Text="Amount"
+                                        FontSize="16"
+                                       Style="{StaticResource HeaderTextBlock}"/>
+
+                        </Grid>
+                    </Border>
+                    <local:CustomScrollView
+                        Grid.Row="1"
+                                        HorizontalAlignment="Stretch" 
+                                        VerticalAlignment="Stretch"
+                                        HorizontalScrollBarVisibility="Hidden"
+                                        Style="{StaticResource MyCustomScrollView}"
+                                          >
+                        <ListView 
+                              PreviewMouseDown="transaction_click"
+                              x:Name="lvTransactionList"
+                              BorderThickness="0"
+                              ItemContainerStyle="{StaticResource TransactionListViewItemStyle}"></ListView>
+                    </local:CustomScrollView>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</local:BaseUserControl>

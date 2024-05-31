@@ -89,6 +89,7 @@ namespace QLNH.GR.Desktop.UI
                 ListFeatureApp.Add(new FeatureApp { FeatureKey = "Menu", FeatureName = "Menu", SortOrder = 0, IconName = "Menu" });
                 ListFeatureApp.Add(new FeatureApp { FeatureKey = "Employee", FeatureName = "Employee", SortOrder = 0, IconName = "Employee" });
                 ListFeatureApp.Add(new FeatureApp { FeatureKey = "Reciept", FeatureName = "Reciept", SortOrder = 0, IconName = "Reciept" });
+                ListFeatureApp.Add(new FeatureApp { FeatureKey = "Transaction", FeatureName = "Transaction", SortOrder = 0, IconName = "Transaction" });
                 Session.ListFeatureApp = ListFeatureApp;
             }
                 itemsControl.ItemsSource = ListFeatureApp;
@@ -132,6 +133,14 @@ namespace QLNH.GR.Desktop.UI
                     if(clickedItem.FeatureKey == "Orders")
                     {
                         CommonFunctionUI.NavigateToPage(AppPage.OrderList, previousPage: AppPage.MainScreen);
+                    }
+                    else if (clickedItem.FeatureKey == "Transaction")
+                    {
+                        CommonFunctionUI.NavigateToPage(AppPage.Transaction, previousPage: AppPage.MainScreen);
+                    }
+                    else if (clickedItem.FeatureKey == "Reciept")
+                    {
+                        CommonFunctionUI.NavigateToPage(AppPage.Receipt, previousPage: AppPage.MainScreen);
                     }
                 }
             }

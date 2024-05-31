@@ -100,6 +100,7 @@ namespace QLNH.GR.Desktop.UI
                 CurrentOrder.TableName = Session.TableName;
                 CurrentOrder.OrderStatus = EnumOrderStatus.Serving;
                 CurrentOrder.OrderType = Session.SelectingOrderType;
+                CurrentOrder.OrderNo = CommonFunction.GenerateUniqueOrderNumber();
             }
             else
             {
@@ -263,13 +264,13 @@ namespace QLNH.GR.Desktop.UI
             }
             else
             {
-                var existOrderDetail = CurrentOrder?.ListOrderDetail?.FirstOrDefault(detail => detail.ListDetailItem != null && detail.ListDetailItem.Any(item => item.DishId == dishItem.DishId) && detail.OrderDetailStatus == EnumOrderDetailStatus.NotSentKitchen);
+                var existOrderDetail = CurrentOrder?.ListOrderDetail?.FirstOrDefault(detail => detail.ListDetailItem != null && detail.ListDetailItem.Any(item => item.DishId == dishItem.DishId) && detail.OrderDetailStatus == EnumOrderDetailStatus.NotSentKitchen && detail.EntityMode != 2);
 
                 if (existOrderDetail != null)
                 {
                     existOrderDetail.Quantity += 1;
                     existOrderDetail.EntityMode = 1;
-                    existOrderDetail.Amount += dishItem.Cost.GetValueOrDefault();
+                    existOrderDetail.Amount += dishItem.Price.GetValueOrDefault();
                 }
                 else
                 {
@@ -387,7 +388,6 @@ namespace QLNH.GR.Desktop.UI
             List<object> lstSaveOrder = new List<object>();
             lstSaveOrder.Add(CurrentOrder);
             CurrentOrder.OrderStatus = EnumOrderStatus.Fired;
-            CurrentOrder.OrderNo = CommonFunction.GenerateUniqueOrderNumber();
             HttpResponseMessage response = await orderService.SaveAndUpdateData(lstSaveOrder);
             if (response != null && response.IsSuccessStatusCode)
             {
@@ -405,8 +405,10 @@ namespace QLNH.GR.Desktop.UI
             else
             {
                 CurrentOrder.Amount = 0;
+               
             }
             string convertedValue = (string)_decimalconverter.Convert(CurrentOrder.Amount, typeof(string), null, CultureInfo.InvariantCulture);
+            CurrentOrder.RemainAmount = CurrentOrder.Amount;
             txtTotalAmount.Text = convertedValue;
         }
     }

@@ -9,7 +9,7 @@ namespace QLNH.GR.Desktop.BO
     public class LoginResponse
     {
         public string token { get; set; }
-        public Employee employee { get; set; }
+        public Employee user { get; set; }
 
         public List<FeatureApp> ListFeatureApp { get; set; }
 

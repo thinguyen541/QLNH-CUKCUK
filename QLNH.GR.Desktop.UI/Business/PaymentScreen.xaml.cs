@@ -23,7 +23,10 @@ namespace QLNH.GR.Desktop.UI
     {
         public Order CurrentOrder { get; set; }
 
-        public DishService dishService = new DishService();
+
+        public CoverOrderService coverOrderService = new CoverOrderService();
+
+        public InvoiceService invoiceService = new InvoiceService();
 
         public DishGroupService dishGroupService = new DishGroupService();
 
@@ -35,10 +38,41 @@ namespace QLNH.GR.Desktop.UI
 
         public OrderService rrderService = new OrderService();
 
-        public List<Card> ListCard;
 
+        // Register the dependency property
+        public static readonly DependencyProperty AmountToPayProperty =
+            DependencyProperty.Register(
+                nameof(AmountToPay),       // The name of the dependency property
+                typeof(decimal),           // The type of the property
+                typeof(PaymentScreen),    // The owner type
+                new PropertyMetadata(default(decimal)));  // Default value
 
-        public Card SelectedCard;
+        // CLR property wrapper
+        public decimal AmountToPay
+        {
+            get => (decimal)GetValue(AmountToPayProperty);
+            set => SetValue(AmountToPayProperty, value);
+        }
+
+        public static readonly DependencyProperty ChoosePaymentAmountProperty =
+          DependencyProperty.Register(
+              nameof(ChoosePaymentAmount),       // The name of the dependency property
+              typeof(decimal),           // The type of the property
+              typeof(PaymentScreen),    // The owner type
+              new PropertyMetadata(default(decimal)));  // Default value
+
+        // CLR property wrapper
+        public decimal ChoosePaymentAmount
+        {
+            get => (decimal)GetValue(ChoosePaymentAmountProperty);
+            set => SetValue(ChoosePaymentAmountProperty, value);
+        }
+        public List<Card> ListCard { get; set; }
+        public List<SuggestMoney> ListSuggestMoney { get; set; }
+
+        public Card SelectedCard { get; set; }
+
+        public SuggestMoney SelectedSuggestMoney { get; set; }
         public List<Dish> ListDish { get; set; }
 
         public List<DishGroup> ListDishGroup { get; set; }
@@ -63,13 +97,14 @@ namespace QLNH.GR.Desktop.UI
         public override async void ProcessDataAsync()
         {
             await LoadData();
-            this.DataContext = CurrentOrder;
+            this.DataContext = this;
         }
         async public Task LoadData()
         {
             await LoadCurrenOrder();
             await LoadOrderDetail();
             LoadListCard();
+            CalculateAmountToPay();
 
         }
 
@@ -176,28 +211,130 @@ namespace QLNH.GR.Desktop.UI
             };
             ListCard = listCard;
             lvCard.ItemsSource = ListCard;
+            SelectedCard = listCard.FirstOrDefault();
+            BuidListSuggestMoney();
+            lvCard.SelectedIndex = 0;
         }
 
+        public void BuidListSuggestMoney()
+        {
+            var listSuggest = new List<SuggestMoney>();
+            switch (SelectedCard.CardType)
+            {
+                
+                case EnumCardType.Cash:
+                    var listMoney = CommonFunction.SuggestPayment(CurrentOrder.RemainAmount.GetValueOrDefault(),5);
+                    foreach (var money in listMoney)
+                    {
+                        if (money == CurrentOrder.RemainAmount.GetValueOrDefault())
+                        {
+                            listSuggest.Add(new SuggestMoney() { Amount = money ,IsSelected=true});
+                        }
+                        else
+                        {
+                            listSuggest.Add(new SuggestMoney() { Amount = money });
+                        }
+                    }
+                   
+                  
+                    break;
+                case EnumCardType.Card:
+                    listSuggest.Add(new SuggestMoney() { Amount = CurrentOrder?.RemainAmount.GetValueOrDefault() , IsSelected = true });
+                    break;
+                case EnumCardType.Vemmo:
+                    listSuggest.Add(new SuggestMoney() { Amount = CurrentOrder?.RemainAmount.GetValueOrDefault() , IsSelected = true });
+                    break;
+                case EnumCardType.OtherCard:
+                    listSuggest.Add(new SuggestMoney() { Amount = CurrentOrder?.RemainAmount.GetValueOrDefault(), IsSelected = true });
+                    break;
+            }
+            ListSuggestMoney = listSuggest;
+            lvSuggestMoney.ItemsSource = null;
+            SelectedSuggestMoney = ListSuggestMoney.FirstOrDefault();
+            CalculateChoosePaymentAmount();
+            lvSuggestMoney.ItemsSource = ListSuggestMoney;
+        }
 
 
         private async void btnPay_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            await ProcessPayment();
+        }
+
+        public async Task ProcessPayment()
+        {
+            var isBuildCoverOK = await BuidCoverOrder();
+            var isBuildinvoiceOK = await BuidInvoice();
+            if (isBuildCoverOK && isBuildinvoiceOK)
+            {
+                List<object> lstSaveOrder = new List<object>();
+                lstSaveOrder.Add(CurrentOrder);
+                CurrentOrder.OrderStatus = EnumOrderStatus.Fired;
+                HttpResponseMessage response = await orderService.SaveAndUpdateData(lstSaveOrder);
+                if (response != null && response.IsSuccessStatusCode)
+                {
+                    CommonFunctionUI.ShowToast("Payment success.");
+                    CommonFunctionUI.NavigateToPage(AppPage.MainScreen, previousPage: AppPage.MainScreen);
+                }
+            }
 
         }
 
-        public async Task ProcessFireAndSave()
+        public async Task<bool> BuidCoverOrder()
         {
             List<object> lstSaveOrder = new List<object>();
-            lstSaveOrder.Add(CurrentOrder);
-            CurrentOrder.OrderStatus = EnumOrderStatus.Fired;
-            CurrentOrder.OrderNo = CommonFunction.GenerateUniqueOrderNumber();
-            HttpResponseMessage response = await orderService.SaveAndUpdateData(lstSaveOrder);
+            CoverOrder coverOrder = new CoverOrder();
+            coverOrder.EntityMode = 0;
+            coverOrder.CoverOrderId = Guid.NewGuid();
+            coverOrder.CoverAmount = SelectedSuggestMoney.Amount;
+            coverOrder.OrderId = CurrentOrder.OrderId;
+            coverOrder.OrderNo = CurrentOrder.OrderNo;
+            coverOrder.UserId = Session.UserID.GetValueOrDefault();
+            coverOrder.UserName = Session.UserName;
+            coverOrder.TransactionID = Guid.NewGuid().ToString();
+            coverOrder.CardType = SelectedCard.CardType;
+            coverOrder.CardName = SelectedCard.CardName;
+
+            lstSaveOrder.Add(coverOrder);
+            HttpResponseMessage response = await coverOrderService.SaveAndUpdateData(lstSaveOrder);
             if (response != null && response.IsSuccessStatusCode)
             {
-                CommonFunctionUI.ShowToast("Fire successfully.");
-                CommonFunctionUI.NavigateToPage(AppPage.MainScreen, previousPage: AppPage.Order);
+                return true;
             }
+            return false;
         }
+
+        public async Task<bool> BuidInvoice()
+        {
+            if (SelectedSuggestMoney.Amount == CurrentOrder.Amount)
+            {
+                CurrentOrder.PaymentStatus = EnumPaymentStatus.PaidAll;
+                List<object> lstSaveOrder = new List<object>();
+                Invoice invoice = new Invoice();
+                invoice.EntityMode = 0;
+                invoice.InvoiceId = Guid.NewGuid();
+                invoice.Amount = SelectedSuggestMoney.Amount.GetValueOrDefault();
+                invoice.OrderId = CurrentOrder.OrderId.GetValueOrDefault();
+                invoice.OrderNo = CurrentOrder.OrderNo;
+                invoice.UserId = Session.UserID.GetValueOrDefault();
+                invoice.UserName = Session.UserName;
+                invoice.OrderType = CurrentOrder.OrderType;
+                invoice.TableID = CurrentOrder.TableID;
+                invoice.TableName = CurrentOrder.TableName;
+
+
+
+                lstSaveOrder.Add(invoice);
+                HttpResponseMessage response = await invoiceService.SaveAndUpdateData(lstSaveOrder);
+                if (response != null && response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                return false;
+            }
+            return true;
+        }
+
 
         public void CalculateOrderAmount()
         {
@@ -222,9 +359,75 @@ namespace QLNH.GR.Desktop.UI
                 if (clickedItem != null)
                 {
                     SelectedCard = clickedItem;
+                    BuidListSuggestMoney();
                 }
             }
         }
 
+        private void lvCard_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (lvCard.Items?.Count > 0)
+            {
+                // Get the first item in the ListView
+                var firstItem = lvCard.ItemContainerGenerator.ContainerFromIndex(0) as ListViewItem;
+                if (firstItem != null)
+                {
+                    // Set focus to the first item
+                    firstItem.Focus();
+                    BuidListSuggestMoney();
+
+                }
+            }
+        }
+
+        private void lvSuggestMoney__Loaded(object sender, RoutedEventArgs e)
+        {
+            if (lvSuggestMoney.Items?.Count > 0)
+            {
+                // Get the first item in the ListView
+                var firstItem = lvSuggestMoney.ItemContainerGenerator.ContainerFromIndex(0) as ListViewItem;
+                if (firstItem != null)
+                {
+                    // Set focus to the first item
+                    firstItem.Focus();
+
+                }
+            }
+        }
+
+        private void lvSuggestMoney_click(object sender, MouseButtonEventArgs e)
+        {
+            // Find the clicked item
+            var originalSource = e.OriginalSource as FrameworkElement;
+            if (originalSource != null)
+            {
+                var clickedItem = originalSource.DataContext as SuggestMoney;
+                if (clickedItem != null)
+                {
+                    SelectedSuggestMoney = clickedItem;
+                    foreach (var item in ListSuggestMoney)
+                    {
+                        item.IsSelected = false;
+                    }
+                    clickedItem.IsSelected = true;
+                    CalculateChoosePaymentAmount();
+                }
+            }
+        }
+        private void CalculateAmountToPay()
+        {
+            if (CurrentOrder != null)
+            {
+                AmountToPay = CurrentOrder.RemainAmount.GetValueOrDefault();
+            }
+        }
+
+        private void CalculateChoosePaymentAmount()
+        {
+            if (SelectedSuggestMoney != null)
+            {
+                ChoosePaymentAmount = SelectedSuggestMoney.Amount.GetValueOrDefault();
+            }
+        }
     }
 }

@@ -44,7 +44,7 @@
             </Setter>
         </Style>
 
-      
+
 
         <Style x:Key="OrderDetailListViewItemStyle" TargetType="ListViewItem">
             <Setter Property="Template">
@@ -101,7 +101,7 @@
                                     Style="{StaticResource NormalTextBlock}"
                                     Text="{Binding Amount, Converter={StaticResource DecimalToAmountStringConverter}}"
                                     />
-                              
+
                             </Grid>
                         </Border>
 
@@ -121,7 +121,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="56"/>
                                     <ColumnDefinition Width="*"/>
-                                   
+
                                 </Grid.ColumnDefinitions>
 
                                 <Image VerticalAlignment="center" Width="48" Height="36" Source="{Binding ImagePath}"></Image>
@@ -180,7 +180,7 @@
                 </StackPanel>
             </Border>
             <!--MAIN-->
-            <Border Grid.Row="1" Padding="6">
+            <Border Grid.Row="1" Padding="6,0,6,6">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="6*"></ColumnDefinition>
@@ -225,7 +225,7 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                
+
                                 </Grid.ColumnDefinitions>
                                 <TextBlock 
                                     Text="Total"
@@ -243,7 +243,7 @@
                                     Text="0.00"  
                                     FontSize="16"
                                     ></TextBlock>
-                              
+
                             </Grid>
                         </Grid>
                     </Border>
@@ -258,9 +258,10 @@
                             <ListView 
                                 Grid.Row="1"
                                 x:Name="lvCard"
-                                MouseDown="card_click"
+                                PreviewMouseDown="card_click"
                                 VerticalAlignment="Stretch"
                                 BorderThickness="0"
+                                Loaded="lvCard_Loaded"
                                 ItemContainerStyle="{StaticResource CardListViewItemStyle}"></ListView>
                         </Grid>
                     </Border>
@@ -271,6 +272,9 @@
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="68"></RowDefinition>
                         </Grid.RowDefinitions>
+                        <Label Content="Payment amount" 
+                                       Style="{StaticResource HeaderLabel}"
+                                       VerticalAlignment="Center"></Label>
                         <Button
                                     Height="56"
                                     Width="420"
@@ -279,9 +283,69 @@
                                     Background="ForestGreen"
                                     VerticalAlignment="Stretch"
                                     HorizontalAlignment="Stretch"
-                                    Content="PAY"
+                                    Content="{Binding ChoosePaymentAmount, Converter={StaticResource AmountToPayContents}}"
                                      Style="{StaticResource BtnFire}"
                                     ></Button>
+                        <Border Grid.Row="1">
+                            <Grid>
+                                <Grid VerticalAlignment="Top" Margin="0,0,0,86">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="240"></RowDefinition>
+                                        <RowDefinition Height="56"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Label Content="{Binding AmountToPay, Converter={StaticResource DecimalToAmountStringConverter}}" FontSize="28"  Grid.Row="0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Center"></Label>
+                                    <Label Content="Choose amount"  Grid.Row="1" Margin="96,0,0,0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Left"></Label>
+                                    <ItemsControl
+                                            Padding="96,0,96,16"
+                                            Grid.Row="2"
+                                            x:Name="lvSuggestMoney" 
+                                            VerticalAlignment="Bottom"
+                                            HorizontalAlignment="Left"
+                                            Height="Auto"
+                                            MouseUp="lvSuggestMoney_click">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Margin="2" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="1" Padding="4" Cursor="Hand"  Height="56" Width="120">
+
+                                                    <TextBlock x:Name="textBlock" Text="{Binding Amount, Converter={StaticResource DecimalToAmountStringConverter}}" FontSize="14" FontWeight="DemiBold" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">
+                                                        <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                    
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                                    <Setter Property="Background" Value="Blue"/>
+                                                                    
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                </Border>
+                                            </DataTemplate>
+
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </Grid>
+
+                        </Border>
                     </Grid>
                 </Grid>
             </Border>

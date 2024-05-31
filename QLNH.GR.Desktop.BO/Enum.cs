@@ -16,7 +16,9 @@ namespace QLNH.GR.Desktop.BO
         Eployee,
         Menu,
         OrderList,
-        PaymentScreen
+        PaymentScreen,
+        Receipt,
+        Transaction
     }
 
     public enum ToastType
@@ -92,7 +94,8 @@ namespace QLNH.GR.Desktop.BO
     {
         NotSentKitchen,
         Send,
-        Hold
+        Hold,
+        Done
     }
     public enum EnumCardType
     {
