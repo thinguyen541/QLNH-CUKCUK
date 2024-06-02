@@ -5,6 +5,8 @@ using QLNH.GR.Desktop.UI.Common;
 using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media.Effects;
 using System.Windows.Threading;
 
 namespace QLNH.GR.Desktop.UI
@@ -44,6 +46,7 @@ namespace QLNH.GR.Desktop.UI
             // Subscribe to the ShowToastEvent
             SwitchFram();
             setTimer();
+            MyPopup.Closed += MyPopup_Closed;
         }
 
         private void setTimer()
@@ -51,6 +54,7 @@ namespace QLNH.GR.Desktop.UI
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
+
             timer.Start();
         }
 
@@ -69,13 +73,27 @@ namespace QLNH.GR.Desktop.UI
             {
                 Navigator.NavigateToPage(typeof(LoginBranch));
             }
-            EventManager.ShowToastEvent += HandleShowToastEvent;
+            EventManager.ShowToastEvent += HandleShowToastEvent; 
+            EventManager.ShowDialogEvent += HandleShowDialogEvent;
         }
 
         private void HandleShowToastEvent(object sender, ToastEventArgs e)
         {
             // Show toast notification
             myToast.ShowToast(e.Message, e.Type);
+        }
+        private void HandleShowDialogEvent(object sender, DialogEventArgs e)
+        {
+            // Assign the UserControl to the Popup
+            MyPopup.Child = e.dialog;
+
+            // Blur the main window content
+            this.Effect = new BlurEffect { Radius = 10 };
+
+            // Show the overlay
+            BackgroundOverlay.Visibility = Visibility.Visible;
+            // Set the Popup to open
+            MyPopup.IsOpen = true;
         }
 
         private bool IsCacheData()
@@ -96,5 +114,14 @@ namespace QLNH.GR.Desktop.UI
             // Update the time
             OnPropertyChanged(nameof(CurrentTime));
         }
+        private void MyPopup_Closed(object sender, EventArgs e)
+        {
+            // Remove the blur effect when the popup is closed
+            this.Effect = null;
+
+            // Hide the overlay
+            BackgroundOverlay.Visibility = Visibility.Collapsed;
+        }
+
     }
 }

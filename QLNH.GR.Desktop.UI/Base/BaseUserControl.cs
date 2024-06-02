@@ -12,7 +12,8 @@ namespace QLNH.GR.Desktop.UI
 {
     public class BaseUserControl: UserControl
     {
-
+        public bool DialogResult { get; set; }
+        public string DialogTitle { get; set; }
         public AppPage PreviousPage { get; set; } = AppPage.MainScreen;
 
         private bool _isDataLoaded = false; // Flag to track whether data is loaded

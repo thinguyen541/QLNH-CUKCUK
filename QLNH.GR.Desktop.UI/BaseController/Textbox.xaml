@@ -97,4 +97,42 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="CustomCheckBox" TargetType="CheckBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal">
+                        <Border x:Name="CheckBoxBorder"
+                                    Width="20" Height="20"
+                                    BorderBrush="Black"
+                                    BorderThickness="1"
+                                    Background="White"
+                                    Margin="5"
+                                Padding="1">
+                            <Path x:Name="CheckMark"
+                                      Data="M0,4 L2,6 L6,0"
+                                      Stretch="Uniform"
+                                      Stroke="Black"
+                                      StrokeThickness="2"
+                                      Visibility="Collapsed"/>
+                        </Border>
+                        <ContentPresenter VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="CheckMark" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="CheckBoxBorder" Property="Background" Value="Gray"/>
+                            <Setter TargetName="CheckMark" Property="Stroke" Value="Gray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

@@ -13,5 +13,9 @@
     <Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
         <ui:ToastControl x:Name="myToast" Visibility="Collapsed" Height="75" Width="500" VerticalAlignment="Top" Margin="0,80,0,0" />
+        <Popup Name="MyPopup" Placement="Center" StaysOpen="False" AllowsTransparency="True">
+            <!-- The content of the popup will be added dynamically -->
+        </Popup>
+        <Border Name="BackgroundOverlay" Background="#80000000" Visibility="Collapsed" />
     </Grid>
 </Window>

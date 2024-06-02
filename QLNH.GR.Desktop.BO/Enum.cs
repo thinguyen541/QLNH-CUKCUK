@@ -27,7 +27,7 @@ namespace QLNH.GR.Desktop.BO
         Warning
     }
 
-    public enum Operator
+    public enum EnumOperator
     {
         LIKE,
         EQUAL,
@@ -48,7 +48,7 @@ namespace QLNH.GR.Desktop.BO
         Delete
     }
 
-    public enum PropertyType
+    public enum EnumPropertyType
     {
         isString,
         isInt,
@@ -57,13 +57,13 @@ namespace QLNH.GR.Desktop.BO
         isGuid
     }
 
-    public enum RelationType
+    public enum EnumRelationType
     {
         AND,
         OR
     }
 
-    public enum SortOrder
+    public enum EnumSortOrder
     {
         ASC,
         DESC
@@ -74,7 +74,8 @@ namespace QLNH.GR.Desktop.BO
         Serving,
         Fired,
         Canceled,
-        Hold
+        Hold,
+        Done
     }
 
     public enum EnumOrderType
@@ -109,10 +110,10 @@ namespace QLNH.GR.Desktop.BO
     {
         Normal,
         Group,
-        Modifiere,
+        Modifier,
         Combo,
         Promotion
     }
 
-
+   
 }

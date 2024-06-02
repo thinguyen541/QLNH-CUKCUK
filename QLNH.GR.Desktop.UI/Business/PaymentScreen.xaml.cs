@@ -263,13 +263,13 @@ namespace QLNH.GR.Desktop.UI
 
         public async Task ProcessPayment()
         {
+            CurrentOrder.OrderStatus = EnumOrderStatus.Fired;
             var isBuildCoverOK = await BuidCoverOrder();
             var isBuildinvoiceOK = await BuidInvoice();
             if (isBuildCoverOK && isBuildinvoiceOK)
             {
                 List<object> lstSaveOrder = new List<object>();
                 lstSaveOrder.Add(CurrentOrder);
-                CurrentOrder.OrderStatus = EnumOrderStatus.Fired;
                 HttpResponseMessage response = await orderService.SaveAndUpdateData(lstSaveOrder);
                 if (response != null && response.IsSuccessStatusCode)
                 {
@@ -309,6 +309,7 @@ namespace QLNH.GR.Desktop.UI
             if (SelectedSuggestMoney.Amount == CurrentOrder.Amount)
             {
                 CurrentOrder.PaymentStatus = EnumPaymentStatus.PaidAll;
+                CurrentOrder.OrderStatus = EnumOrderStatus.Done;
                 List<object> lstSaveOrder = new List<object>();
                 Invoice invoice = new Invoice();
                 invoice.EntityMode = 0;

@@ -26,5 +26,21 @@ namespace QLNH.GR.Desktop.BO.Entity
         /// </summary>
         [DefaultValue(0)]
         public int? FavoriteServiceCost { get; set; }
+
+        private bool _selected;
+        public bool IsSelected
+        {
+            get => _selected;
+            set
+            {
+                if (_selected != value)
+                {
+                    _selected = value;
+                    OnPropertyChanged(nameof(IsSelected));
+                }
+            }
+        }
+
+        public decimal? ServiceCost { get; set; }
     }
 }

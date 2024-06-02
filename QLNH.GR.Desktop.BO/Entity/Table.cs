@@ -17,5 +17,35 @@ namespace QLNH.GR.Desktop.BO
         public double? CorY { get; set; }
         public Guid? BranchID { get; set; }
         public int? Status { get; set; }
+        
+  
+
+        private bool _isServing;
+        public bool IsServing
+        {
+            get => _isServing;
+            set
+            {
+                if (_isServing != value)
+                {
+                    _isServing = value;
+                    OnPropertyChanged(nameof(IsServing));
+                }
+            }
+        }
+
+        private string _servingTime;
+        public string ServingTime
+        {
+            get => _servingTime;
+            set
+            {
+                if (_servingTime != value)
+                {
+                    _servingTime = value;
+                    OnPropertyChanged(nameof(ServingTime));
+                }
+            }
+        }
     }
 }

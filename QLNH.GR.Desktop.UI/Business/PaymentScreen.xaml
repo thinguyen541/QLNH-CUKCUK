@@ -51,13 +51,63 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ListViewItem">
                         <Border  BorderThickness="0" Background="Transparent">
-                            <StackPanel  HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                            <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="88"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
                                 <Label VerticalAlignment="Top" 
                                        Height="auto"
                                        FontSize="14"
+                                       FontWeight="SemiBold"
                                        Content="{Binding DishName}"
                                        HorizontalAlignment="Stretch"></Label>
-                            </StackPanel>
+                                <TextBlock
+                                    Width="auto"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="1"
+                                    Margin="0,0,8,0"
+                                    Style="{StaticResource NormalTextBlock}"
+                                    Text="{Binding Amount, Converter={StaticResource DecimalToAmountStringConverter}}"
+                                    />
+                            </Grid>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="OrderDetailModifireListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Border  BorderThickness="0" Background="Transparent">
+                            <Grid Margin="8,0,0,0"  HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="88"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label VerticalAlignment="Top" 
+                                       Height="auto"
+                                       FontSize="13"
+                                       Foreground="#9d9d9d"
+                                       Content="{Binding DishName}"
+                                       HorizontalAlignment="Stretch"></Label>
+                                <TextBlock
+                                    Width="auto"
+                                    FontSize="14"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="1"
+                                     FontWeight="SemiBold"
+                                    Margin="0,0,8,0"
+                                    Style="{StaticResource NormalTextBlock}"
+                                    Text="{Binding Amount, Converter={StaticResource DecimalToAmountStringConverter}}"
+                                    />
+                            </Grid>
                         </Border>
 
                     </ControlTemplate>
@@ -74,7 +124,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="28"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="68"/>
+                           
                                     <ColumnDefinition Width="36"/>
                                 </Grid.ColumnDefinitions>
                                 <Button Grid.Column="0"
@@ -88,19 +138,19 @@
                                         VerticalAlignment="Top"
                                         Content="{Binding Quantity, Converter = {StaticResource DecimalToQuantityStringConverter}}"/>
 
-                                <ListView ItemsSource="{Binding ListDetailItem}"
+                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                    <ListView ItemsSource="{Binding ListNormalDetailItem}"
                                           BorderThickness="0"
-                                          Grid.Column="1"
+                                          
                                           HorizontalAlignment="Stretch"
                                           ItemContainerStyle="{StaticResource OrderDetailListViewItemStyle}"/>
-                                <TextBlock
-                                    Width="auto"
-                                    FontSize="14"
-                                    VerticalAlignment="Center"
-                                    Grid.Column="2"
-                                    Style="{StaticResource NormalTextBlock}"
-                                    Text="{Binding Amount, Converter={StaticResource DecimalToAmountStringConverter}}"
-                                    />
+                                    <ListView ItemsSource="{Binding ListModifierDetailItem}"
+                                          BorderThickness="0"
+                                    
+                                          HorizontalAlignment="Stretch"
+                                          ItemContainerStyle="{StaticResource OrderDetailModifireListViewItemStyle}"/>
+                                </StackPanel>
+                           
 
                             </Grid>
                         </Border>

@@ -1,4 +1,6 @@
-﻿using QLNH.GR.Desktop.BO;
+﻿using AssignmentGPBL.Domain.Object;
+using Newtonsoft.Json.Linq;
+using QLNH.GR.Desktop.BO;
 using QLNH.GR.Desktop.BO.Entity;
 using QLNH.GR.Desktop.Common;
 using QLNH.GR.Desktop.UI.Common;
@@ -50,6 +52,11 @@ namespace QLNH.GR.Desktop.UI
         async private Task LoadOrder()
         {
             var pag = new PaginationObject() { PageSize = 100, RecentPage = 1 };
+            List<BO.FilterObject> lstFilter = new List<BO.FilterObject>()
+            {
+                new BO.FilterObject(){ Property = "OrderStatus", Value=(int)EnumOrderStatus.Done, PropertyType = (int)EnumPropertyType.isInt, Operator = (int)EnumOperator.NOTEQUAL,RelationType= (int)EnumRelationType.AND }
+            };
+            pag.FilterObjects = lstFilter;
             HttpResponseMessage response = await orderService.Filter(pag);
             if (response != null && response.IsSuccessStatusCode)
             {

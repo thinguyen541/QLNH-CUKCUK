@@ -30,11 +30,11 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style x:Key="TableListViewItemStyle" TargetType="ListViewItem">
-       
+
             <Setter Property="Height" Value="86">
-                
+
             </Setter>
             <Setter Property="Width" Value="86">
 
@@ -63,7 +63,7 @@
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
-          
+
         </Style>
 
         <Style x:Key="TableScreenListViewStyle" TargetType="ListView">
@@ -77,9 +77,9 @@
             <Setter Property="ItemContainerStyle">
                 <Setter.Value>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="Height" Value="86">
+                        <Setter Property="Height" Value="90">
                         </Setter>
-                        <Setter Property="Width" Value="70">
+                        <Setter Property="Width" Value="74">
 
                         </Setter>
                         <Setter Property="Canvas.Left" Value="{Binding CorX}"/>
@@ -87,14 +87,17 @@
                         <Setter Property="ContentTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <Border x:Name="border" BorderBrush="Transparent" BorderThickness="1" Background="Transparent" SnapsToDevicePixels="True" VerticalAlignment="Center" HorizontalAlignment="Center" >
-                                        <StackPanel  Orientation="Vertical" HorizontalAlignment="Center">
-                                            <Image Height="56" Width="56" HorizontalAlignment="Center">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="E:\Documents\git_local\QLNH.GR.Desktop\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\meeting-room.png"/>
-                                                </Image.Source>
+                                    <Border x:Name="border" BorderBrush="Transparent" BorderThickness="1" SnapsToDevicePixels="True" VerticalAlignment="Center" HorizontalAlignment="Center" CornerRadius="4" >
 
-                                            </Image>
+                                        <StackPanel  Orientation="Vertical" HorizontalAlignment="Center" Margin="4">
+                                            <Grid>
+                                                <Label Height="auto" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource NormalLabel}" Content="{Binding ServingTime}"></Label>
+                                                <Image Height="56" Width="56" HorizontalAlignment="Center">
+                                                    <Image.Source>
+                                                        <BitmapImage UriSource="E:\Documents\git_local\QLNH.GR.Desktop\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\meeting-room.png"/>
+                                                    </Image.Source>
+                                                </Image>
+                                            </Grid>
                                             <StackPanel  >
                                                 <Label Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource NormalLabel}" Content="{Binding TableName}"></Label>
                                             </StackPanel>
@@ -105,14 +108,18 @@
                                                     <Trigger Property="IsMouseOver" Value="True">
                                                         <Setter Property="Background" Value="LightGray"/>
                                                     </Trigger>
+
+                                                    <DataTrigger Binding="{Binding IsServing}" Value="True">
+                                                        <Setter Property="Background" Value="LightBlue"/>
+                                                    </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Border.Style>
                                     </Border>
-                                    
+
                                 </DataTemplate>
                             </Setter.Value>
-                            
+
                         </Setter>
                     </Style>
                 </Setter.Value>
@@ -183,7 +190,7 @@
                                 MouseUp="Table_click"
                                 >
                             </ListView>
-                            
+
                         </StackPanel>
                     </Border>
                 </Grid>

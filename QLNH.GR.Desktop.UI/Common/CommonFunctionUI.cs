@@ -15,7 +15,7 @@ namespace QLNH.GR.Desktop.UI.Common
 {
     public class CommonFunctionUI
     {
-        public static void NavigateToPage(AppPage page, AppPage previousPage = AppPage.MainScreen,Dictionary<string, object> arguments = null)
+        public static void NavigateToPage(AppPage page, AppPage previousPage = AppPage.MainScreen, Dictionary<string, object> arguments = null)
         {
             Window window = Application.Current.MainWindow;
             Frame frame = window.FindName("MainFrame") as Frame;
@@ -26,17 +26,17 @@ namespace QLNH.GR.Desktop.UI.Common
                     var homePage = new HomeScreen();
                     homePage.PreviousPage = previousPage;
                     frame.Navigate(homePage);
-                    
+
                     if (arguments != null && arguments.ContainsKey("SomeArgument"))
                     {
-                        
+
                     }
                     frame.Navigate(homePage);
                     break;
-                 
+
                 case AppPage.Login:
                     var loginPage = new Login();
-                  
+
                     frame.Navigate(loginPage);
                     break;
                 case AppPage.LoginBranch:
@@ -44,7 +44,7 @@ namespace QLNH.GR.Desktop.UI.Common
                     frame.Navigate(loginBranchPage);
                     break;
                 case AppPage.Table:
-                    
+
                     var chooseTable = new ChooseTable();
                     chooseTable.PreviousPage = previousPage;
                     frame.Navigate(chooseTable);
@@ -52,10 +52,11 @@ namespace QLNH.GR.Desktop.UI.Common
                 case AppPage.Order:
 
                     var order = new OrderScreen();
-                    if (arguments != null) {
+                    if (arguments != null)
+                    {
                         if (arguments.ContainsKey("IsCreateNewOrder") && order.CurrentOrder == null)
                         {
-                            order.IsCreateNewOrder = true; 
+                            order.IsCreateNewOrder = true;
                         }
                         if (arguments.ContainsKey("TableID") && order.CurrentOrder != null)
                         {
@@ -100,5 +101,13 @@ namespace QLNH.GR.Desktop.UI.Common
         {
             EventManager.RaiseShowToastEvent(null, new ToastEventArgs(message, type));
         }
+
+
+
+        public static void ShowDialog(BaseUserControl dialogInstance)
+        {
+            EventManager.RaiseShowDialogEvent(null, new DialogEventArgs(dialogInstance));
+        }
     }
+
 }

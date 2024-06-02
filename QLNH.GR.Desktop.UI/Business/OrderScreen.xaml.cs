@@ -2,6 +2,7 @@
 using QLNH.GR.Desktop.BO;
 using QLNH.GR.Desktop.BO.Entity;
 using QLNH.GR.Desktop.Common;
+
 using QLNH.GR.Desktop.UI.Common;
 using QLNH.GR.Desktop.UI.Converter;
 using System;
@@ -12,6 +13,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace QLNH.GR.Desktop.UI
 {
@@ -25,6 +27,8 @@ namespace QLNH.GR.Desktop.UI
         public DishService dishService = new DishService();
 
         public DishGroupService dishGroupService = new DishGroupService();
+
+        public FavoriteServiceService fsService = new FavoriteServiceService();
 
         public OrderService orderService = new OrderService();
 
@@ -212,7 +216,7 @@ namespace QLNH.GR.Desktop.UI
             }
         }
 
-        private void lvDish_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private async void lvDish_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             // Find the clicked item
             var originalSource = e.OriginalSource as FrameworkElement;
@@ -221,7 +225,27 @@ namespace QLNH.GR.Desktop.UI
                 var clickedItem = originalSource.DataContext as Dish;
                 if (clickedItem != null)
                 {
-                    AddItemToOrder(clickedItem);
+                    var listfService = await fsService.GetFavoriteServiceByDishID(clickedItem.DishId.GetValueOrDefault());
+                    if (listfService != null && listfService.Any())
+                    {
+                        var dialog = new ModifierDialog();
+                        dialog.DialogTitle = "Select modifiers";
+                        dialog.DialogResultEvent += PopupContent_DialogResult;
+                        dialog.CurrentOrder = CurrentOrder;
+                        dialog.SelectedDish = clickedItem;
+                        dialog.ListFavoriteService = listfService;
+                        CommonFunctionUI.ShowDialog(dialog);
+                        if (dialog.DialogResult)
+                        {
+                            List<FavoriteService> selectedListFavor = dialog.ListFavoriteService.Where(item => item.IsSelected == true).ToList();
+                        }
+                       
+                    }
+                    else
+                    {
+                        AddItemToOrder(clickedItem);
+                    }
+
                 }
             }
         }
@@ -237,7 +261,13 @@ namespace QLNH.GR.Desktop.UI
             detailItem.DishId = dishItem.DishId;
             detailItem.OrderDetailId = orderDetail.OrderDetailId;
             orderDetail.Quantity = 1;
+            detailItem.DetailItemType = EnumDetailItemType.Normal;
             orderDetail.Amount += dishItem.Price.GetValueOrDefault();
+            if(detailItem.Amount == null)
+            {
+                detailItem.Amount += dishItem.Price.GetValueOrDefault();
+            }
+            detailItem.Amount = dishItem.Price;
             detailItem.DishName = dishItem.DishName;
             detailItem.EntityMode = 0;
             orderDetail.EntityMode = 0;
@@ -271,6 +301,10 @@ namespace QLNH.GR.Desktop.UI
                     existOrderDetail.Quantity += 1;
                     existOrderDetail.EntityMode = 1;
                     existOrderDetail.Amount += dishItem.Price.GetValueOrDefault();
+                    foreach (var detail in existOrderDetail.ListDetailItem)
+                    {
+                        detail.Amount += dishItem.Price.GetValueOrDefault();
+                    }
                 }
                 else
                 {
@@ -280,8 +314,6 @@ namespace QLNH.GR.Desktop.UI
             }
             ReloadLoadOrderDetail();
             CalculateOrderAmount();
-
-
         }
 
         private void btnDelete_Dish(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -388,6 +420,10 @@ namespace QLNH.GR.Desktop.UI
             List<object> lstSaveOrder = new List<object>();
             lstSaveOrder.Add(CurrentOrder);
             CurrentOrder.OrderStatus = EnumOrderStatus.Fired;
+            foreach(var detail in CurrentOrder.ListOrderDetail)
+            {
+                detail.OrderDetailStatus = EnumOrderDetailStatus.Send;
+            }
             HttpResponseMessage response = await orderService.SaveAndUpdateData(lstSaveOrder);
             if (response != null && response.IsSuccessStatusCode)
             {
@@ -411,5 +447,15 @@ namespace QLNH.GR.Desktop.UI
             CurrentOrder.RemainAmount = CurrentOrder.Amount;
             txtTotalAmount.Text = convertedValue;
         }
+
+        private void PopupContent_DialogResult(object sender, bool? DialogResult)
+        {
+            if (DialogResult == true)
+            {
+                ReloadLoadOrderDetail();
+                CalculateOrderAmount();
+            }
+        }
+
     }
 }
