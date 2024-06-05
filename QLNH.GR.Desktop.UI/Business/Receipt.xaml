@@ -100,6 +100,10 @@
                         <RowDefinition Height="48"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
                     <Border  x:Name="border" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="0,0,0,1" Background="Transparent" SnapsToDevicePixels="True">
                         <Grid  >
                             <Grid.ColumnDefinitions>
@@ -147,9 +151,15 @@
                               PreviewMouseDown="invoice_click"
                               x:Name="lvInvoiceList"
                               BorderThickness="0"
+                              SelectionChanged="ReceiptsListView_SelectionChanged"
                               ItemContainerStyle="{StaticResource InvoiceistListViewItemStyle}"></ListView>
                     </local:CustomScrollView>
+                    <StackPanel Grid.Column="1" Margin="10" Grid.Row="1">
+                        <WebBrowser Name="PdfWebViewer" Height="504"/>
+                        
+                    </StackPanel>
                 </Grid>
+
             </Border>
         </Grid>
     </Grid>

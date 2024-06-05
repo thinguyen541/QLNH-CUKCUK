@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using QLNH.GR.Desktop.BO;
 using QLNH.GR.Desktop.BO.Entity;
 using QLNH.GR.Desktop.Common;
@@ -90,7 +91,7 @@ namespace QLNH.GR.Desktop.UI
 
         async private Task LoadCurrenOrder()
         {
-            if(PreviousPage == AppPage.PaymentScreen)
+            if (PreviousPage == AppPage.PaymentScreen)
             {
                 PreviousPage = Session.PreviousOrderPage.Value;
                 CurrentOrder = Session.CurrentOrderPayment;
@@ -239,7 +240,7 @@ namespace QLNH.GR.Desktop.UI
                         {
                             List<FavoriteService> selectedListFavor = dialog.ListFavoriteService.Where(item => item.IsSelected == true).ToList();
                         }
-                       
+
                     }
                     else
                     {
@@ -263,7 +264,7 @@ namespace QLNH.GR.Desktop.UI
             orderDetail.Quantity = 1;
             detailItem.DetailItemType = EnumDetailItemType.Normal;
             orderDetail.Amount += dishItem.Price.GetValueOrDefault();
-            if(detailItem.Amount == null)
+            if (detailItem.Amount == null)
             {
                 detailItem.Amount += dishItem.Price.GetValueOrDefault();
             }
@@ -412,7 +413,7 @@ namespace QLNH.GR.Desktop.UI
             {
                 CommonFunctionUI.ShowToast("Order have at least one item.", type: ToastType.Warning);
             }
-          
+
         }
 
         public async Task ProcessFireAndSave()
@@ -420,7 +421,16 @@ namespace QLNH.GR.Desktop.UI
             List<object> lstSaveOrder = new List<object>();
             lstSaveOrder.Add(CurrentOrder);
             CurrentOrder.OrderStatus = EnumOrderStatus.Fired;
-            foreach(var detail in CurrentOrder.ListOrderDetail)
+            SaveFileDialog oDlg = new SaveFileDialog();
+            oDlg.Filter = "Pdf files (*.pdf)|*.pdf";
+            if (true == oDlg.ShowDialog())
+            {
+                string oSelectedFile = "";
+                oSelectedFile = oDlg.FileName;
+                // Do whatever you want with oSelectedFile
+                Printer.PrintSendKitchen(CurrentOrder, oSelectedFile);
+            }
+            foreach (var detail in CurrentOrder.ListOrderDetail)
             {
                 detail.OrderDetailStatus = EnumOrderDetailStatus.Send;
             }
@@ -429,6 +439,12 @@ namespace QLNH.GR.Desktop.UI
             {
                 CommonFunctionUI.ShowToast("Fire successfully.");
                 CommonFunctionUI.NavigateToPage(AppPage.MainScreen, previousPage: AppPage.Order);
+               
+            }
+
+            else
+            {
+                CommonFunctionUI.ShowToast("Error occur.");
             }
         }
 
@@ -441,7 +457,7 @@ namespace QLNH.GR.Desktop.UI
             else
             {
                 CurrentOrder.Amount = 0;
-               
+
             }
             string convertedValue = (string)_decimalconverter.Convert(CurrentOrder.Amount, typeof(string), null, CultureInfo.InvariantCulture);
             CurrentOrder.RemainAmount = CurrentOrder.Amount;

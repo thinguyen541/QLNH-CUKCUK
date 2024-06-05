@@ -111,5 +111,17 @@ namespace QLNH.GR.Desktop.BO.Entity
         /// </summary>
         [MaxLength(255)]
         public List<FavoriteServiceDish>? FavoriteServiceDishListDto { get; set; }
+
+        public string ImageSource
+        {
+            get
+            {
+                if (PictureId != null && PictureId != Guid.Empty) { return $"https://localhost:44389/api/v1/Picture/getImage/{PictureId}"; }
+                else
+                {
+                    return "E:\\Documents\\git_local\\QLNH.GR.Desktop\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\dish.png";
+                }
+            }
+        }
     }
 }

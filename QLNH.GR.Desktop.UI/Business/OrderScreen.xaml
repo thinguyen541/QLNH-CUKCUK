@@ -406,7 +406,7 @@
                                         <DataTemplate>
                                             <Border Margin="2" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="1" Padding="4" Cursor="Hand" >
                                                 <StackPanel Orientation="Vertical" Margin="2" >
-                                                    <Image Source="E:\Documents\git_local\QLNH.GR.Desktop\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\dish.png"
+                                                    <Image Source="{Binding ImageSource}"
                                             Width="78" Height="78"/>
                                                     <TextBlock Text="{Binding DishName}" Margin="0,4,0,0" MaxWidth="78" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" TextAlignment="Center"/>
                                                 </StackPanel>

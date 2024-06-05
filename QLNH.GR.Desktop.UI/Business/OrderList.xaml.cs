@@ -1,4 +1,5 @@
-﻿using AssignmentGPBL.Domain.Object;
+﻿using iTextSharp.text.pdf;
+using iTextSharp.text;
 using Newtonsoft.Json.Linq;
 using QLNH.GR.Desktop.BO;
 using QLNH.GR.Desktop.BO.Entity;
@@ -6,6 +7,7 @@ using QLNH.GR.Desktop.Common;
 using QLNH.GR.Desktop.UI.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -34,6 +36,11 @@ namespace QLNH.GR.Desktop.UI
         public OrderDetailService orderDetailService = new OrderDetailService();
 
         public DetailItemService detailItemService = new DetailItemService();
+        public Order CurrentOrder { get; set; }
+
+        public FavoriteServiceService fsService = new FavoriteServiceService();
+
+
         public OrderList()
         {
             InitializeComponent();
@@ -105,5 +112,7 @@ namespace QLNH.GR.Desktop.UI
                 }
             }
         }
+
     }
 }
+
