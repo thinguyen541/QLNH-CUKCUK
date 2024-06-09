@@ -24,6 +24,7 @@ namespace QLNH.GR.Desktop.UI
     {
         public Order CurrentOrder { get; set; }
 
+        public List<Promotion> ListPromtion { get; set; } = new List<Promotion>();
 
         public CoverOrderService coverOrderService = new CoverOrderService();
 
@@ -38,6 +39,7 @@ namespace QLNH.GR.Desktop.UI
         public DetailItemService detailItemService = new DetailItemService();
 
         public OrderService rrderService = new OrderService();
+        public PromotionService promotionService = new PromotionService();
 
 
         // Register the dependency property
@@ -104,6 +106,7 @@ namespace QLNH.GR.Desktop.UI
         {
             await LoadCurrenOrder();
             await LoadOrderDetail();
+            await LoadPromotion();
             LoadListCard();
             CalculateAmountToPay();
 
@@ -115,6 +118,82 @@ namespace QLNH.GR.Desktop.UI
             //load orderDetail
             lvOrderDetail.ItemsSource = CurrentOrder?.ListOrderDetail?.Where(item => item.EntityMode != 2);
         }
+
+        async private Task LoadPromotion()
+        {
+            var pag = new PaginationObject() { PageSize = 100, RecentPage = 1 };
+            List<SortObject> lstsort = new List<SortObject>() {
+            new SortObject() { Property = "createdDate", SortBy = 0 }
+            };
+
+            pag.SortObjects = lstsort;
+            HttpResponseMessage response = await promotionService.Filter(pag);
+            if (response != null && response.IsSuccessStatusCode)
+            {
+                // Read the response content as a string
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                // Deserialize the response body to the specified type
+                PagingHttpResponse result = Newtonsoft.Json.JsonConvert.DeserializeObject<PagingHttpResponse>(responseBody);
+                if (result != null)
+                {
+                    var lstPro = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Promotion>>(result.Data.ToString());
+                    if (lstPro != null)
+                    {
+                        foreach (var promotion in lstPro)
+                        {
+                            if (CheckValidPromotion(promotion))
+                            {
+                                ListPromtion.Add(promotion);
+                                foreach (var promo in ListPromtion)
+                                {
+                                    if(promo.PromotionId == CurrentOrder.PromotionId){
+                                        promo.IsSelected = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            CalculateOrderAmount();
+        }
+
+        public bool CheckValidPromotion(Promotion promotion)
+        {
+            var result = false;
+            if ((promotion.StartTime !=  null && promotion.StartTime > DateTime.Now) || (promotion.EndTime != null && promotion.EndTime< DateTime.Now))
+            {
+                return false;
+            }
+            if (promotion != null)
+            {
+                if (promotion.AmountConditionType == EnumAmountConditionType.GreaterThan)
+                {
+                    if (CurrentOrder.Amount >= promotion.AmountCondition || promotion.AmountCondition == null)
+                    {
+                        return true;
+                    }
+                }
+                else if (promotion.AmountConditionType == EnumAmountConditionType.LessThan)
+                {
+                    if (CurrentOrder.Amount <= promotion.AmountCondition || promotion.AmountCondition == null)
+                    {
+                        return true;
+                    }
+                }
+                else if (promotion.AmountConditionType == EnumAmountConditionType.Equal)
+                {
+                    if (CurrentOrder.Amount == promotion.AmountCondition || promotion.AmountCondition == null)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return result;
+        }
+
 
         async private Task ReloadLoadOrderDetail()
         {
@@ -306,7 +385,7 @@ namespace QLNH.GR.Desktop.UI
 
         public async Task<bool> BuidInvoice()
         {
-            if (SelectedSuggestMoney.Amount == CurrentOrder.Amount)
+            if (SelectedSuggestMoney.Amount == CurrentOrder.RemainAmount)
             {
                 CurrentOrder.PaymentStatus = EnumPaymentStatus.PaidAll;
                 CurrentOrder.OrderStatus = EnumOrderStatus.Done;
@@ -337,6 +416,10 @@ namespace QLNH.GR.Desktop.UI
                 invoice.OrderType = CurrentOrder.OrderType;
                 invoice.TableID = CurrentOrder.TableID;
                 invoice.TableName = CurrentOrder.TableName;
+                invoice.PromotionName = CurrentOrder.PromotionName;
+                invoice.PromotionAmount = CurrentOrder.PromotionAmount;
+                
+
 
 
 
@@ -364,6 +447,16 @@ namespace QLNH.GR.Desktop.UI
             }
             string convertedValue = (string)_decimalconverter.Convert(CurrentOrder.Amount, typeof(string), null, CultureInfo.InvariantCulture);
             txtTotalAmount.Text = convertedValue;
+            var oldPromotion = CurrentOrder.ListOrderDetail.FirstOrDefault(item => item.OrderDetailType == EnumOrderDetailType.Promotion);
+            if (oldPromotion != null)
+            {
+                gdTotalDiscount.Visibility = Visibility.Visible;
+                txtTotalDiscount.Text = (string)_decimalconverter.Convert(oldPromotion.Amount, typeof(string), null, CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                gdTotalDiscount.Visibility = Visibility.Collapsed;
+            }
         }
         private void card_click(object sender, MouseButtonEventArgs e)
         {
@@ -435,6 +528,11 @@ namespace QLNH.GR.Desktop.UI
             if (CurrentOrder != null)
             {
                 AmountToPay = CurrentOrder.RemainAmount.GetValueOrDefault();
+                var oldPromotion = CurrentOrder.ListOrderDetail.FirstOrDefault(item => item.OrderDetailType == EnumOrderDetailType.Promotion);
+                if (oldPromotion != null)
+                {
+                    txtTotalDiscount.Text = (string)_decimalconverter.Convert(oldPromotion.Amount, typeof(string), null, CultureInfo.InvariantCulture);
+                }
             }
         }
 
@@ -444,6 +542,27 @@ namespace QLNH.GR.Desktop.UI
             {
                 ChoosePaymentAmount = SelectedSuggestMoney.Amount.GetValueOrDefault();
             }
+        }
+
+        private void btnPromotion_click(object sender, MouseButtonEventArgs e)
+        {
+            var dialog = new PromotionDialog();
+            dialog.ListPromtion = ListPromtion;
+            dialog.DialogTitle = "Promotions";
+            dialog.DialogResultEvent += PopupContent_DialogResult;
+            dialog.CurrentOrder = CurrentOrder;
+            CommonFunctionUI.ShowDialog(dialog);
+            if (dialog.DialogResult)
+            {
+            
+            }
+        }
+
+        private void PopupContent_DialogResult(object? sender, bool? e)
+        {
+            CalculateAmountToPay();
+            CalculateOrderAmount();
+            BuidListSuggestMoney();
         }
     }
 }

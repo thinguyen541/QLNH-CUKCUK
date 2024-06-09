@@ -19,6 +19,11 @@ namespace QLNH.GR.Desktop.BO
         public EnumOrderType? OrderType { get; set; }
 
         public Guid? EmployeeId { get; set; }
+        public Guid? PromotionId { get; set; }
+        public string? PromotionName { get; set; }
+
+
+        public decimal? PromotionAmount { get; set; }
 
         public string? EmployeeName { get; set; }
 

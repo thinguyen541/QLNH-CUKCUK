@@ -17,7 +17,8 @@ namespace QLNH.GR.Desktop.Common
             {
                 PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(outputFilePath, FileMode.Create));
                 document.Open();
-
+                // Step 4: Create a base font that supports Unicode
+                Font font = FontFactory.GetFont("Arial", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
                 // Add Store Information
                 document.Add(new Paragraph(storeName, FontFactory.GetFont("Arial", 18, Font.BOLD)));
                 document.Add(new Paragraph(storeAddress));
@@ -39,19 +40,20 @@ namespace QLNH.GR.Desktop.Common
                     foreach (var detail in item.ListNormalDetailItem)
                     {
 
-                        table.AddCell(detail.DishName);
-                        PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString())) { HorizontalAlignment = Element.ALIGN_CENTER };
+                        PdfPCell itemnameCell = new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_LEFT, };
+                        table.AddCell(itemnameCell);
+                        PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER, };
                         table.AddCell(quantityCell);
-                        PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"))) { HorizontalAlignment = Element.ALIGN_RIGHT };
+                        PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"), font)) { HorizontalAlignment = Element.ALIGN_RIGHT };
                         table.AddCell(amountCell);
                     }
                     foreach (var detail in item.ListModifierDetailItem)
                     {
-                        PdfPCell nameCell = new PdfPCell(new Phrase(detail.DishName)) { HorizontalAlignment = Element.ALIGN_CENTER, Indent = 12 };
+                        PdfPCell nameCell = new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_CENTER, Indent = 12 };
                         table.AddCell(nameCell);
-                        PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString())) { HorizontalAlignment = Element.ALIGN_CENTER };
+                        PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER };
                         table.AddCell(quantityCell);
-                        PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"))) { HorizontalAlignment = Element.ALIGN_RIGHT };
+                        PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"), font)) { HorizontalAlignment = Element.ALIGN_RIGHT };
                         table.AddCell(amountCell);
                     }
 
@@ -89,6 +91,8 @@ namespace QLNH.GR.Desktop.Common
                 // Create a new PDF document
                 float width = 5 * 72; // 5 inches
                 float height = 7 * 72; // 7 inches
+          
+             
                 iTextSharp.text.Rectangle customPageSize = new iTextSharp.text.Rectangle(width, height);
                 using (Document document = new Document(customPageSize))
                 {
@@ -98,6 +102,9 @@ namespace QLNH.GR.Desktop.Common
 
                         try
                         {
+
+                            // Step 4: Create a base font that supports Unicode
+                            Font font = FontFactory.GetFont("Arial", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
                             if (CurrentOrder.ListOrderDetail == null)
                             {
                                 return;
@@ -112,9 +119,9 @@ namespace QLNH.GR.Desktop.Common
 
                             // Add Items
                             PdfPTable table = new PdfPTable(3);
-                            PdfPCell cel11 = new PdfPCell(new iTextSharp.text.Phrase("Item name")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
+                            PdfPCell cel11 = new PdfPCell(new iTextSharp.text.Phrase("Item name")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER  };
                             table.AddCell(cel11);
-                            PdfPCell cel12 = new PdfPCell(new iTextSharp.text.Phrase("Quantity")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER, };
+                            PdfPCell cel12 = new PdfPCell(new iTextSharp.text.Phrase("Quantity")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER};
                             table.AddCell(cel12);
                             PdfPCell cel13 = new PdfPCell(new iTextSharp.text.Phrase("Total price")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
                             table.AddCell(cel13);
@@ -124,19 +131,20 @@ namespace QLNH.GR.Desktop.Common
                                 foreach (var detail in item.ListNormalDetailItem)
                                 {
 
-                                    table.AddCell(detail.DishName);
-                                    PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString())) { HorizontalAlignment = Element.ALIGN_CENTER };
+                                    PdfPCell itemnameCell = new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_LEFT, };
+                                    table.AddCell(itemnameCell);
+                                    PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER, };
                                     table.AddCell(quantityCell);
-                                    PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"))) { HorizontalAlignment = Element.ALIGN_RIGHT };
+                                    PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"), font)) { HorizontalAlignment = Element.ALIGN_RIGHT };
                                     table.AddCell(amountCell);
                                 }
                                 foreach (var detail in item.ListModifierDetailItem)
                                 {
-                                    PdfPCell nameCell = new PdfPCell(new Phrase(detail.DishName)) { HorizontalAlignment = Element.ALIGN_CENTER, Indent = 12 };
+                                    PdfPCell nameCell = new PdfPCell(new Phrase(detail.DishName,font)) { HorizontalAlignment = Element.ALIGN_CENTER, Indent = 12 };
                                     table.AddCell(nameCell);
-                                    PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString())) { HorizontalAlignment = Element.ALIGN_CENTER };
+                                    PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(),font)) { HorizontalAlignment = Element.ALIGN_CENTER };
                                     table.AddCell(quantityCell);
-                                    PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"))) { HorizontalAlignment = Element.ALIGN_RIGHT };
+                                    PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"),font)) { HorizontalAlignment = Element.ALIGN_RIGHT };
                                     table.AddCell(amountCell);
                                 }
 

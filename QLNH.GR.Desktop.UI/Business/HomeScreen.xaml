@@ -82,7 +82,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Width="88" Height="86" Margin="10" x:Name="border" BorderThickness="0"  MouseDown="FetureApp_click">
+                                    <Border Width="88" Height="90" Margin="10" x:Name="border" BorderThickness="0"  MouseDown="FetureApp_click">
                                         <StackPanel Orientation="Vertical" >
                                             <Image Source="{Binding IconName, Converter={StaticResource IconConverter}}" Width="48" Height="48"/>
                                             <TextBlock HorizontalAlignment="Center" Text="{Binding FeatureName}" Padding="0,24,0,0" Style="{StaticResource FeatureAppTextBlock}"/>

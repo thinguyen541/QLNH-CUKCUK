@@ -16,7 +16,7 @@
                         <Border Height="48" x:Name="border" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="0,0,0,1" Background="Transparent" SnapsToDevicePixels="True">
                             <Grid >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="240"></ColumnDefinition>
+                                    <ColumnDefinition Width="260"></ColumnDefinition>
                                     <ColumnDefinition Width="120"></ColumnDefinition>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -108,7 +108,7 @@
                     <Border  x:Name="border" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="0,0,0,1" Background="Transparent" SnapsToDevicePixels="True">
                         <Grid  >
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="240"></ColumnDefinition>
+                                <ColumnDefinition Width="260"></ColumnDefinition>
                                 <ColumnDefinition Width="120"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>

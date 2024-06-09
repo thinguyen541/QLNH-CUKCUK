@@ -243,7 +243,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="56"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="56"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
                             <!--header detail order-->
                             <Border VerticalAlignment="Stretch"
@@ -270,21 +270,42 @@
                             <!--action order detail-->
                             <Grid Grid.Row="2">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="56"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
 
                                 </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0" x:Name="gdTotalDiscount" Visibility="Collapsed">
+                                    <TextBlock 
+                                    x:Name="tbTotalDiscount"
+                                    Text="Total discount"
+                                    Style="{StaticResource HeaderTextBlock}"
+                                    FontSize="16"
+                                    TextAlignment="Left"
+                                    Padding="16"
+                                    ></TextBlock>
+                                    <TextBlock 
+                                    Grid.Column="1"
+                                    x:Name="txtTotalDiscount"
+                                    Style="{StaticResource HeaderTextBlock}"
+                                    TextAlignment="Right"
+                                    Padding="16"
+                                    Text="0.00"  
+                                    FontSize="16"
+                                    ></TextBlock>
+                                </Grid>
                                 <TextBlock 
                                     Text="Total"
+                                    Grid.Row="1"
                                     Style="{StaticResource HeaderTextBlock}"
                                     FontSize="16"
                                     TextAlignment="Left"
                                     Padding="16"
                                     ></TextBlock>
                                 <TextBlock 
+                                    Grid.Row="1"
                                     Grid.Column="1"
                                     x:Name="txtTotalAmount"
                                     Style="{StaticResource HeaderTextBlock}"
@@ -297,11 +318,13 @@
                             </Grid>
                         </Grid>
                     </Border>
+                    <!--method-->
                     <Border Grid.Column="1" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="0,0,1,0" >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="56"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="68"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Label Content="Payment methods"
                                    Style="{StaticResource HeaderLabel}"></Label>
@@ -313,6 +336,12 @@
                                 BorderThickness="0"
                                 Loaded="lvCard_Loaded"
                                 ItemContainerStyle="{StaticResource CardListViewItemStyle}"></ListView>
+                            <Button Grid.Row="2" Width="220" Height="48" Background="blue" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BaseButton}" Padding="0" PreviewMouseUp="btnPromotion_click">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                    <Image  Source="E:\Documents\git_local\QLNH.GR.Desktop\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\promotions2.png" Width="28" Height="28" Margin="-19,0,5,0" HorizontalAlignment="Left" />
+                                    <TextBlock Text="Add promotion" Foreground="white" VerticalAlignment="Center" Margin="5" FontSize="16" Style="{StaticResource HeaderTextBlock}"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </Border>
                     <!--payment main-->

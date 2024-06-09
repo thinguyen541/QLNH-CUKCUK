@@ -60,5 +60,12 @@ namespace QLNH.GR.Desktop.BO
             }
         }
 
+        public EnumOrderDetailType OrderDetailType { get; set; } = EnumOrderDetailType.Normal;
+
+        public bool IsDisplay { get
+            {
+                return OrderDetailType == EnumOrderDetailType.Normal || OrderDetailType == EnumOrderDetailType.Modifier || OrderDetailType == EnumOrderDetailType.Combo;
+            } }
+
     }
 }

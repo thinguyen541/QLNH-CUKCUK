@@ -115,5 +115,27 @@ namespace QLNH.GR.Desktop.BO
         Promotion
     }
 
-   
+    public enum EnumOrderDetailType
+    {
+        Normal,
+        Group,
+        Modifier,
+        Combo,
+        Promotion
+    }
+
+    public enum EnumPromotionValueType
+    {
+       Amount,
+       Percentage
+    }
+
+    public enum EnumAmountConditionType
+    {
+        GreaterThan,
+        LessThan,
+        Equal
+    }
+
+
 }

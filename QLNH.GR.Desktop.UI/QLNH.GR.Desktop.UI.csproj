@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FileRerource\Resources\Icon\promotions.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Aspose.PDF" Version="24.5.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
@@ -17,6 +21,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QLNH.GR.Desktop.Common\QLNH.GR.Desktop.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="FileRerource\Resources\Icon\promotions.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
