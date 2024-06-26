@@ -9,7 +9,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FileRerource\Resources\Icon\add.png" />
+    <None Remove="FileRerource\Resources\Icon\atm-card.png" />
+    <None Remove="FileRerource\Resources\Icon\close.png" />
+    <None Remove="FileRerource\Resources\Icon\Cooking.png" />
+    <None Remove="FileRerource\Resources\Icon\Cooking2.png" />
+    <None Remove="FileRerource\Resources\Icon\credit-card.png" />
+    <None Remove="FileRerource\Resources\Icon\Delivery.png" />
+    <None Remove="FileRerource\Resources\Icon\DineIn.png" />
+    <None Remove="FileRerource\Resources\Icon\dish.png" />
+    <None Remove="FileRerource\Resources\Icon\download.svg" />
+    <None Remove="FileRerource\Resources\Icon\employee.png" />
+    <None Remove="FileRerource\Resources\Icon\left-arrow.png" />
+    <None Remove="FileRerource\Resources\Icon\meeting-room.png" />
+    <None Remove="FileRerource\Resources\Icon\Menu.png" />
+    <None Remove="FileRerource\Resources\Icon\money.png" />
+    <None Remove="FileRerource\Resources\Icon\Orders.png" />
+    <None Remove="FileRerource\Resources\Icon\power-off.png" />
     <None Remove="FileRerource\Resources\Icon\promotions.png" />
+    <None Remove="FileRerource\Resources\Icon\promotions2.png" />
+    <None Remove="FileRerource\Resources\Icon\Reciept.png" />
+    <None Remove="FileRerource\Resources\Icon\right-arrow.png" />
+    <None Remove="FileRerource\Resources\Icon\table.png" />
+    <None Remove="FileRerource\Resources\Icon\take-away.png" />
+    <None Remove="FileRerource\Resources\Icon\to-go.png" />
+    <None Remove="FileRerource\Resources\Icon\Transaction.png" />
+    <None Remove="FileRerource\Resources\Icon\Vemmo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,9 +49,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="FileRerource\Resources\Icon\add.png" />
+    <Resource Include="FileRerource\Resources\Icon\atm-card.png" />
+    <Resource Include="FileRerource\Resources\Icon\close.png" />
+    <Resource Include="FileRerource\Resources\Icon\Cooking.png" />
+    <Resource Include="FileRerource\Resources\Icon\Cooking2.png" />
+    <Resource Include="FileRerource\Resources\Icon\credit-card.png" />
+    <Resource Include="FileRerource\Resources\Icon\Delivery.png" />
+    <Resource Include="FileRerource\Resources\Icon\DineIn.png" />
+    <Resource Include="FileRerource\Resources\Icon\dish.png" />
+    <Resource Include="FileRerource\Resources\Icon\download.svg" />
+    <Resource Include="FileRerource\Resources\Icon\employee.png" />
+    <Resource Include="FileRerource\Resources\Icon\left-arrow.png" />
+    <Resource Include="FileRerource\Resources\Icon\meeting-room.png" />
+    <Resource Include="FileRerource\Resources\Icon\Menu.png" />
+    <Resource Include="FileRerource\Resources\Icon\money.png" />
+    <Resource Include="FileRerource\Resources\Icon\Orders.png" />
+    <Resource Include="FileRerource\Resources\Icon\power-off.png" />
     <Resource Include="FileRerource\Resources\Icon\promotions.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="FileRerource\Resources\Icon\promotions2.png" />
+    <Resource Include="FileRerource\Resources\Icon\Reciept.png" />
+    <Resource Include="FileRerource\Resources\Icon\right-arrow.png" />
+    <Resource Include="FileRerource\Resources\Icon\table.png" />
+    <Resource Include="FileRerource\Resources\Icon\take-away.png" />
+    <Resource Include="FileRerource\Resources\Icon\to-go.png" />
+    <Resource Include="FileRerource\Resources\Icon\Transaction.png" />
+    <Resource Include="FileRerource\Resources\Icon\Vemmo.png" />
   </ItemGroup>
 
 </Project>

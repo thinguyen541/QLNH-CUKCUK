@@ -117,7 +117,7 @@ namespace QLNH.GR.Desktop.UI.Converter
             if (value is string iconName)
             {
                 // Construct the path to the PNG file based on the iconName
-                return $"E:/Documents/git_local/QLNH.GR.Desktop/QLNH.GR.Desktop.UI/FileRerource/Resources/Icon/{iconName}.png";
+                return $"pack://application:,,,/FileRerource/Resources/Icon/{iconName}.png";
 
                 // Load the PNG file as a BitmapImage
 

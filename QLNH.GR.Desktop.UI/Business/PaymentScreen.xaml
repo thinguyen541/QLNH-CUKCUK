@@ -270,42 +270,82 @@
                             <!--action order detail-->
                             <Grid Grid.Row="2">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
 
                                 </Grid.ColumnDefinitions>
-                                <Grid Grid.Row="0" x:Name="gdTotalDiscount" Visibility="Collapsed">
+                                <Grid Grid.Row="0" x:Name="gdSubtotal">
+                                    <TextBlock 
+                                    x:Name="tbSubtotal"
+                                    Text="Subtotal"
+                                    Style="{StaticResource HeaderTextBlock}"
+                                    FontSize="16"
+                                    TextAlignment="Left"
+                                    Padding="16 8 16 8"
+                                    ></TextBlock>
+                                    <TextBlock 
+                                    Grid.Column="1"
+                                    x:Name="txtSubtotal"
+                                    Style="{StaticResource HeaderTextBlock}"
+                                    TextAlignment="Right"
+                                    Padding="16 8 16 8"
+                                    Text="0.00"  
+                                    FontSize="16"
+                                    ></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="1" x:Name="gdTipAmount" Visibility="Collapsed">
+                                    <TextBlock 
+                                    x:Name="tbTipAmount"
+                                    Text="Tip Amount"
+                                    Style="{StaticResource HeaderTextBlock}"
+                                    FontSize="16"
+                                    TextAlignment="Left"
+                                    Padding="16 8 16 8"
+                                    ></TextBlock>
+                                    <TextBlock 
+                                    Grid.Column="1"
+                                    x:Name="txtTipAmount"
+                                    Style="{StaticResource HeaderTextBlock}"
+                                    TextAlignment="Right"
+                                    Padding="16 8 16 8"
+                                    Text="0.00"  
+                                    FontSize="16"
+                                    ></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="2" x:Name="gdTotalDiscount" Visibility="Collapsed">
                                     <TextBlock 
                                     x:Name="tbTotalDiscount"
                                     Text="Total discount"
                                     Style="{StaticResource HeaderTextBlock}"
                                     FontSize="16"
                                     TextAlignment="Left"
-                                    Padding="16"
+                                    Padding="16 8 16 8"
                                     ></TextBlock>
                                     <TextBlock 
-                                    Grid.Column="1"
+                                    Grid.Column="2"
                                     x:Name="txtTotalDiscount"
                                     Style="{StaticResource HeaderTextBlock}"
                                     TextAlignment="Right"
-                                    Padding="16"
+                                    Padding="16 8 16 8"
                                     Text="0.00"  
                                     FontSize="16"
                                     ></TextBlock>
                                 </Grid>
                                 <TextBlock 
                                     Text="Total"
-                                    Grid.Row="1"
+                                    Grid.Row="3"
                                     Style="{StaticResource HeaderTextBlock}"
                                     FontSize="16"
                                     TextAlignment="Left"
                                     Padding="16"
                                     ></TextBlock>
                                 <TextBlock 
-                                    Grid.Row="1"
+                                    Grid.Row="3"
                                     Grid.Column="1"
                                     x:Name="txtTotalAmount"
                                     Style="{StaticResource HeaderTextBlock}"
@@ -338,7 +378,7 @@
                                 ItemContainerStyle="{StaticResource CardListViewItemStyle}"></ListView>
                             <Button Grid.Row="2" Width="220" Height="48" Background="blue" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BaseButton}" Padding="0" PreviewMouseUp="btnPromotion_click">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Image  Source="E:\Documents\git_local\QLNH.GR.Desktop\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\promotions2.png" Width="28" Height="28" Margin="-19,0,5,0" HorizontalAlignment="Left" />
+                                    <Image  Source="pack://application:,,,/FileRerource/Resources/Icon/promotions2.png" Width="28" Height="28" Margin="-19,0,5,0" HorizontalAlignment="Left" />
                                     <TextBlock Text="Add promotion" Foreground="white" VerticalAlignment="Center" Margin="5" FontSize="16" Style="{StaticResource HeaderTextBlock}"/>
                                 </StackPanel>
                             </Button>
@@ -349,7 +389,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="56"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="68"></RowDefinition>
+                            <RowDefinition Height="88"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Label Content="Payment amount" 
                                        Style="{StaticResource HeaderLabel}"
@@ -367,9 +407,11 @@
                                     ></Button>
                         <Border Grid.Row="1">
                             <Grid>
-                                <Grid VerticalAlignment="Top" Margin="0,0,0,86">
+                                <Grid VerticalAlignment="Top" Margin="0,0,0,27">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="240"></RowDefinition>
+                                        <RowDefinition Height="140"></RowDefinition>
+                                        <RowDefinition Height="56"></RowDefinition>
+                                        <RowDefinition Height="78"></RowDefinition>
                                         <RowDefinition Height="56"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
@@ -421,6 +463,55 @@
 
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
+
+                                    <Label Content="Add ip"  Grid.Row="3" Margin="96,0,0,0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Left"></Label>
+                                    <ItemsControl
+                                            Padding="96,0,96,16"
+                                            Grid.Row="4"
+                                            x:Name="lvTip" 
+                                            VerticalAlignment="Bottom"
+                                            HorizontalAlignment="Left"
+                                            Height="Auto"
+                                            MouseUp="lvTip_click">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Margin="2" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="1" Padding="4" Cursor="Hand"  Height="56" Width="120">
+
+                                                    <TextBlock x:Name="textBlock" Text="{Binding DisplayText}" FontSize="14" FontWeight="DemiBold" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Background" Value="Transparent"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                                        <Setter Property="Foreground" Value="White"/>
+
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                                    <Setter Property="Background" Value="Blue"/>
+
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                </Border>
+                                            </DataTemplate>
+
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
                                 </Grid>
                             </Grid>
 

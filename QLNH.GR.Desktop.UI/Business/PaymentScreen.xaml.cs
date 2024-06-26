@@ -72,10 +72,12 @@ namespace QLNH.GR.Desktop.UI
         }
         public List<Card> ListCard { get; set; }
         public List<SuggestMoney> ListSuggestMoney { get; set; }
+        public List<SuggestMoney> ListTip { get; set; }
 
         public Card SelectedCard { get; set; }
 
         public SuggestMoney SelectedSuggestMoney { get; set; }
+        public SuggestMoney SelectedTip { get; set; }
         public List<Dish> ListDish { get; set; }
 
         public List<DishGroup> ListDishGroup { get; set; }
@@ -276,6 +278,12 @@ namespace QLNH.GR.Desktop.UI
                     }
                 }
             }
+            if (CurrentOrder != null && CurrentOrder.ListOrderDetail != null)
+            {
+               CurrentOrder.Amount = CurrentOrder.ListOrderDetail.Sum(item => { if (item.EntityMode != 2) return item.Amount; return 0; });
+                string convertedValue = (string)_decimalconverter.Convert(CurrentOrder.Amount, typeof(string), null, CultureInfo.InvariantCulture);
+                txtSubtotal.Text = convertedValue;
+            }
             CalculateOrderAmount();
         }
 
@@ -293,30 +301,19 @@ namespace QLNH.GR.Desktop.UI
             lvCard.ItemsSource = ListCard;
             SelectedCard = listCard.FirstOrDefault();
             BuidListSuggestMoney();
+            BuidListTipMoney();
             lvCard.SelectedIndex = 0;
         }
 
         public void BuidListSuggestMoney()
         {
             var listSuggest = new List<SuggestMoney>();
-            switch (SelectedCard.CardType)
+            switch (SelectedCard?.CardType)
             {
                 
                 case EnumCardType.Cash:
-                    var listMoney = CommonFunction.SuggestPayment(CurrentOrder.RemainAmount.GetValueOrDefault(),5);
-                    foreach (var money in listMoney)
-                    {
-                        if (money == CurrentOrder.RemainAmount.GetValueOrDefault())
-                        {
-                            listSuggest.Add(new SuggestMoney() { Amount = money ,IsSelected=true});
-                        }
-                        else
-                        {
-                            listSuggest.Add(new SuggestMoney() { Amount = money });
-                        }
-                    }
-                   
-                  
+                    listSuggest.Add(new SuggestMoney() { Amount = CurrentOrder?.RemainAmount.GetValueOrDefault(), IsSelected = true });
+
                     break;
                 case EnumCardType.Card:
                     listSuggest.Add(new SuggestMoney() { Amount = CurrentOrder?.RemainAmount.GetValueOrDefault() , IsSelected = true });
@@ -332,8 +329,25 @@ namespace QLNH.GR.Desktop.UI
             lvSuggestMoney.ItemsSource = null;
             SelectedSuggestMoney = ListSuggestMoney.FirstOrDefault();
             CalculateChoosePaymentAmount();
+           
             lvSuggestMoney.ItemsSource = ListSuggestMoney;
         }
+
+        public void BuidListTipMoney()
+        {
+            var lstTip = new List<SuggestMoney>();
+          
+            lstTip.Add(new SuggestMoney() { Amount =0});
+            lstTip.Add(new SuggestMoney() { Amount =CurrentOrder?.RemainAmount.GetValueOrDefault()/100*5});
+            lstTip.Add(new SuggestMoney() { Amount =CurrentOrder?.RemainAmount.GetValueOrDefault()/100*10 });
+            lstTip.Add(new SuggestMoney() { Amount =CurrentOrder?.RemainAmount.GetValueOrDefault()/100*15 });
+            lstTip.Add(new SuggestMoney() { Amount =CurrentOrder?.RemainAmount.GetValueOrDefault()/100*20 });
+            lstTip.Add(new SuggestMoney() { Amount =CurrentOrder?.RemainAmount.GetValueOrDefault()/100*30 });
+            lstTip.Add(new SuggestMoney() { Amount = -1 });
+            ListTip = lstTip;
+            lvTip.ItemsSource = ListTip;
+        }
+
 
 
         private async void btnPay_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -440,22 +454,31 @@ namespace QLNH.GR.Desktop.UI
             if (CurrentOrder != null && CurrentOrder.ListOrderDetail != null)
             {
                 CurrentOrder.Amount = CurrentOrder.ListOrderDetail.Sum(item => { if (item.EntityMode != 2) return item.Amount; return 0; });
-            }
-            else
-            {
 
-            }
-            string convertedValue = (string)_decimalconverter.Convert(CurrentOrder.Amount, typeof(string), null, CultureInfo.InvariantCulture);
-            txtTotalAmount.Text = convertedValue;
-            var oldPromotion = CurrentOrder.ListOrderDetail.FirstOrDefault(item => item.OrderDetailType == EnumOrderDetailType.Promotion);
-            if (oldPromotion != null)
-            {
-                gdTotalDiscount.Visibility = Visibility.Visible;
-                txtTotalDiscount.Text = (string)_decimalconverter.Convert(oldPromotion.Amount, typeof(string), null, CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                gdTotalDiscount.Visibility = Visibility.Collapsed;
+                var oldPromotion = CurrentOrder.ListOrderDetail.FirstOrDefault(item => item.OrderDetailType == EnumOrderDetailType.Promotion);
+                if (oldPromotion != null)
+                {
+                    gdTotalDiscount.Visibility = Visibility.Visible;
+                    txtTotalDiscount.Text = (string)_decimalconverter.Convert(oldPromotion.Amount, typeof(string), null, CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    gdTotalDiscount.Visibility = Visibility.Collapsed;
+                }
+
+                decimal tipAmout = 0;
+                if (SelectedTip != null && SelectedTip.Amount > 0)
+                {
+                    gdTipAmount.Visibility = Visibility.Visible;
+                    tipAmout = SelectedTip.Amount.GetValueOrDefault();
+                    txtTipAmount.Text = (string)_decimalconverter.Convert(SelectedTip.Amount, typeof(string), null, CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    gdTipAmount.Visibility = Visibility.Collapsed;
+                }
+                string convertedValue = (string)_decimalconverter.Convert(CurrentOrder.Amount + tipAmout, typeof(string), null, CultureInfo.InvariantCulture);
+                txtTotalAmount.Text = convertedValue;
             }
         }
         private void card_click(object sender, MouseButtonEventArgs e)
@@ -542,6 +565,10 @@ namespace QLNH.GR.Desktop.UI
             {
                 ChoosePaymentAmount = SelectedSuggestMoney.Amount.GetValueOrDefault();
             }
+            if (SelectedTip != null)
+            {
+                ChoosePaymentAmount = SelectedSuggestMoney.Amount.GetValueOrDefault() + SelectedTip.Amount.GetValueOrDefault();
+            }
         }
 
         private void btnPromotion_click(object sender, MouseButtonEventArgs e)
@@ -563,6 +590,26 @@ namespace QLNH.GR.Desktop.UI
             CalculateAmountToPay();
             CalculateOrderAmount();
             BuidListSuggestMoney();
+        }
+
+        private void lvTip_click(object sender, MouseButtonEventArgs e)
+        {
+            var originalSource = e.OriginalSource as FrameworkElement;
+            if (originalSource != null)
+            {
+                var clickedItem = originalSource.DataContext as SuggestMoney;
+                if (clickedItem != null)
+                {
+                    SelectedTip = clickedItem;
+                    foreach (var item in ListTip)
+                    {
+                        item.IsSelected = false;
+                    }
+                    clickedItem.IsSelected = true;
+                    CalculateChoosePaymentAmount();
+                    CalculateOrderAmount();
+                }
+            }
         }
     }
 }

@@ -145,7 +145,7 @@ namespace QLNH.GR.Desktop.UI
                                 foreach (var deatil in listOrderDetail)
                                 {
                                     var pag1 = new PaginationObject() { PageSize = 1000, RecentPage = 1 };
-                                    pag1.FilterObjects = new List<FilterObject>() { new FilterObject() { Property = "DetailItems.OrderDetailId", Value = deatil?.OrderDetailId.ToString(), PropertyType = 4, Operator = 1, RelationType = 0 } };
+                                    pag1.FilterObjects = new List<FilterObject>() { new FilterObject() { Property = "detailitems.OrderDetailId", Value = deatil?.OrderDetailId.ToString(), PropertyType = 4, Operator = 1, RelationType = 0 } };
                                     HttpResponseMessage detailItemResponse = await detailItemService.Filter(pag1);
                                     if (detailItemResponse != null && detailItemResponse.IsSuccessStatusCode)
                                     {
@@ -351,7 +351,7 @@ namespace QLNH.GR.Desktop.UI
                     var pag = new PaginationObject() { PageSize = 40, RecentPage = 1 };
                     if (clickedItem.DishGroupId != Guid.Empty)
                     {
-                        pag.FilterObjects = new List<FilterObject>() { new FilterObject() { Property = "Dishs.DishGroupId", Value = clickedItem?.DishGroupId.ToString(), PropertyType = 4, Operator = 1, RelationType = 0 } };
+                        pag.FilterObjects = new List<FilterObject>() { new FilterObject() { Property = "dishs.DishGroupId", Value = clickedItem?.DishGroupId.ToString(), PropertyType = 4, Operator = 1, RelationType = 0 } };
                     }
                     HttpResponseMessage response = await dishService.Filter(pag);
                     if (response != null && response.IsSuccessStatusCode)
