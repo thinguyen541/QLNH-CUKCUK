@@ -51,7 +51,7 @@
                             <StackPanel  Orientation="Vertical">
                                 <Image Height="56" Width="56">
                                     <Image.Source>
-                                        <BitmapImage UriSource="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\meeting-room.png"/>
+                                        <BitmapImage UriSource="pack://application:,,,/FileRerource/Resources/Icon/meeting-room.png"/>
                                     </Image.Source>
 
                                 </Image>
@@ -94,7 +94,7 @@
                                                 <Label Height="auto" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource NormalLabel}" Content="{Binding ServingTime}"></Label>
                                                 <Image Height="56" Width="56" HorizontalAlignment="Center">
                                                     <Image.Source>
-                                                        <BitmapImage UriSource="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\meeting-room.png"/>
+                                                        <BitmapImage UriSource="E:\Documents\git_local\QLNH.GR.Desktop\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\meeting-room.png"/>
                                                     </Image.Source>
                                                 </Image>
                                             </Grid>

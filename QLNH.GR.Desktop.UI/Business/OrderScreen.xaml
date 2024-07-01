@@ -199,7 +199,7 @@
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Top">
                                     <Image 
-                                        Source="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\Cooking2.png"  
+                                        Source="pack://application:,,,/FileRerource/Resources/Icon/Cooking2.png"  
                                         Stretch="Uniform"/>
                                 </Button>
                                 <Button Height="20" 
@@ -213,7 +213,7 @@
                                         PreviewMouseUp="btnDelete_Dish"
                                         VerticalAlignment="Top">
                                     <Image 
-                                        Source="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\close.png"  
+                                        Source="E:\Documents\git_local\QLNH.GR.Desktop\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\close.png"  
                                         Stretch="Uniform"/>
                                 </Button>
                             </Grid>

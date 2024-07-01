@@ -54,8 +54,8 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             >
                              <StackPanel>
-
-                            <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\left-arrow.png" Width="28" Height="24" Margin="5,5,5,0">
+                           
+                            <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="pack://application:,,,/FileRerource/Resources/Icon/left-arrow.png" Width="28" Height="24" Margin="5,5,5,0">
                             
                             </Image>
                         </StackPanel>
@@ -80,7 +80,7 @@
                             >
                         <StackPanel>
 
-                            <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\power-off.png">
+                            <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="E:\Documents\git_local\QLNH.GR.Desktop\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\power-off.png">
 
                             </Image>
                         </StackPanel>

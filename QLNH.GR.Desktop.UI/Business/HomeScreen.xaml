@@ -102,20 +102,20 @@
                                 <StackPanel>
                                     <Border Cursor="Hand" x:Name="bdDineIn" Background="CornflowerBlue" Margin="0,0,0,24" Padding="24,16,0,16" CornerRadius="4"  PreviewMouseDown="DineInClick">
                                         <StackPanel Orientation="Horizontal">
-                                            <Image HorizontalAlignment="Left" Source="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\DineIn.png" Width="48" Height="48"/>
-                                            <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="Tại bàn" FontSize="28"  Margin="36,0,0,0"></Label>
+                                            <Image HorizontalAlignment="Left" Source="pack://application:,,,/FileRerource/Resources/Icon/DineIn.png" Width="48" Height="48"/>
+                                            <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="Dine-in" FontSize="28"  Margin="36,0,0,0"></Label>
                                          </StackPanel>
                                     </Border>
                                     <Border x:Name="bdDelivery" Cursor="Hand" Background="Orange" Margin="0,0,0,24" Padding="24,16,0,16"  CornerRadius="4"  PreviewMouseDown="DeliveryClick">
                                         <StackPanel Orientation="Horizontal">
-                                            <Image HorizontalAlignment="Left"  Source="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\Delivery.png" Width="48" Height="48"/>
-                                            <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="Giao hàng" FontSize="28"  Margin="36,0,0,0"></Label>
+                                            <Image HorizontalAlignment="Left"  Source="pack://application:,,,/FileRerource/Resources/Icon/Delivery.png" Width="48" Height="48"/>
+                                            <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="Delivery" FontSize="28"  Margin="36,0,0,0"></Label>
                                         </StackPanel>
                                     </Border>
                                     <Border x:Name="bdToGo" Cursor="Hand" Background="ForestGreen" Margin="0,0,0,24" Padding="24,16,0,16"  CornerRadius="4"  PreviewMouseDown="TogoClick">
                                         <StackPanel Orientation="Horizontal">
-                                            <Image HorizontalAlignment="Left"  Source="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\To-go.png" Width="48" Height="48"/>
-                                            <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="Mang về" FontSize="28"  Margin="36,0,0,0"></Label>
+                                            <Image HorizontalAlignment="Left"  Source="pack://application:,,,/FileRerource/Resources/Icon/To-go.png" Width="48" Height="48"/>
+                                            <Label VerticalAlignment="Center" HorizontalAlignment="Right" Content="To-go" FontSize="28"  Margin="36,0,0,0"></Label>
                                         </StackPanel>
                                     </Border>
                                 </StackPanel>
