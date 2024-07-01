@@ -284,10 +284,10 @@ namespace QLNH.GR.Desktop.UI
         {
             var listCard = new List<Card>
             {
-                new Card() { CardID = Guid.NewGuid(), CardName = "Cash", CardType = EnumCardType.Cash, ImagePath = "E:\\Documents\\git_local\\QLNH.GR.Desktop\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\money.png" },
-                new Card() { CardID = Guid.NewGuid(), CardName = "Card", CardType = EnumCardType.Card, ImagePath = "E:\\Documents\\git_local\\QLNH.GR.Desktop\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\credit-card.png" } ,
-                new Card() { CardID = Guid.NewGuid(), CardName = "Vemmo", CardType = EnumCardType.Vemmo, ImagePath = "E:\\Documents\\git_local\\QLNH.GR.Desktop\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\Vemmo.png" } ,
-                new Card() { CardID = Guid.NewGuid(), CardName = "Other Card", CardType = EnumCardType.OtherCard, ImagePath = "E:\\Documents\\git_local\\QLNH.GR.Desktop\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\atm-card.png" }
+                new Card() { CardID = Guid.NewGuid(), CardName = "Cash", CardType = EnumCardType.Cash, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\money.png" },
+                new Card() { CardID = Guid.NewGuid(), CardName = "Card", CardType = EnumCardType.Card, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\credit-card.png" } ,
+                new Card() { CardID = Guid.NewGuid(), CardName = "Vemmo", CardType = EnumCardType.Vemmo, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\Vemmo.png" } ,
+                new Card() { CardID = Guid.NewGuid(), CardName = "Other Card", CardType = EnumCardType.OtherCard, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\atm-card.png" }
             };
             ListCard = listCard;
             lvCard.ItemsSource = ListCard;
@@ -390,7 +390,7 @@ namespace QLNH.GR.Desktop.UI
                 CurrentOrder.PaymentStatus = EnumPaymentStatus.PaidAll;
                 CurrentOrder.OrderStatus = EnumOrderStatus.Done;
                 List<object> lstSaveOrder = new List<object>();
-                CommonFunctionUI.ShowToast("Payment success.");
+                CommonFunctionUI.ShowToast("Thanh toán thành công");
                 SaveFileDialog oDlg = new SaveFileDialog();
                 oDlg.Filter = "Pdf files (*.pdf)|*.pdf";
                 if (true == oDlg.ShowDialog())

@@ -86,7 +86,7 @@
                     <Label 
                         Style="{StaticResource HeaderLabel}"
                         VerticalAlignment="Center"
-                        Content="Receipt"
+                        Content="Hóa đơn"
                         Height="36"
                            ></Label>
                 </StackPanel>
@@ -114,27 +114,27 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Order no"
+                            <TextBlock Text="Số Order"
                                        Style="{StaticResource HeaderTextBlock}"
                                        FontSize="16"/>
-                            <TextBlock Text="Table"
+                            <TextBlock Text="Bàn"
                                        Grid.Column="1" 
                                        Style="{StaticResource HeaderTextBlock}"
                                        FontSize="16"/>
                             <TextBlock Grid.Column="2"  
-                                       Text="Order type" 
+                                       Text="Loại Order" 
                                         FontSize="16"
                                        Style="{StaticResource HeaderTextBlock}"/>
                             <TextBlock Grid.Column="3"  
-                                       Text="Order time" 
+                                       Text="Thời gian" 
                                         FontSize="16"
                                        Style="{StaticResource HeaderTextBlock}"/>
                             <TextBlock Grid.Column="4"  
-                                       Text="Cashier"
+                                       Text="Thu ngân"
                                         FontSize="16"
                                        Style="{StaticResource HeaderTextBlock}"/>
                             <TextBlock Grid.Column="5" 
-                                       Text="Amount"
+                                       Text="Tổng tiền"
                                         FontSize="16"
                                        Style="{StaticResource HeaderTextBlock}"/>
                         

@@ -98,7 +98,7 @@ namespace QLNH.GR.Desktop.UI
 
         private bool IsCacheData()
         {
-            var cacheLoginData = JsonFileManager.ReadFromJson<LoginResponse>("E:\\Documents\\git_local\\QLNH.GR.Desktop\\QLNH.GR.Desktop.UI\\FileRerource\\account.json");
+            var cacheLoginData = JsonFileManager.ReadFromJson<LoginResponse>("C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\account.json");
             if(cacheLoginData != null && !string.IsNullOrEmpty(cacheLoginData.token))
             {
                 Session.UserID = cacheLoginData.user?.EmployeeId;

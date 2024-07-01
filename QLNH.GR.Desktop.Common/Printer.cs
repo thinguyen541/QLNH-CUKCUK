@@ -22,17 +22,17 @@ namespace QLNH.GR.Desktop.Common
                 // Add Store Information
                 document.Add(new Paragraph(storeName, FontFactory.GetFont("Arial", 18, Font.BOLD)));
                 document.Add(new Paragraph(storeAddress));
-                document.Add(new Paragraph($"Cashier: {invoice.UserName}"));
-                document.Add(new Paragraph($"Print at: {DateTime.Now.ToString()}"));
+                document.Add(new Paragraph($"Hóa đơn: {invoice.UserName}"));
+                document.Add(new Paragraph($"In tại: {DateTime.Now.ToString()}"));
                 document.Add(new Paragraph(" ")); // Add a blank line
 
                 // Add Items
                 PdfPTable table = new PdfPTable(3);
-                PdfPCell cel11 = new PdfPCell(new iTextSharp.text.Phrase("Item name")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
+                PdfPCell cel11 = new PdfPCell(new iTextSharp.text.Phrase("Tên món")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
                 table.AddCell(cel11);
-                PdfPCell cel12 = new PdfPCell(new iTextSharp.text.Phrase("Quantity")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER, };
+                PdfPCell cel12 = new PdfPCell(new iTextSharp.text.Phrase("Số lượng")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER, };
                 table.AddCell(cel12);
-                PdfPCell cel13 = new PdfPCell(new iTextSharp.text.Phrase("Total price")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
+                PdfPCell cel13 = new PdfPCell(new iTextSharp.text.Phrase("Giá tiền")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
                 table.AddCell(cel13);
 
                 foreach (var item in items)
@@ -63,9 +63,9 @@ namespace QLNH.GR.Desktop.Common
 
                 // Add Total Amount
                 document.Add(new Paragraph(" "));
-                document.Add(new Paragraph("Total Amount: " + CurrentOrder.Amount.GetValueOrDefault().ToString("C"), FontFactory.GetFont("Arial", 14, Font.BOLD)));
+                document.Add(new Paragraph("Tổng tiền: " + CurrentOrder.Amount.GetValueOrDefault().ToString("C"), FontFactory.GetFont("Arial", 14, Font.BOLD)));
 
-                document.Add(new Paragraph("Thank you for dining with us!", FontFactory.GetFont("Arial", 12, Font.ITALIC)));
+                document.Add(new Paragraph("Cảm ơn đã dùng bữa tại cửa hàng!", FontFactory.GetFont("Arial", 12, Font.ITALIC)));
             }
             catch (DocumentException docEx)
             {
@@ -80,7 +80,7 @@ namespace QLNH.GR.Desktop.Common
                 document.Close();
             }
 
-            Console.WriteLine("Receipt PDF created successfully!");
+            Console.WriteLine("Tạo thành công hóa đơn pdf!");
         }
 
         public static void PrintSendKitchen(Order CurrentOrder, string outputFilePath)
@@ -113,17 +113,17 @@ namespace QLNH.GR.Desktop.Common
                             document.Open();
 
                             // Add Store Information
-                            document.Add(new Paragraph("Send kitchen tampt", FontFactory.GetFont("Arial", 18, Font.BOLD)));
-                            document.Add(new Paragraph($"Print at: {DateTime.Now.ToString()}"));
+                            document.Add(new Paragraph("Gửi bếp", FontFactory.GetFont("Arial", 18, Font.BOLD)));
+                            document.Add(new Paragraph($"In tại: {DateTime.Now.ToString()}"));
                             document.Add(new Paragraph(" ")); // Add a blank line
 
                             // Add Items
                             PdfPTable table = new PdfPTable(3);
-                            PdfPCell cel11 = new PdfPCell(new iTextSharp.text.Phrase("Item name")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER  };
+                            PdfPCell cel11 = new PdfPCell(new iTextSharp.text.Phrase("Tên món")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER  };
                             table.AddCell(cel11);
-                            PdfPCell cel12 = new PdfPCell(new iTextSharp.text.Phrase("Quantity")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER};
+                            PdfPCell cel12 = new PdfPCell(new iTextSharp.text.Phrase("Số lượng")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER};
                             table.AddCell(cel12);
-                            PdfPCell cel13 = new PdfPCell(new iTextSharp.text.Phrase("Total price")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
+                            PdfPCell cel13 = new PdfPCell(new iTextSharp.text.Phrase("Số tiền")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
                             table.AddCell(cel13);
 
                             foreach (var item in items)

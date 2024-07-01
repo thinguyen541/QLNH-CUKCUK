@@ -224,7 +224,7 @@
                     <Label 
                         Style="{StaticResource HeaderLabel}"
                         VerticalAlignment="Center"
-                        Content="Payment"
+                        Content="Thanh toán"
                         Height="36"
                            ></Label>
                 </StackPanel>
@@ -280,7 +280,7 @@
                                 <Grid Grid.Row="0" x:Name="gdTotalDiscount" Visibility="Collapsed">
                                     <TextBlock 
                                     x:Name="tbTotalDiscount"
-                                    Text="Total discount"
+                                    Text="Tổng chiết khấu"
                                     Style="{StaticResource HeaderTextBlock}"
                                     FontSize="16"
                                     TextAlignment="Left"
@@ -297,7 +297,7 @@
                                     ></TextBlock>
                                 </Grid>
                                 <TextBlock 
-                                    Text="Total"
+                                    Text="Tổng"
                                     Grid.Row="1"
                                     Style="{StaticResource HeaderTextBlock}"
                                     FontSize="16"
@@ -326,7 +326,7 @@
                                 <RowDefinition Height="*"></RowDefinition>
                                 <RowDefinition Height="68"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Label Content="Payment methods"
+                            <Label Content="Phương thức thanh toán"
                                    Style="{StaticResource HeaderLabel}"></Label>
                             <ListView 
                                 Grid.Row="1"
@@ -338,8 +338,8 @@
                                 ItemContainerStyle="{StaticResource CardListViewItemStyle}"></ListView>
                             <Button Grid.Row="2" Width="220" Height="48" Background="blue" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BaseButton}" Padding="0" PreviewMouseUp="btnPromotion_click">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Image  Source="E:\Documents\git_local\QLNH.GR.Desktop\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\promotions2.png" Width="28" Height="28" Margin="-19,0,5,0" HorizontalAlignment="Left" />
-                                    <TextBlock Text="Add promotion" Foreground="white" VerticalAlignment="Center" Margin="5" FontSize="16" Style="{StaticResource HeaderTextBlock}"/>
+                                    <Image  Source="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\promotions2.png" Width="28" Height="28" Margin="-19,0,5,0" HorizontalAlignment="Left" />
+                                    <TextBlock Text="Thêm khuyến mại" Foreground="white" VerticalAlignment="Center" Margin="5" FontSize="16" Style="{StaticResource HeaderTextBlock}"/>
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -351,7 +351,7 @@
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="68"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Label Content="Payment amount" 
+                        <Label Content="Tổng tiền thanh toán" 
                                        Style="{StaticResource HeaderLabel}"
                                        VerticalAlignment="Center"></Label>
                         <Button
@@ -374,7 +374,7 @@
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Label Content="{Binding AmountToPay, Converter={StaticResource DecimalToAmountStringConverter}}" FontSize="28"  Grid.Row="0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Center"></Label>
-                                    <Label Content="Choose amount"  Grid.Row="1" Margin="96,0,0,0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Left"></Label>
+                                    <Label Content="Chọn tiền"  Grid.Row="1" Margin="96,0,0,0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Left"></Label>
                                     <ItemsControl
                                             Padding="96,0,96,16"
                                             Grid.Row="2"

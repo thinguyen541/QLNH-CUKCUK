@@ -201,7 +201,7 @@ namespace QLNH.GR.Desktop.UI
                 if (ListPromtion.Count(item => item.IsSelected) > 1)
                 {
                   
-                    myToast.ShowToast("Please uncheck the selected one if you want to change promotion.", ToastType.Warning);
+                    myToast.ShowToast("Hãy bỏ chọn nếu muốn chọn khuyến mại khác", ToastType.Warning);
                     selectedPromotion.IsSelected = false;
                     return;
                 }

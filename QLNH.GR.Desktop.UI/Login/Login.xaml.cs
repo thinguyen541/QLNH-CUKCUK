@@ -62,20 +62,20 @@ namespace QLNH.GR.Desktop.UI
                     else
                     {
                         // Handle unsuccessful response
-                        CommonFunctionUI.ShowToast("Wrong credentials!", ToastType.Warning);
+                        CommonFunctionUI.ShowToast("Sai thôn tin!", ToastType.Warning);
 
                     }
                 }
             }
             catch (Exception)
             {
-                CommonFunctionUI.ShowToast("Cnnection fail!", ToastType.Warning);
+                CommonFunctionUI.ShowToast("Lỗi kết nối!", ToastType.Warning);
             }
         }
 
         private static void WriteToFile(LoginResponse result)
         {
-            JsonFileManager.WriteToJson<LoginResponse>(result, "E:\\Documents\\git_local\\QLNH.GR.Desktop\\QLNH.GR.Desktop.UI\\FileRerource\\account.json");
+            JsonFileManager.WriteToJson<LoginResponse>(result, "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\account.json");
         }
 
         public bool validateInput()

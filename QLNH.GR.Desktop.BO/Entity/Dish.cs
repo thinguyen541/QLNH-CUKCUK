@@ -116,10 +116,10 @@ namespace QLNH.GR.Desktop.BO.Entity
         {
             get
             {
-                if (PictureId != null && PictureId != Guid.Empty) { return $"https://localhost:44389/api/v1/Picture/getImage/{PictureId}"; }
+                if (PictureId != null && PictureId != Guid.Empty) { return $"https://localhost:7206/api/v1/Picture/getImage/{PictureId}"; }
                 else
                 {
-                    return "E:\\Documents\\git_local\\QLNH.GR.Desktop\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\dish.png";
+                    return "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\dish.png";
                 }
             }
         }

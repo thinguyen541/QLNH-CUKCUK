@@ -384,12 +384,12 @@ namespace QLNH.GR.Desktop.UI
                 }
                 else
                 {
-                    CommonFunctionUI.ShowToast("Order have at least one item.", type: ToastType.Warning);
+                    CommonFunctionUI.ShowToast("Order phải có ít nhất một món", type: ToastType.Warning);
                 }
             }
             else
             {
-                CommonFunctionUI.ShowToast("Order have at least one item.", type: ToastType.Warning);
+                CommonFunctionUI.ShowToast("Order phải có ít nhất một món", type: ToastType.Warning);
             }
         }
 
@@ -406,12 +406,12 @@ namespace QLNH.GR.Desktop.UI
                 }
                 else
                 {
-                    CommonFunctionUI.ShowToast("Order have at least one item.", type: ToastType.Warning);
+                    CommonFunctionUI.ShowToast("Order phải có ít nhất một món", type: ToastType.Warning);
                 }
             }
             else
             {
-                CommonFunctionUI.ShowToast("Order have at least one item.", type: ToastType.Warning);
+                CommonFunctionUI.ShowToast("Order phải có ít nhất một món", type: ToastType.Warning);
             }
 
         }
@@ -437,14 +437,14 @@ namespace QLNH.GR.Desktop.UI
             HttpResponseMessage response = await orderService.SaveAndUpdateData(lstSaveOrder);
             if (response != null && response.IsSuccessStatusCode)
             {
-                CommonFunctionUI.ShowToast("Fire successfully.");
+                CommonFunctionUI.ShowToast("Lưu order thành công");
                 CommonFunctionUI.NavigateToPage(AppPage.MainScreen, previousPage: AppPage.Order);
                
             }
 
             else
             {
-                CommonFunctionUI.ShowToast("Error occur.");
+                CommonFunctionUI.ShowToast("Đã xảy ra lỗi");
             }
         }
 

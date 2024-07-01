@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:QLNH.GR.Desktop.UI"
         mc:Ignorable="d"
         Title="Quản lý nhà hàng" Height="768" Width="1080"
-        Icon="E:\Documents\git_local\QLNH.GR.Desktop\Image/AppIcon.png"
+        Icon="C:\Đồ án\QLNH-Thesis\Image\AppIcon.png"
         xmlns:ui="clr-namespace:QLNH.GR.Desktop.UI">
     
   

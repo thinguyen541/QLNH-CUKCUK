@@ -117,7 +117,7 @@ namespace QLNH.GR.Desktop.UI.Converter
             if (value is string iconName)
             {
                 // Construct the path to the PNG file based on the iconName
-                return $"E:/Documents/git_local/QLNH.GR.Desktop/QLNH.GR.Desktop.UI/FileRerource/Resources/Icon/{iconName}.png";
+                return $"C:/Đồ án/QLNH-Thesis/QLNH.GR.Desktop.UI/FileRerource/Resources/Icon/{iconName}.png";
 
                 // Load the PNG file as a BitmapImage
 
@@ -233,15 +233,15 @@ namespace QLNH.GR.Desktop.UI.Converter
             {
                 if (OrderType == EnumOrderType.DineIn)
                 {
-                    return "Dine-In";
+                    return "Tại bàn";
                 }
                 if (OrderType == EnumOrderType.Delivery)
                 {
-                    return "Delivery";
+                    return "Giao hàng";
                 }
                 if (OrderType == EnumOrderType.Pickup)
                 {
-                    return "To-go";
+                    return "Mang về";
                 }
                 return OrderType;
 

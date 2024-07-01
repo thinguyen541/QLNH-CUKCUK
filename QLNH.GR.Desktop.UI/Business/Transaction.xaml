@@ -91,7 +91,7 @@
                     <Label 
                         Style="{StaticResource HeaderLabel}"
                         VerticalAlignment="Center"
-                        Content="Transaction"
+                        Content="Giao dịch"
                         Height="36"
                            ></Label>
                 </StackPanel>
@@ -116,31 +116,31 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Transaction ID"
+                            <TextBlock Text="Mã giao dịch"
                                        Style="{StaticResource HeaderTextBlock}"
                                        FontSize="16"/>
-                            <TextBlock Text="OrderNo"
+                            <TextBlock Text="Số Order"
                                        Grid.Column="1" 
                                        Style="{StaticResource HeaderTextBlock}"
                                        FontSize="16"/>
                             <TextBlock Grid.Column="2"  
-                                       Text="Payment method" 
+                                       Text="Phương thức tt" 
                                         FontSize="16"
                                        Style="{StaticResource HeaderTextBlock}"/>
                             <TextBlock Grid.Column="3"  
-                                       Text="Created time" 
+                                       Text="Giờ tạo" 
                                         FontSize="16"
                                        Style="{StaticResource HeaderTextBlock}"/>
                             <TextBlock Grid.Column="4"  
-                                       Text="Cashier"
+                                       Text="Thu ngân"
                                         FontSize="16"
                                        Style="{StaticResource HeaderTextBlock}"/>
                             <TextBlock Grid.Column="5" 
-                                       Text="Tip amount"
+                                       Text="Tiền tip"
                                         FontSize="16"
                                        Style="{StaticResource HeaderTextBlock}"/>
                             <TextBlock Grid.Column="6" 
-                                       Text="Amount"
+                                       Text="Tổng tiền"
                                         FontSize="16"
                                        Style="{StaticResource HeaderTextBlock}"/>
 

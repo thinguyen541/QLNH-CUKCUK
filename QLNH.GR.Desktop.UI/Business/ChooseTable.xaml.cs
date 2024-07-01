@@ -132,7 +132,7 @@ namespace QLNH.GR.Desktop.UI
             {
                 if (clickedItem.IsServing)
                 {
-                    CommonFunctionUI.ShowToast("Table is serving by other order.",ToastType.Warning);
+                    CommonFunctionUI.ShowToast("Bàn đã được sử dụng bởi order khác",ToastType.Warning);
                     return;
                 }
                 Dictionary<string, object> navigateDictionary = new Dictionary<string, object>();

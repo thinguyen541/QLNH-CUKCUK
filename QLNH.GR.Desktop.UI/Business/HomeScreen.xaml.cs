@@ -85,11 +85,11 @@ namespace QLNH.GR.Desktop.UI
             else
             {
                 ListFeatureApp.Add(new FeatureApp {FeatureKey="Orders",FeatureName="Orders",SortOrder=0,IconName="Orders" });
-                ListFeatureApp.Add(new FeatureApp { FeatureKey = "Table", FeatureName = "Table", SortOrder = 0, IconName = "Table" });
+                ListFeatureApp.Add(new FeatureApp { FeatureKey = "Table", FeatureName = "Bàn", SortOrder = 0, IconName = "Table" });
                 ListFeatureApp.Add(new FeatureApp { FeatureKey = "Menu", FeatureName = "Menu", SortOrder = 0, IconName = "Menu" });
-                ListFeatureApp.Add(new FeatureApp { FeatureKey = "Employee", FeatureName = "Employee", SortOrder = 0, IconName = "Employee" });
-                ListFeatureApp.Add(new FeatureApp { FeatureKey = "Reciept", FeatureName = "Reciept", SortOrder = 0, IconName = "Reciept" });
-                ListFeatureApp.Add(new FeatureApp { FeatureKey = "Transaction", FeatureName = "Transaction", SortOrder = 0, IconName = "Transaction" });
+                ListFeatureApp.Add(new FeatureApp { FeatureKey = "Employee", FeatureName = "Nhân viên", SortOrder = 0, IconName = "Employee" });
+                ListFeatureApp.Add(new FeatureApp { FeatureKey = "Reciept", FeatureName = "Hóa đơn", SortOrder = 0, IconName = "Reciept" });
+                ListFeatureApp.Add(new FeatureApp { FeatureKey = "Transaction", FeatureName = "Giao dịch", SortOrder = 0, IconName = "Transaction" });
                 Session.ListFeatureApp = ListFeatureApp;
             }
                 itemsControl.ItemsSource = ListFeatureApp;
@@ -141,6 +141,10 @@ namespace QLNH.GR.Desktop.UI
                     else if (clickedItem.FeatureKey == "Reciept")
                     {
                         CommonFunctionUI.NavigateToPage(AppPage.Receipt, previousPage: AppPage.MainScreen);
+                    }
+                    else if (clickedItem.FeatureKey == "Table")
+                    {
+                        CommonFunctionUI.NavigateToPage(AppPage.Table, previousPage: AppPage.MainScreen);
                     }
                 }
             }

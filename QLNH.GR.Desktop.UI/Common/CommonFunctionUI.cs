@@ -92,7 +92,7 @@ namespace QLNH.GR.Desktop.UI.Common
                     transaction.PreviousPage = previousPage;
                     frame.Navigate(transaction);
                     break;
-                default:
+                default:    
                     throw new ArgumentException("Invalid page enum value");
             }
         }

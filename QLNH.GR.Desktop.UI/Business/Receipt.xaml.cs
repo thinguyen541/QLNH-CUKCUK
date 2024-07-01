@@ -164,15 +164,15 @@ namespace QLNH.GR.Desktop.UI
 
         private void GenerateAndDisplayPdf(Order CurrentOrde, Invoice selectedReceiptr)
         {
-            string storeName = "My Store";
-            string storeAddress = "123 Main St, Anytown, USA";
+            string storeName = "Cửa hàng của Quân";
+            string storeAddress = "175 Tây Sơn, Thủy lợi";
 
             // Define custom page size (5 inches wide by 7 inches tall)
             float width = 5 * 72; // 5 inches
             float height = 7 * 72; // 7 inches
             iTextSharp.text.Rectangle customPageSize = new iTextSharp.text.Rectangle(width, height);
 
-            string pdfFilePath = "E:\\Downloads\\" + $"{Guid.NewGuid().ToString()}.pdf";
+            string pdfFilePath = "C:\\Đồ án\\" + $"{Guid.NewGuid().ToString()}.pdf";
 
             Printer.PrintReceipt(storeName, storeAddress, CurrentOrder, pdfFilePath, customPageSize, selectedReceiptr);
 
