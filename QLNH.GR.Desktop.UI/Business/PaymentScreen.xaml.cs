@@ -367,7 +367,8 @@ namespace QLNH.GR.Desktop.UI
                 HttpResponseMessage response = await orderService.SaveAndUpdateData(lstSaveOrder);
                 if (response != null && response.IsSuccessStatusCode)
                 {
-                        CommonFunctionUI.NavigateToPage(AppPage.MainScreen, previousPage: AppPage.MainScreen);
+                    CommonFunctionUI.ShowToast("Payment success.");
+                    CommonFunctionUI.NavigateToPage(AppPage.MainScreen, previousPage: AppPage.MainScreen);
                 }
             }
 
@@ -387,6 +388,10 @@ namespace QLNH.GR.Desktop.UI
             coverOrder.TransactionID = Guid.NewGuid().ToString();
             coverOrder.CardType = SelectedCard.CardType;
             coverOrder.CardName = SelectedCard.CardName;
+            if (SelectedTip != null)
+            {
+                coverOrder.TipAmount = SelectedTip.Amount.GetValueOrDefault();
+            }
 
             lstSaveOrder.Add(coverOrder);
             HttpResponseMessage response = await coverOrderService.SaveAndUpdateData(lstSaveOrder);
@@ -404,7 +409,6 @@ namespace QLNH.GR.Desktop.UI
                 CurrentOrder.PaymentStatus = EnumPaymentStatus.PaidAll;
                 CurrentOrder.OrderStatus = EnumOrderStatus.Done;
                 List<object> lstSaveOrder = new List<object>();
-                CommonFunctionUI.ShowToast("Payment success.");
                 SaveFileDialog oDlg = new SaveFileDialog();
                 oDlg.Filter = "Pdf files (*.pdf)|*.pdf";
                 if (true == oDlg.ShowDialog())
@@ -432,10 +436,10 @@ namespace QLNH.GR.Desktop.UI
                 invoice.TableName = CurrentOrder.TableName;
                 invoice.PromotionName = CurrentOrder.PromotionName;
                 invoice.PromotionAmount = CurrentOrder.PromotionAmount;
-                
-
-
-
+                if (SelectedTip != null)
+                {
+                    invoice.Tipamount = SelectedTip.Amount.GetValueOrDefault();
+                }
 
                 lstSaveOrder.Add(invoice);
                 HttpResponseMessage response = await invoiceService.SaveAndUpdateData(lstSaveOrder);
