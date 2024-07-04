@@ -1,4 +1,5 @@
 ﻿
+
 using QLNH.GR.Desktop.BO;
 using QLNH.GR.Desktop.BO.Entity;
 using QLNH.GR.Desktop.Common;
@@ -143,6 +144,7 @@ namespace QLNH.GR.Desktop.UI
             if (selectedPromotion != null)
             {
                 var promotionOrderDetail = new OrderDetail();
+                promotionOrderDetail.OrderDetailId = Guid.NewGuid();
                 promotionOrderDetail.OrderDetailType = EnumOrderDetailType.Promotion;
                 if (selectedPromotion.PromotionValueType == EnumPromotionValueType.Amount)
                 {

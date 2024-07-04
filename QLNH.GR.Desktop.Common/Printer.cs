@@ -10,7 +10,7 @@ namespace QLNH.GR.Desktop.Common
     {
         public static void PrintReceipt(string storeName, string storeAddress, Order CurrentOrder, string outputFilePath, iTextSharp.text.Rectangle pageSize, Invoice invoice)
         {
-            List<OrderDetail> items = CurrentOrder.ListOrderDetail;
+            List<OrderDetail> items = CurrentOrder?.ListOrderDetail;
             Document document = new Document(pageSize);
 
             try
@@ -132,26 +132,28 @@ namespace QLNH.GR.Desktop.Common
                             table.AddCell(cel13);     
                                 foreach (var item in items)
                                 {
-                                    foreach (var detail in item.ListNormalDetailItem)
+                                    if (item.ListNormalDetailItem != null)
                                     {
+                                        foreach (var detail in item.ListNormalDetailItem)
+                                        {
 
-                                        PdfPCell itemnameCell = new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_LEFT, };
-                                        table.AddCell(itemnameCell);
-                                        PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER, };
-                                        table.AddCell(quantityCell);
-                                        PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"), font)) { HorizontalAlignment = Element.ALIGN_RIGHT };
-                                        table.AddCell(amountCell);
+                                            PdfPCell itemnameCell = new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_LEFT, };
+                                            table.AddCell(itemnameCell);
+                                            PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER, };
+                                            table.AddCell(quantityCell);
+                                            PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"), font)) { HorizontalAlignment = Element.ALIGN_RIGHT };
+                                            table.AddCell(amountCell);
+                                        }
+                                        foreach (var detail in item.ListModifierDetailItem)
+                                        {
+                                            PdfPCell nameCell = new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_CENTER, Indent = 12 };
+                                            table.AddCell(nameCell);
+                                            PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER };
+                                            table.AddCell(quantityCell);
+                                            PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"), font)) { HorizontalAlignment = Element.ALIGN_RIGHT };
+                                            table.AddCell(amountCell);
+                                        }
                                     }
-                                    foreach (var detail in item.ListModifierDetailItem)
-                                    {
-                                        PdfPCell nameCell = new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_CENTER, Indent = 12 };
-                                        table.AddCell(nameCell);
-                                        PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER };
-                                        table.AddCell(quantityCell);
-                                        PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"), font)) { HorizontalAlignment = Element.ALIGN_RIGHT };
-                                        table.AddCell(amountCell);
-                                    }
-
                                 }
 
                                 document.Add(table);
