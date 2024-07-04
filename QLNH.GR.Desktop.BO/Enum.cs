@@ -103,7 +103,7 @@ namespace QLNH.GR.Desktop.BO
         Cash,
         Card,
         Papal,
-        Vemmo,
+        Momo,
         OtherCard
     }
     public enum EnumDetailItemType

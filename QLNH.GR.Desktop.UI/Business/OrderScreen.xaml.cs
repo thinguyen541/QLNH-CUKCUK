@@ -211,7 +211,7 @@ namespace QLNH.GR.Desktop.UI
                 if (result != null)
                 {
                     ListDishGroup = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DishGroup>>(result.Data.ToString());
-                    ListDishGroup.Insert(0, new DishGroup() { DishGroupId = Guid.Empty, DishGroupName = "All Items" });
+                    ListDishGroup.Insert(0, new DishGroup() { DishGroupId = Guid.Empty, DishGroupName = "Tất cả" });
                     lvDishGroup.ItemsSource = ListDishGroup;
                 }
             }

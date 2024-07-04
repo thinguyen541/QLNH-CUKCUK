@@ -129,16 +129,7 @@ namespace QLNH.GR.Desktop.Common
                             PdfPCell cel12 = new PdfPCell(new iTextSharp.text.Phrase("Số lượng")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER};
                             table.AddCell(cel12);
                             PdfPCell cel13 = new PdfPCell(new iTextSharp.text.Phrase("Số tiền")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
-                            table.AddCell(cel13);
-                                // Add Items
-                                PdfPTable table = new PdfPTable(3);
-                                PdfPCell cel11 = new PdfPCell(new iTextSharp.text.Phrase("Item name")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
-                                table.AddCell(cel11);
-                                PdfPCell cel12 = new PdfPCell(new iTextSharp.text.Phrase("Quantity")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
-                                table.AddCell(cel12);
-                                PdfPCell cel13 = new PdfPCell(new iTextSharp.text.Phrase("Total price")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
-                                table.AddCell(cel13);
-
+                            table.AddCell(cel13);     
                                 foreach (var item in items)
                                 {
                                     foreach (var detail in item.ListNormalDetailItem)

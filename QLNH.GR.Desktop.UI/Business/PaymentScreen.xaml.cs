@@ -292,10 +292,10 @@ namespace QLNH.GR.Desktop.UI
         {
             var listCard = new List<Card>
             {
-                new Card() { CardID = Guid.NewGuid(), CardName = "Cash", CardType = EnumCardType.Cash, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\money.png" },
-                new Card() { CardID = Guid.NewGuid(), CardName = "Card", CardType = EnumCardType.Card, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\credit-card.png" } ,
-                new Card() { CardID = Guid.NewGuid(), CardName = "Vemmo", CardType = EnumCardType.Vemmo, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\Vemmo.png" } ,
-                new Card() { CardID = Guid.NewGuid(), CardName = "Other Card", CardType = EnumCardType.OtherCard, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\atm-card.png" }
+                new Card() { CardID = Guid.NewGuid(), CardName = "Tiền mặt", CardType = EnumCardType.Cash, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\money.png" },
+                new Card() { CardID = Guid.NewGuid(), CardName = "Thẻ", CardType = EnumCardType.Card, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\credit-card.png" } ,
+                new Card() { CardID = Guid.NewGuid(), CardName = "Momo", CardType = EnumCardType.Momo, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\Momo.png" } ,
+                new Card() { CardID = Guid.NewGuid(), CardName = "Thẻ khác", CardType = EnumCardType.OtherCard, ImagePath = "C:\\Đồ án\\QLNH-Thesis\\QLNH.GR.Desktop.UI\\FileRerource\\Resources\\Icon\\atm-card.png" }
             };
             ListCard = listCard;
             lvCard.ItemsSource = ListCard;
@@ -318,7 +318,7 @@ namespace QLNH.GR.Desktop.UI
                 case EnumCardType.Card:
                     listSuggest.Add(new SuggestMoney() { Amount = CurrentOrder?.RemainAmount.GetValueOrDefault() , IsSelected = true });
                     break;
-                case EnumCardType.Vemmo:
+                case EnumCardType.Momo:
                     listSuggest.Add(new SuggestMoney() { Amount = CurrentOrder?.RemainAmount.GetValueOrDefault() , IsSelected = true });
                     break;
                 case EnumCardType.OtherCard:

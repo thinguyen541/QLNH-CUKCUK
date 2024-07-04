@@ -124,7 +124,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="28"/>
                                     <ColumnDefinition Width="*"/>
-                           
+
                                     <ColumnDefinition Width="36"/>
                                 </Grid.ColumnDefinitions>
                                 <Button Grid.Column="0"
@@ -150,7 +150,7 @@
                                           HorizontalAlignment="Stretch"
                                           ItemContainerStyle="{StaticResource OrderDetailModifireListViewItemStyle}"/>
                                 </StackPanel>
-                           
+
 
                             </Grid>
                         </Border>
@@ -282,7 +282,7 @@
                                 <Grid Grid.Row="0" x:Name="gdSubtotal">
                                     <TextBlock 
                                     x:Name="tbSubtotal"
-                                    Text="Subtotal"
+                                    Text="Tạm tính"
                                     Style="{StaticResource HeaderTextBlock}"
                                     FontSize="16"
                                     TextAlignment="Left"
@@ -301,7 +301,7 @@
                                 <Grid Grid.Row="1" x:Name="gdTipAmount" Visibility="Collapsed">
                                     <TextBlock 
                                     x:Name="tbTipAmount"
-                                    Text="Tip Amount"
+                                    Text="Tiền tip"
                                     Style="{StaticResource HeaderTextBlock}"
                                     FontSize="16"
                                     TextAlignment="Left"
@@ -366,7 +366,7 @@
                                 <RowDefinition Height="*"></RowDefinition>
                                 <RowDefinition Height="68"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Label Content="Phương thức thanh toán"
+                            <Label Content="Thanh toán"
                                    Style="{StaticResource HeaderLabel}"></Label>
                             <ListView 
                                 Grid.Row="1"
@@ -378,10 +378,8 @@
                                 ItemContainerStyle="{StaticResource CardListViewItemStyle}"></ListView>
                             <Button Grid.Row="2" Width="220" Height="48" Background="blue" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BaseButton}" Padding="0" PreviewMouseUp="btnPromotion_click">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Image  Source="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\promotions2.png" Width="28" Height="28" Margin="-19,0,5,0" HorizontalAlignment="Left" />
-                                    <TextBlock Text="Thêm khuyến mại" Foreground="white" VerticalAlignment="Center" Margin="5" FontSize="16" Style="{StaticResource HeaderTextBlock}"/>
-                                    <Image  Source="pack://application:,,,/FileRerource/Resources/Icon/promotions2.png" Width="28" Height="28" Margin="-19,0,5,0" HorizontalAlignment="Left" />
-                                    <TextBlock Text="Add promotion" Foreground="white" VerticalAlignment="Center" Margin="5" FontSize="16" Style="{StaticResource HeaderTextBlock}"/>
+                                    <Image  Source="pack://application:,,,/FileRerource/Resources/Icon/promotions2.png" Width="28" Height="28" />
+                                    <TextBlock Text="khuyến mại" Foreground="white" FontSize="16" Style="{StaticResource HeaderTextBlock}" Width="90"/>
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -418,7 +416,7 @@
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Label Content="{Binding AmountToPay, Converter={StaticResource DecimalToAmountStringConverter}}" FontSize="28"  Grid.Row="0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Center"></Label>
-                                    <Label Content="Chọn tiền"  Grid.Row="1" Margin="96,0,0,0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Left"></Label>
+                                    <Label Content="Số tiền"  Grid.Row="1" Margin="96,0,0,0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Left"></Label>
                                     <ItemsControl
                                             Padding="96,0,96,16"
                                             Grid.Row="2"
@@ -438,16 +436,16 @@
 
                                                     <TextBlock x:Name="textBlock" Text="{Binding Amount, Converter={StaticResource DecimalToAmountStringConverter}}" FontSize="14" FontWeight="DemiBold" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">
                                                         <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="Background" Value="Transparent"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                                                    <Setter Property="Foreground" Value="White"/>
-                                                                    
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Background" Value="Transparent"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                                        <Setter Property="Foreground" Value="White"/>
+
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
                                                     </TextBlock>
                                                     <Border.Style>
                                                         <Style TargetType="Border">
@@ -455,7 +453,7 @@
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding IsSelected}" Value="True">
                                                                     <Setter Property="Background" Value="Blue"/>
-                                                                    
+
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
@@ -466,7 +464,7 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
 
-                                    <Label Content="Add ip"  Grid.Row="3" Margin="96,0,0,0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Left"></Label>
+                                    <Label Content="Chọn"  Grid.Row="3" Margin="96,0,0,0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Left"></Label>
                                     <ItemsControl
                                             Padding="96,0,96,16"
                                             Grid.Row="4"

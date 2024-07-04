@@ -34,7 +34,7 @@
     <None Remove="FileRerource\Resources\Icon\take-away.png" />
     <None Remove="FileRerource\Resources\Icon\to-go.png" />
     <None Remove="FileRerource\Resources\Icon\Transaction.png" />
-    <None Remove="FileRerource\Resources\Icon\Vemmo.png" />
+    <None Remove="FileRerource\Resources\Icon\Momo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,7 +76,7 @@
     <Resource Include="FileRerource\Resources\Icon\take-away.png" />
     <Resource Include="FileRerource\Resources\Icon\to-go.png" />
     <Resource Include="FileRerource\Resources\Icon\Transaction.png" />
-    <Resource Include="FileRerource\Resources\Icon\Vemmo.png" />
+    <Resource Include="FileRerource\Resources\Icon\Momo.png" />
   </ItemGroup>
 
 </Project>

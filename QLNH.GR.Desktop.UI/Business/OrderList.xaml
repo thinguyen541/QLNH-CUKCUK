@@ -84,7 +84,7 @@
                                     Content="Thanh toán"
                                     PreviewMouseDown="btnPay_click"
                                     VerticalAlignment="Center"
-                                    Width="48"
+                                    Width="100"
                                     Height="28"
                                     FontSize="14"
                                     Background="ForestGreen"
