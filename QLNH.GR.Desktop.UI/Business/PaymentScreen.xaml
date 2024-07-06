@@ -464,7 +464,7 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
 
-                                    <Label Content="Chọn"  Grid.Row="3" Margin="96,0,0,0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Left"></Label>
+                                    <Label Content="Tiền tip"  Grid.Row="3" Margin="96,0,0,0" Style="{StaticResource HeaderLabel}" HorizontalAlignment="Left"></Label>
                                     <ItemsControl
                                             Padding="96,0,96,16"
                                             Grid.Row="4"

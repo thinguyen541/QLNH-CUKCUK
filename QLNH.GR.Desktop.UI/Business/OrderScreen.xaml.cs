@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using static Aspose.Pdf.Annotations.Measure;
 
 namespace QLNH.GR.Desktop.UI
 {
@@ -459,7 +460,10 @@ namespace QLNH.GR.Desktop.UI
                 CurrentOrder.Amount = 0;
 
             }
-            string convertedValue = (string)_decimalconverter.Convert(CurrentOrder.Amount, typeof(string), null, CultureInfo.InvariantCulture);
+            //CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
+            //string convertedValue = double.Parse(CurrentOrder.Amount).ToString("#,###", cul.NumberFormat);
+            string convertedValue = String.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:c}", CurrentOrder.Amount);
+            //string convertedValue = (string)_decimalconverter.Convert(CurrentOrder.Amount, typeof(NumberFormat), null, CultureInfo.GetCultureInfo("vi-VN"));
             CurrentOrder.RemainAmount = CurrentOrder.Amount;
             txtTotalAmount.Text = convertedValue;
         }

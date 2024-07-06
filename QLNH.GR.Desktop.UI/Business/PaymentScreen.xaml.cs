@@ -281,7 +281,7 @@ namespace QLNH.GR.Desktop.UI
             if (CurrentOrder != null && CurrentOrder.ListOrderDetail != null)
             {
                CurrentOrder.Amount = CurrentOrder.ListOrderDetail.Sum(item => { if (item.EntityMode != 2) return item.Amount; return 0; });
-                string convertedValue = (string)_decimalconverter.Convert(CurrentOrder.Amount, typeof(string), null, CultureInfo.InvariantCulture);
+                string convertedValue = String.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:c}", CurrentOrder.Amount);
                 txtSubtotal.Text = convertedValue;
             }
             CalculateOrderAmount();
@@ -367,7 +367,7 @@ namespace QLNH.GR.Desktop.UI
                 HttpResponseMessage response = await orderService.SaveAndUpdateData(lstSaveOrder);
                 if (response != null && response.IsSuccessStatusCode)
                 {
-                    CommonFunctionUI.ShowToast("Payment success.");
+                    CommonFunctionUI.ShowToast("Thanh toán thành công.");
                     CommonFunctionUI.NavigateToPage(AppPage.MainScreen, previousPage: AppPage.MainScreen);
                 }
             }
@@ -464,7 +464,7 @@ namespace QLNH.GR.Desktop.UI
                 if (oldPromotion != null)
                 {
                     gdTotalDiscount.Visibility = Visibility.Visible;
-                    txtTotalDiscount.Text = (string)_decimalconverter.Convert(oldPromotion.Amount, typeof(string), null, CultureInfo.InvariantCulture);
+                    txtTotalDiscount.Text = String.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:c}", (oldPromotion.Amount));
                 }
                 else
                 {
@@ -472,17 +472,19 @@ namespace QLNH.GR.Desktop.UI
                 }
 
                 decimal tipAmout = 0;
+                CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
                 if (SelectedTip != null && SelectedTip.Amount > 0)
                 {
                     gdTipAmount.Visibility = Visibility.Visible;
                     tipAmout = SelectedTip.Amount.GetValueOrDefault();
-                    txtTipAmount.Text = (string)_decimalconverter.Convert(SelectedTip.Amount, typeof(string), null, CultureInfo.InvariantCulture);
+                    txtTipAmount.Text = String.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:c}", tipAmout);
+
                 }
                 else
                 {
                     gdTipAmount.Visibility = Visibility.Collapsed;
                 }
-                string convertedValue = (string)_decimalconverter.Convert(CurrentOrder.Amount + tipAmout, typeof(string), null, CultureInfo.InvariantCulture);
+                string convertedValue = (string)_decimalconverter.Convert(CurrentOrder.Amount + tipAmout, typeof(string), null, cul);
                 txtTotalAmount.Text = convertedValue;
             }
         }
@@ -559,7 +561,7 @@ namespace QLNH.GR.Desktop.UI
                 var oldPromotion = CurrentOrder.ListOrderDetail.FirstOrDefault(item => item.OrderDetailType == EnumOrderDetailType.Promotion);
                 if (oldPromotion != null)
                 {
-                    txtTotalDiscount.Text = (string)_decimalconverter.Convert(oldPromotion.Amount, typeof(string), null, CultureInfo.InvariantCulture);
+                    txtTotalDiscount.Text = String.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:c}", oldPromotion.Amount);
                 }
             }
         }

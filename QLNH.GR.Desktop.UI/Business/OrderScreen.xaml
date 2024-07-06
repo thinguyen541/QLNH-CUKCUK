@@ -213,7 +213,7 @@
                                         PreviewMouseUp="btnDelete_Dish"
                                         VerticalAlignment="Top">
                                     <Image 
-                                        Source="E:\Documents\git_local\QLNH.GR.Desktop\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\close.png"  
+                                        Source="C:\Đồ án\QLNH-Thesis\QLNH.GR.Desktop.UI\FileRerource\Resources\Icon\close.png"  
                                         Stretch="Uniform"/>
                                 </Button>
                             </Grid>

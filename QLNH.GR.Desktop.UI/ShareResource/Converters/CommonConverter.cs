@@ -139,7 +139,8 @@ namespace QLNH.GR.Desktop.UI.Converter
         {
             if (value is decimal decimalValue)
             {
-                return decimalValue.ToString("G29", culture); // "G29" removes unnecessary trailing zeros while preserving precision
+                //return String.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:c}", decimalValue);
+                return decimalValue.ToString("G29",culture); // "G29" removes unnecessary trailing zeros while preserving precision
             }
             return string.Empty;
         }
@@ -159,9 +160,10 @@ namespace QLNH.GR.Desktop.UI.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
             if (value is decimal decimalValue)
             {
-                return decimalValue.ToString("F2", culture); // "G29" removes unnecessary trailing zeros while preserving precision
+                return String.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:c}", decimalValue); // "G29" removes unnecessary trailing zeros while preserving precision
             }
             return "0.0";
         }
@@ -183,9 +185,9 @@ namespace QLNH.GR.Desktop.UI.Converter
         {
             if (value is decimal decimalValue)
             {
-                return $"PAY - {decimalValue.ToString("F2", culture)}"; // "G29" removes unnecessary trailing zeros while preserving precision
+                return $"Trả - {decimalValue.ToString(CultureInfo.GetCultureInfo("vi-VN"))}"; // "G29" removes unnecessary trailing zeros while preserving precision
             }
-            return "Pay - 0.0";
+            return "Trả - 0.0";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

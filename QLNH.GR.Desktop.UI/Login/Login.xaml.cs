@@ -62,7 +62,7 @@ namespace QLNH.GR.Desktop.UI
                     else
                     {
                         // Handle unsuccessful response
-                        CommonFunctionUI.ShowToast("Sai thôn tin!", ToastType.Warning);
+                        CommonFunctionUI.ShowToast("Sai thông tin!", ToastType.Warning);
 
                     }
                 }

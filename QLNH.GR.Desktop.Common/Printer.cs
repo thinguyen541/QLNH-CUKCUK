@@ -3,6 +3,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using QLNH.GR.Desktop.BO.Entity;
 using System.Windows;
+using System.Globalization;
 
 namespace QLNH.GR.Desktop.Common
 {
@@ -10,62 +11,49 @@ namespace QLNH.GR.Desktop.Common
     {
         public static void PrintReceipt(string storeName, string storeAddress, Order CurrentOrder, string outputFilePath, iTextSharp.text.Rectangle pageSize, Invoice invoice)
         {
-            List<OrderDetail> items = CurrentOrder?.ListOrderDetail;
-            Document document = new Document(pageSize);
+                        System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
+            Document document = new Document(pageSize);
             try
             {
-                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(outputFilePath, FileMode.Create));
+                PdfWriter.GetInstance(document, new FileStream(outputFilePath, FileMode.Create));
                 document.Open();
-                // Step 4: Create a base font that supports Unicode
-                Font font = FontFactory.GetFont("Arial", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
+
+                // Use Arial Unicode MS for Unicode support
+                BaseFont baseFont = BaseFont.CreateFont("C:\\Đồ án\\QLNH-Thesis\\ttf\\arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                Font font = new Font(baseFont, 12);
+
                 // Add Store Information
-                document.Add(new Paragraph(storeName, FontFactory.GetFont("Arial", 18, Font.BOLD)));
-                document.Add(new Paragraph(storeAddress));
-                document.Add(new Paragraph($"Hóa đơn: {invoice.UserName}"));
-                document.Add(new Paragraph($"In tại: {DateTime.Now.ToString()}"));
+                document.Add(new Paragraph(storeName, new Font(baseFont, 18, Font.BOLD)));
+                document.Add(new Paragraph(storeAddress, font));
+                document.Add(new Paragraph($"Hóa đơn: {invoice.UserName}", font));
+                document.Add(new Paragraph($"In tại: {DateTime.Now.ToString(CultureInfo.GetCultureInfo("vi-VN"))}", font));
                 document.Add(new Paragraph(" ")); // Add a blank line
 
                 // Add Items
                 PdfPTable table = new PdfPTable(3);
-                PdfPCell cel11 = new PdfPCell(new iTextSharp.text.Phrase("Tên món")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
-                table.AddCell(cel11);
-                PdfPCell cel12 = new PdfPCell(new iTextSharp.text.Phrase("Số lượng")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER, };
-                table.AddCell(cel12);
-                PdfPCell cel13 = new PdfPCell(new iTextSharp.text.Phrase("Giá tiền")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
-                table.AddCell(cel13);
+                table.AddCell(new PdfPCell(new Phrase("Tên món", font)) { HorizontalAlignment = Element.ALIGN_CENTER });
+                table.AddCell(new PdfPCell(new Phrase("Số lượng", font)) { HorizontalAlignment = Element.ALIGN_CENTER });
+                table.AddCell(new PdfPCell(new Phrase("Giá tiền", font)) { HorizontalAlignment = Element.ALIGN_CENTER });
 
-                foreach (var item in items)
+                foreach (var item in CurrentOrder?.ListOrderDetail ?? new List<OrderDetail>())
                 {
                     foreach (var detail in item.ListNormalDetailItem)
                     {
-
-                        PdfPCell itemnameCell = new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_LEFT, };
-                        table.AddCell(itemnameCell);
-                        PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER, };
-                        table.AddCell(quantityCell);
-                        PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"), font)) { HorizontalAlignment = Element.ALIGN_RIGHT };
-                        table.AddCell(amountCell);
+                        table.AddCell(new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_LEFT });
+                        table.AddCell(new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER });
+                        table.AddCell(new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C", CultureInfo.GetCultureInfo("vi-VN")), font)) { HorizontalAlignment = Element.ALIGN_RIGHT });
                     }
-                    foreach (var detail in item.ListModifierDetailItem)
-                    {
-                        PdfPCell nameCell = new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_CENTER, Indent = 12 };
-                        table.AddCell(nameCell);
-                        PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER };
-                        table.AddCell(quantityCell);
-                        PdfPCell amountCell = new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C"), font)) { HorizontalAlignment = Element.ALIGN_RIGHT };
-                        table.AddCell(amountCell);
-                    }
-
                 }
 
                 document.Add(table);
 
                 // Add Total Amount
-                document.Add(new Paragraph(" "));
-                document.Add(new Paragraph("Tổng tiền: " + CurrentOrder.Amount.GetValueOrDefault().ToString("C"), FontFactory.GetFont("Arial", 14, Font.BOLD)));
+                string totalAmountText = "Tổng tiền: ";
+                string thankNote = "Cảm ơn đã dùng bữa tại cửa hàng!";
+                document.Add(new Paragraph(totalAmountText + CurrentOrder.Amount.GetValueOrDefault().ToString("C", CultureInfo.GetCultureInfo("vi-VN")), new Font(baseFont, 14, Font.BOLD)));
 
-                document.Add(new Paragraph("Cảm ơn đã dùng bữa tại cửa hàng!", FontFactory.GetFont("Arial", 12, Font.ITALIC)));
+                document.Add(new Paragraph(thankNote, new Font(baseFont, 12, Font.ITALIC)));
             }
             catch (DocumentException docEx)
             {
@@ -79,8 +67,6 @@ namespace QLNH.GR.Desktop.Common
             {
                 document.Close();
             }
-
-            Console.WriteLine("Tạo thành công hóa đơn pdf!");
         }
 
         public static void PrintSendKitchen(Order CurrentOrder, string outputFilePath)
@@ -105,7 +91,7 @@ namespace QLNH.GR.Desktop.Common
                             {
 
                                 // Step 4: Create a base font that supports Unicode
-                                Font font = FontFactory.GetFont("Arial", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
+                                Font font = FontFactory.GetFont("Times New Roman", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
                                 if (CurrentOrder.ListOrderDetail == null)
                                 {
                                     return;
@@ -114,11 +100,11 @@ namespace QLNH.GR.Desktop.Common
                                 document.Open();
 
                             // Add Store Information
-                            document.Add(new Paragraph("Gửi bếp", FontFactory.GetFont("Arial", 18, Font.BOLD)));
+                            document.Add(new Paragraph("Gửi bếp", FontFactory.GetFont("Times New Roman", 18, Font.BOLD)));
                             document.Add(new Paragraph($"In tại: {DateTime.Now.ToString()}"));
                             document.Add(new Paragraph(" ")); // Add a blank line
                                 // Add Store Information
-                                document.Add(new Paragraph("Send kitchen tampt", FontFactory.GetFont("Arial", 18, Font.BOLD)));
+                                document.Add(new Paragraph("Send kitchen tampt", FontFactory.GetFont("Times New Roman", 18, Font.BOLD)));
                                 document.Add(new Paragraph($"Print at: {DateTime.Now.ToString()}"));
                                 document.Add(new Paragraph(" ")); // Add a blank line
 

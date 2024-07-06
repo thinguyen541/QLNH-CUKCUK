@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -164,8 +165,8 @@ namespace QLNH.GR.Desktop.UI
 
         private void GenerateAndDisplayPdf(Order CurrentOrde, Invoice selectedReceiptr)
         {
-            string storeName = "Cửa hàng của Quân";
-            string storeAddress = "175 Tây Sơn, Thủy lợi";
+            string storeName = "Anh Quan's Shop";
+            string storeAddress = "175 Tay Sơn, Thuy Loi";
 
             // Define custom page size (5 inches wide by 7 inches tall)
             float width = 5 * 72; // 5 inches

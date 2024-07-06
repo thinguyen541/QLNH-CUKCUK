@@ -46,6 +46,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QLNH.GR.Desktop.Common\QLNH.GR.Desktop.Common.csproj" />
+    <ProjectReference Include="..\QLNH.GR.Desktop.Presenter\QLNH.GR.Desktop.Presenter.csproj" />
   </ItemGroup>
 
   <ItemGroup>

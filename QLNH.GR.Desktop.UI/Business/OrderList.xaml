@@ -129,7 +129,7 @@
                     <Label 
                         Style="{StaticResource HeaderLabel}"
                         VerticalAlignment="Center"
-                        Content="Order"
+                        Content="Đơn hàng"
                         Height="36"
                            ></Label>
                 </StackPanel>

@@ -11,7 +11,7 @@ namespace QLNH.GR.Desktop.BO.Entity
     public class SuggestMoney : BaseEntity
     {
         public decimal? Amount { get; set; }
-        public string? DisplayText { get { if (Amount >= 0) { return Amount.Value.ToString("F2", new CultureInfo("en-us")); } else return "Tùy chọn"; } }
+        public string? DisplayText { get { if (Amount >= 0) { return String.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:c}", Amount.Value); } else return "Tùy chọn"; } }
 
         public bool? IsCustomAmount { get; set; }
         private bool _selected;
