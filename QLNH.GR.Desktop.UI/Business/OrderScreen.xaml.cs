@@ -178,7 +178,7 @@ namespace QLNH.GR.Desktop.UI
         }
         async private Task LoadDish()
         {
-            var pag = new PaginationObject() { PageSize = 40, RecentPage = 1 };
+            var pag = new PaginationObject() { PageSize = 200, RecentPage = 1 };
             HttpResponseMessage response = await dishService.Filter(pag);
             if (response != null && response.IsSuccessStatusCode)
             {
@@ -348,7 +348,7 @@ namespace QLNH.GR.Desktop.UI
                 var clickedItem = originalSource.DataContext as DishGroup;
                 if (clickedItem != null)
                 {
-                    var pag = new PaginationObject() { PageSize = 40, RecentPage = 1 };
+                    var pag = new PaginationObject() { PageSize = 200, RecentPage = 1 };
                     if (clickedItem.DishGroupId != Guid.Empty)
                     {
                         pag.FilterObjects = new List<FilterObject>() { new FilterObject() { Property = "dishs.DishGroupId", Value = clickedItem?.DishGroupId.ToString(), PropertyType = 4, Operator = 1, RelationType = 0 } };
@@ -473,5 +473,29 @@ namespace QLNH.GR.Desktop.UI
             }
         }
 
+        private async void tbFindItem_change(object sender, TextChangedEventArgs e)
+        {
+            var pag = new PaginationObject() { PageSize = 200, RecentPage = 1 };
+            
+            pag.FilterObjects = new List<FilterObject>() { new FilterObject() { Property = "dishs.DishName", Value = tbFindItem.Text, PropertyType =(int) EnumPropertyType.isString, Operator = (int)EnumOperator.LIKE, RelationType = 0 } };
+            
+            HttpResponseMessage response = await dishService.Filter(pag);
+            if (response != null && response.IsSuccessStatusCode)
+            {
+                // Read the response content as a string
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                // Deserialize the response body to the specified type
+                PagingHttpResponse result = Newtonsoft.Json.JsonConvert.DeserializeObject<PagingHttpResponse>(responseBody);
+                if (result != null)
+                {
+                    ListDish = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dish>>(result.Data.ToString());
+                    lvDish.ItemsSource = null;
+                    lvDish.ItemsSource = ListDish;
+                    lvDish.UpdateLayout();
+
+                }
+            }
+        }
     }
 }

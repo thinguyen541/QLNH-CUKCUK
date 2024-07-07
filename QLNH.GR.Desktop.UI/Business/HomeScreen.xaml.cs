@@ -142,6 +142,10 @@ namespace QLNH.GR.Desktop.UI
                     {
                         CommonFunctionUI.NavigateToPage(AppPage.Receipt, previousPage: AppPage.MainScreen);
                     }
+                    else if (clickedItem.FeatureKey == "Table")
+                    {
+                        CommonFunctionUI.NavigateToPage(AppPage.Table, previousPage: AppPage.MainScreen);
+                    }
                 }
             }
         }

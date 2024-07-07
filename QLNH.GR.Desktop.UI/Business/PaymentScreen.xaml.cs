@@ -385,7 +385,7 @@ namespace QLNH.GR.Desktop.UI
             coverOrder.OrderNo = CurrentOrder.OrderNo;
             coverOrder.UserId = Session.UserID.GetValueOrDefault();
             coverOrder.UserName = Session.UserName;
-            coverOrder.TransactionID = Guid.NewGuid().ToString();
+            coverOrder.TransactionID = CommonFunction.GeneratePaymentId();
             coverOrder.CardType = SelectedCard.CardType;
             coverOrder.CardName = SelectedCard.CardName;
             if (SelectedTip != null)

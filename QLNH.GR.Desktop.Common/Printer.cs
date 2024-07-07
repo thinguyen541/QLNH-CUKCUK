@@ -3,6 +3,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using QLNH.GR.Desktop.BO.Entity;
 using System.Windows;
+using System.Text;
 
 namespace QLNH.GR.Desktop.Common
 {
@@ -15,14 +16,16 @@ namespace QLNH.GR.Desktop.Common
 
             try
             {
+                // Register the code pages encoding provider
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(outputFilePath, FileMode.Create));
                 document.Open();
-                // Step 4: Create a base font that supports Unicode
-                Font font = FontFactory.GetFont("Arial", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
+                BaseFont baseFont = BaseFont.CreateFont("E:\\Documents\\git_local\\QLNH.GR.Desktop\\ttf\\Tahoma Regular font.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                Font font = new Font(baseFont, 12);
                 // Add Store Information
-                document.Add(new Paragraph(storeName, FontFactory.GetFont("Arial", 18, Font.BOLD)));
+                document.Add(new Paragraph(storeName, font));
                 document.Add(new Paragraph(storeAddress));
-                document.Add(new Paragraph($"Cashier: {invoice.UserName}"));
+                document.Add(new Paragraph($"Cashier: {invoice.UserName}", font));
                 document.Add(new Paragraph($"Print at: {DateTime.Now.ToString()}"));
                 document.Add(new Paragraph(" ")); // Add a blank line
 
@@ -61,8 +64,19 @@ namespace QLNH.GR.Desktop.Common
 
                 document.Add(table);
 
-                // Add Total Amount
-                document.Add(new Paragraph(" "));
+            
+                
+                if (invoice.PromotionAmount.GetValueOrDefault() != 0)
+                {
+                    document.Add(new Paragraph("Total Discount Amount: " + invoice.PromotionAmount.GetValueOrDefault().ToString("C"),
+                        FontFactory.GetFont("Arial", 14, Font.BOLD)));
+
+                }
+                if (invoice.Tipamount!= 0)
+                {
+                    document.Add(new Paragraph("Tip amount: " + invoice.Tipamount.ToString("C"),
+                    FontFactory.GetFont("Arial", 14, Font.BOLD)));
+                }
                 document.Add(new Paragraph("Total Amount: " + CurrentOrder.Amount.GetValueOrDefault().ToString("C"), FontFactory.GetFont("Arial", 14, Font.BOLD)));
 
                 document.Add(new Paragraph("Thank you for dining with us!", FontFactory.GetFont("Arial", 12, Font.ITALIC)));
@@ -104,8 +118,9 @@ namespace QLNH.GR.Desktop.Common
                             try
                             {
 
-                                // Step 4: Create a base font that supports Unicode
-                                Font font = FontFactory.GetFont("Arial", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
+
+                                BaseFont baseFont = BaseFont.CreateFont("E:\\Documents\\git_local\\QLNH.GR.Desktop\\ttf\\Tahoma Regular font.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                                Font font = new Font(baseFont, 12);
                                 if (CurrentOrder.ListOrderDetail == null)
                                 {
                                     return;

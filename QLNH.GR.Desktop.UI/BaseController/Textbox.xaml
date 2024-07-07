@@ -40,7 +40,6 @@
         </Setter>
     </Style>
 
-
     <Style TargetType="{x:Type local:CustomTexbox}">
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="14"/>
@@ -51,47 +50,25 @@
                 <ControlTemplate TargetType="{x:Type local:CustomTexbox}">
                     <Grid>
                         <TextBox x:Name="TextBox"
-                                 Text="{TemplateBinding Text}"
-                                 Width="{TemplateBinding Width}"
-                                 VerticalContentAlignment="Center" />
+                             Text="{TemplateBinding Text}"
+                             Width="{TemplateBinding Width}"
+                             VerticalContentAlignment="Center" />
                         <TextBlock x:Name="Placeholder"
-                                   Text="{TemplateBinding PlaceholderText}"
-                                   Foreground="#D9d9d9"
-                                   Width="{TemplateBinding Width}"
-                                   Margin="5,0,0,0"
-                                   
-                                   VerticalAlignment="Center"
-                                   IsHitTestVisible="False"
-                                   Visibility="Collapsed" />
+                               Text="{TemplateBinding PlaceholderText}"
+                               Foreground="#D9d9d9"
+                               Width="{TemplateBinding Width}"
+                               Margin="5,0,0,0"
+                               VerticalAlignment="Center"
+                               IsHitTestVisible="False"
+                               Visibility="Visible" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Text" Value="" />
-                                <Condition Property="IsKeyboardFocused" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Placeholder" Property="Visibility" Value="Visible" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Text" Value="" />
-                                <Condition Property="IsKeyboardFocused" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Text" Value="" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Placeholder" Property="Visibility" Value="Visible" />
-                        </MultiTrigger>
-                        <DataTrigger Binding="{Binding Path=Text.Length, RelativeSource={RelativeSource Self}}" Value="0">
+                        <DataTrigger Binding="{Binding Text.Length, RelativeSource={RelativeSource TemplatedParent}}" Value="0">
                             <Setter TargetName="Placeholder" Property="Visibility" Value="Visible" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=Text.Length, RelativeSource={RelativeSource Self}}" Value="1">
+                        <DataTrigger Binding="{Binding Text.Length, RelativeSource={RelativeSource TemplatedParent}}" Value="1">
                             <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
