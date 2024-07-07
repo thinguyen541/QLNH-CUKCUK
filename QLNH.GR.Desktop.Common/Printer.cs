@@ -11,18 +11,19 @@ namespace QLNH.GR.Desktop.Common
     {
         public static void PrintReceipt(string storeName, string storeAddress, Order CurrentOrder, string outputFilePath, iTextSharp.text.Rectangle pageSize, Invoice invoice)
         {
-                        System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            List<OrderDetail> items = CurrentOrder?.ListOrderDetail;
+            Document document = new Document(pageSize);
 
             Document document = new Document(pageSize);
             try
             {
                 PdfWriter.GetInstance(document, new FileStream(outputFilePath, FileMode.Create));
+                // Register the code pages encoding provider
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(outputFilePath, FileMode.Create));
                 document.Open();
-
-                // Use Arial Unicode MS for Unicode support
-                BaseFont baseFont = BaseFont.CreateFont("C:\\Đồ án\\QLNH-Thesis\\ttf\\arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                BaseFont baseFont = BaseFont.CreateFont("C:\\Đồ án\\QLNH-Thesis\\ttf\\Tahoma Regular font.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
                 Font font = new Font(baseFont, 12);
-
                 // Add Store Information
                 document.Add(new Paragraph(storeName, new Font(baseFont, 18, Font.BOLD)));
                 document.Add(new Paragraph(storeAddress, font));

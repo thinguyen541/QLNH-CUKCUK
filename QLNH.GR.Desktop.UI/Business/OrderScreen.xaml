@@ -359,6 +359,7 @@
                                                 Height="28"
                                                 HorizontalAlignment="Right"
                                                 VerticalAlignment="Center"
+                                                TextChanged="tbFindItem_change"
                                                 Margin="0,0,16,0"
                                                 ></local:CustomTexbox>
                             </StackPanel>

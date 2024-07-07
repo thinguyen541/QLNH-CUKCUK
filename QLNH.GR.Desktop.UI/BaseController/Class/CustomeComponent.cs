@@ -21,9 +21,26 @@ namespace QLNH.GR.Desktop.UI
 
 
 
-        static CustomTexbox()
+        private void CustomTextbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomTexbox), new FrameworkPropertyMetadata(typeof(CustomTexbox)));
+            UpdatePlaceholderVisibility();
+        }
+
+        private void UpdatePlaceholderVisibility()
+        {
+            var placeholder = GetTemplateChild("Placeholder") as TextBlock;
+            var textBox = GetTemplateChild("TextBox") as TextBox;
+            if (placeholder != null && textBox != null)
+            {
+                this.Text = textBox.Text;
+                placeholder.Visibility = string.IsNullOrEmpty(textBox.Text) ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        public CustomTexbox()
+        {
+            this.TextChanged += CustomTextbox_TextChanged;
+            UpdatePlaceholderVisibility();
         }
     }
 }

@@ -52,5 +52,13 @@ namespace QLNH.GR.Desktop.Common
 
             return suggestions;
         }
+        public static string GeneratePaymentId()
+        {
+            string datePart = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            string randomPart = _random.Next(1000, 9999).ToString();
+            return $"{datePart}{randomPart}";
+        }
     }
+
+
 }

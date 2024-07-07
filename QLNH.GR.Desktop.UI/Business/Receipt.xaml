@@ -69,6 +69,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="48"></RowDefinition>
+                <RowDefinition Height="48"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <!--header-->
