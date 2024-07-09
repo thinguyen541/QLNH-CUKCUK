@@ -69,7 +69,6 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="48"></RowDefinition>
-                <RowDefinition Height="48"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <!--header-->
@@ -98,6 +97,7 @@
                 >
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="56"></RowDefinition>
                         <RowDefinition Height="48"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
@@ -105,7 +105,21 @@
                         <ColumnDefinition Width="5*"></ColumnDefinition>
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Border  x:Name="border" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="0,0,0,1" Background="Transparent" SnapsToDevicePixels="True">
+
+                    <Border Grid.Row="0" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="0,0,0,1" Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox  Style="{StaticResource CustomComboBoxStyle}" x:Name="cbTimeFilter" Width="200" Margin="10" HorizontalAlignment="Left" 
+                                       Background="White"
+                                      
+                                        DisplayMemberPath="Value" SelectionChanged="cbTimeFilter_SelectionChanged"/>
+
+
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1"  x:Name="border" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="0,0,0,1" Background="Transparent" SnapsToDevicePixels="True">
                         <Grid  >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="120"></ColumnDefinition>
@@ -142,7 +156,7 @@
                         </Grid>
                     </Border>
                     <local:CustomScrollView
-                        Grid.Row="1"
+                        Grid.Row="2"
                                         HorizontalAlignment="Stretch" 
                                         VerticalAlignment="Stretch"
                                         HorizontalScrollBarVisibility="Hidden"

@@ -1,5 +1,6 @@
 ﻿using QLNH.GR.Desktop.BO;
 using QLNH.GR.Desktop.BO.Entity;
+using QLNH.GR.Desktop.BO.Entity.CommonObject;
 using QLNH.GR.Desktop.Common;
 using QLNH.GR.Desktop.UI.Common;
 using System;
@@ -17,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace QLNH.GR.Desktop.UI
 {
@@ -49,7 +51,14 @@ namespace QLNH.GR.Desktop.UI
 
         public override async void ProcessDataAsync()
         {
-            await LoadInvoice();
+            var listTimeFilter = new List<DateTimeFilter>() { 
+                new DateTimeFilter { Key = 1, Value = "Today" },
+                new DateTimeFilter { Key = 2, Value = "This week" },
+                new DateTimeFilter { Key = 3, Value = "This month" },
+                new DateTimeFilter { Key = 4, Value = "All" }
+            };
+            cbTimeFilter.ItemsSource = listTimeFilter;
+            cbTimeFilter.SelectedIndex = 0;
         }
 
         async private Task LoadInvoice()
@@ -191,7 +200,52 @@ namespace QLNH.GR.Desktop.UI
            
         }
 
+        private async void cbTimeFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedValue = cbTimeFilter.SelectedValue;
+            string filterDate = "";
+            if (selectedValue is DateTimeFilter selectedItem)
+            {
+                // Access the selected item properties
+                if(selectedItem.Key == 1)
+                {
+                    filterDate = DateTime.Today.ToString("yyyy-MM-ddTHH:mm:ss.fff");
+                }
+                // Access the selected item properties
+                if (selectedItem.Key == 2)
+                {
+                    filterDate = DateTime.Today.AddDays(-7).ToString("yyyy-MM-ddTHH:mm:ss.fff");
+                }
+                // Access the selected item properties
+                if (selectedItem.Key == 3)
+                {
+                    filterDate = DateTime.Today.AddDays(-30).ToString("yyyy-MM-ddTHH:mm:ss.fff");
+                }
+                // Access the selected item properties
+                if (selectedItem.Key == 4)
+                {
+                    filterDate = DateTime.Today.AddDays(-360).ToString("yyyy-MM-ddTHH:mm:ss.fff");
+                }
+            }
+            var pag = new PaginationObject() { PageSize = 100, RecentPage = 1 };
+            pag.FilterObjects = new List<FilterObject>() { new FilterObject() { Property = "CreatedDate", Value =filterDate
+, PropertyType = (int)EnumPropertyType.isDate, Operator = (int)EnumOperator.GREATERTHANOREQUAL, RelationType = 0 } };
+            HttpResponseMessage response = await invoiceService.Filter(pag);
+            if (response != null && response.IsSuccessStatusCode)
+            {
+                // Read the response content as a string
+                string responseBody = await response.Content.ReadAsStringAsync();
 
-
+                // Deserialize the response body to the specified type
+                PagingHttpResponse result = Newtonsoft.Json.JsonConvert.DeserializeObject<PagingHttpResponse>(responseBody);
+                if (result != null)
+                {
+                    ListInvoice = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Invoice>>(result.Data.ToString());
+                    lvInvoiceList.ItemsSource = null;
+                    lvInvoiceList.ItemsSource = ListInvoice;
+                    lvInvoiceList.SelectedIndex = 0;
+                }
+            }
+        }
     }
 }
