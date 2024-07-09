@@ -4,6 +4,8 @@ using iTextSharp.text.pdf;
 using QLNH.GR.Desktop.BO.Entity;
 using System.Windows;
 using System.Text;
+using static iTextSharp.text.pdf.AcroFields;
+using System.util;
 
 namespace QLNH.GR.Desktop.Common
 {
@@ -16,14 +18,18 @@ namespace QLNH.GR.Desktop.Common
 
             try
             {
+
                 // Register the code pages encoding provider
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(outputFilePath, FileMode.Create));
                 document.Open();
                 BaseFont baseFont = BaseFont.CreateFont("E:\\Documents\\git_local\\QLNH.GR.Desktop\\ttf\\Tahoma Regular font.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
                 Font font = new Font(baseFont, 12);
+                Font fontBold12 = new Font(baseFont, 12, Font.BOLD);
+                Font fontBold14 = new Font(baseFont, 14, Font.BOLD);
+                Font fontBold13 = new Font(baseFont, 13, Font.BOLD);
                 // Add Store Information
-                document.Add(new Paragraph(storeName, font));
+                document.Add(new Paragraph(storeName, fontBold14));
                 document.Add(new Paragraph(storeAddress));
                 document.Add(new Paragraph($"Cashier: {invoice.UserName}", font));
                 document.Add(new Paragraph($"Print at: {DateTime.Now.ToString()}"));
@@ -37,12 +43,14 @@ namespace QLNH.GR.Desktop.Common
                 table.AddCell(cel12);
                 PdfPCell cel13 = new PdfPCell(new iTextSharp.text.Phrase("Total price")) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER };
                 table.AddCell(cel13);
-
+                decimal totalItem = 0;
+                decimal subtotal = 0;
                 foreach (var item in items)
                 {
                     foreach (var detail in item.ListNormalDetailItem)
                     {
-
+                        totalItem += item.Quantity.GetValueOrDefault();
+                        subtotal += detail.Amount.GetValueOrDefault();
                         PdfPCell itemnameCell = new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_LEFT, };
                         table.AddCell(itemnameCell);
                         PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER, };
@@ -52,6 +60,7 @@ namespace QLNH.GR.Desktop.Common
                     }
                     foreach (var detail in item.ListModifierDetailItem)
                     {
+                        subtotal += detail.Amount.GetValueOrDefault();
                         PdfPCell nameCell = new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_CENTER, Indent = 12 };
                         table.AddCell(nameCell);
                         PdfPCell quantityCell = new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER };
@@ -62,24 +71,36 @@ namespace QLNH.GR.Desktop.Common
 
                 }
 
+                
+                PdfPCell TotolCell = new PdfPCell(new Phrase("Total", fontBold12)) { HorizontalAlignment = Element.ALIGN_CENTER,  };
+                table.AddCell(TotolCell);
+                PdfPCell totalQuantityCell = new PdfPCell(new Phrase(totalItem.ToString(), fontBold12)) { HorizontalAlignment = Element.ALIGN_CENTER };
+                table.AddCell(totalQuantityCell);
+                PdfPCell SubtotalCell = new PdfPCell(new Phrase(subtotal.ToString("C"), fontBold12)) { HorizontalAlignment = Element.ALIGN_RIGHT };
+                table.AddCell(SubtotalCell);
                 document.Add(table);
 
             
                 
                 if (invoice.PromotionAmount.GetValueOrDefault() != 0)
                 {
-                    document.Add(new Paragraph("Total Discount Amount: " + invoice.PromotionAmount.GetValueOrDefault().ToString("C"),
-                        FontFactory.GetFont("Arial", 14, Font.BOLD)));
+                    var total = invoice.PromotionAmount.GetValueOrDefault();
+                    if (total < 0)
+                    {
+                        total = 0 - total;
+                    }
+                    document.Add(new Paragraph("Discount: " + invoice.PromotionName + $" (-{total.ToString("C")})",
+                        fontBold13));
 
                 }
                 if (invoice.Tipamount!= 0)
                 {
                     document.Add(new Paragraph("Tip amount: " + invoice.Tipamount.ToString("C"),
-                    FontFactory.GetFont("Arial", 14, Font.BOLD)));
+                    fontBold13));
                 }
-                document.Add(new Paragraph("Total Amount: " + CurrentOrder.Amount.GetValueOrDefault().ToString("C"), FontFactory.GetFont("Arial", 14, Font.BOLD)));
+                document.Add(new Paragraph("Total amount: " + CurrentOrder.Amount.GetValueOrDefault().ToString("C"), fontBold13));
 
-                document.Add(new Paragraph("Thank you for dining with us!", FontFactory.GetFont("Arial", 12, Font.ITALIC)));
+                document.Add(new Paragraph("Thank you for dining with us!", fontBold13));
             }
             catch (DocumentException docEx)
             {

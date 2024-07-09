@@ -20,6 +20,16 @@ namespace QLNH.GR.Desktop.BO.Entity
         public DateTime? EndTime { get;set;}
 
         private bool _selected;
+        public string? PromotionNameDisPlay { get { 
+                if(PromotionValueType == EnumPromotionValueType.Percentage)
+                {
+                    return PromotionName+$" (-{AmountValue}%)";
+                }
+                else
+                {
+                    return PromotionName + $" (-{AmountValue.GetValueOrDefault().ToString("C")})";
+                }
+            } }
         public bool IsSelected
         {
             get => _selected;

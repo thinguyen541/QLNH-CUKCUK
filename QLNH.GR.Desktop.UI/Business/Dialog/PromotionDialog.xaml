@@ -23,7 +23,7 @@
                                           Style="{StaticResource CustomCheckBox}"
                                           VerticalAlignment="Center"
                                           HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding PromotionName}"
+                                <TextBlock Text="{Binding PromotionNameDisPlay}"
                                            Grid.Column="1"
                                            HorizontalAlignment="left"
                                            VerticalAlignment="Center"

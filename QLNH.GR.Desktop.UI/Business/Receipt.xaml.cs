@@ -173,8 +173,8 @@ namespace QLNH.GR.Desktop.UI
 
         private void GenerateAndDisplayPdf(Order CurrentOrde, Invoice selectedReceiptr)
         {
-            string storeName = "My Store";
-            string storeAddress = "123 Main St, Anytown, USA";
+            string storeName = "Ndthi restaurant";
+            string storeAddress = "1 Dai Co Viet Street, Hai Ba Trung District, Hanoi";
 
             // Define custom page size (5 inches wide by 7 inches tall)
             float width = 5 * 72; // 5 inches
