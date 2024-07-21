@@ -14,7 +14,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ListViewItem">
                         <Border Height="48" x:Name="border" BorderBrush="{StaticResource MainBorderColor}" BorderThickness="0,0,0,1" Background="Transparent" SnapsToDevicePixels="True">
-                            <Grid >
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="120"></ColumnDefinition>
                                     <ColumnDefinition Width="120"></ColumnDefinition>
@@ -68,7 +68,6 @@
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="48"></RowDefinition>
                 <RowDefinition Height="48"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>

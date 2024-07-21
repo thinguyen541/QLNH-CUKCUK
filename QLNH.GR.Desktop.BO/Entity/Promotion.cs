@@ -8,7 +8,7 @@ namespace QLNH.GR.Desktop.BO.Entity
 {
     public class Promotion : BaseEntity
     {
-        public Guid PromotionId { get; set; }
+        public Guid? PromotionId { get; set; }
         public string? PromotionName { get; set; }
         public decimal? PercentageValue {get;set;}
         public decimal? AmountValue {get;set;}
@@ -32,5 +32,6 @@ namespace QLNH.GR.Desktop.BO.Entity
                 }
             }
         }
+        public decimal? PromotionAmount { get; set; }
     }
 }

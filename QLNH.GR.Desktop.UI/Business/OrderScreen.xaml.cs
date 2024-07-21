@@ -231,7 +231,7 @@ namespace QLNH.GR.Desktop.UI
                     if (listfService != null && listfService.Any())
                     {
                         var dialog = new ModifierDialog();
-                        dialog.DialogTitle = "Select modifiers";
+                        dialog.DialogTitle = "Chọn sở thích phục vụ";
                         dialog.DialogResultEvent += PopupContent_DialogResult;
                         dialog.CurrentOrder = CurrentOrder;
                         dialog.SelectedDish = clickedItem;

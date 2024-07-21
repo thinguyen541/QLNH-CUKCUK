@@ -124,7 +124,7 @@
                                        Style="{StaticResource HeaderTextBlock}"
                                        FontSize="16"/>
                             <TextBlock Grid.Column="2"  
-                                       Text="Phương thức tt" 
+                                       Text="Hình thức thanh toán" 
                                         FontSize="16"
                                        Style="{StaticResource HeaderTextBlock}"/>
                             <TextBlock Grid.Column="3"  

@@ -78,7 +78,8 @@
                                 <TextBlock Grid.Column="5" 
                                            Text="{Binding OrderStatus}"
                                            Style="{StaticResource HeaderTextBlock}"
-                                             FontSize="13"/>
+                                             FontSize="13"
+                                           />
                                 <Button
                                     Grid.Column="6" 
                                     Content="Thanh toán"

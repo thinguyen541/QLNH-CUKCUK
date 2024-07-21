@@ -36,6 +36,8 @@ namespace QLNH.GR.Desktop.UI
         public DetailItemService detailItemService = new DetailItemService();
         public Order CurrentOrder { get; set; }
 
+        public Promotion PromotionAmount { get; set; }
+
         public OrderService orderService = new OrderService();
 
         public Receipt()
@@ -106,6 +108,15 @@ namespace QLNH.GR.Desktop.UI
                         CurrentOrder = result;
                         CurrentOrder.EntityMode = 1;
                     }
+
+                    if (responseBody.Contains("PromotionId"))
+                    {
+                        Promotion promotion = Newtonsoft.Json.JsonConvert.DeserializeObject<Promotion>(responseBody);
+                        if (promotion != null)
+                        {
+                            PromotionAmount = promotion;
+                        }
+                    }
                 }
 
                 if (CurrentOrder != null)
@@ -156,17 +167,17 @@ namespace QLNH.GR.Desktop.UI
                         }
                     }
                 }
-                GenerateAndDisplayPdf(CurrentOrder, selectedReceipt);
+                GenerateAndDisplayPdf(CurrentOrder, selectedReceipt, PromotionAmount);
             }
            
         }
 
 
 
-        private void GenerateAndDisplayPdf(Order CurrentOrde, Invoice selectedReceiptr)
+        private void GenerateAndDisplayPdf(Order CurrentOrde, Invoice selectedReceiptr, Promotion PromotionAmount)
         {
-            string storeName = "Anh Quan's Shop";
-            string storeAddress = "175 Tay Sơn, Thuy Loi";
+            string storeName = "NHÀ HÀNG CỦA QUÂN";
+            string storeAddress = "175 Tây Sơn, Thủy Lợi";
 
             // Define custom page size (5 inches wide by 7 inches tall)
             float width = 5 * 72; // 5 inches
@@ -175,7 +186,7 @@ namespace QLNH.GR.Desktop.UI
 
             string pdfFilePath = "C:\\Đồ án\\" + $"{Guid.NewGuid().ToString()}.pdf";
 
-            Printer.PrintReceipt(storeName, storeAddress, CurrentOrder, pdfFilePath, customPageSize, selectedReceiptr);
+            Printer.PrintReceipt(storeName, storeAddress, CurrentOrder, PromotionAmount, pdfFilePath, customPageSize, selectedReceiptr);
 
             DisplayPdf(pdfFilePath, customPageSize);
         }

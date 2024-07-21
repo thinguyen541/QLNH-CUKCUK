@@ -4,20 +4,18 @@ using iTextSharp.text.pdf;
 using QLNH.GR.Desktop.BO.Entity;
 using System.Windows;
 using System.Globalization;
+using System.Text;
 
 namespace QLNH.GR.Desktop.Common
 {
     public class Printer
     {
-        public static void PrintReceipt(string storeName, string storeAddress, Order CurrentOrder, string outputFilePath, iTextSharp.text.Rectangle pageSize, Invoice invoice)
+        public static void PrintReceipt(string storeName, string storeAddress, Order CurrentOrder, Promotion? PromotionAmount, string outputFilePath, iTextSharp.text.Rectangle pageSize, Invoice invoice)
         {
             List<OrderDetail> items = CurrentOrder?.ListOrderDetail;
             Document document = new Document(pageSize);
-
-            Document document = new Document(pageSize);
             try
             {
-                PdfWriter.GetInstance(document, new FileStream(outputFilePath, FileMode.Create));
                 // Register the code pages encoding provider
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(outputFilePath, FileMode.Create));
@@ -25,36 +23,107 @@ namespace QLNH.GR.Desktop.Common
                 BaseFont baseFont = BaseFont.CreateFont("C:\\Đồ án\\QLNH-Thesis\\ttf\\Tahoma Regular font.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
                 Font font = new Font(baseFont, 12);
                 // Add Store Information
-                document.Add(new Paragraph(storeName, new Font(baseFont, 18, Font.BOLD)));
-                document.Add(new Paragraph(storeAddress, font));
-                document.Add(new Paragraph($"Hóa đơn: {invoice.UserName}", font));
-                document.Add(new Paragraph($"In tại: {DateTime.Now.ToString(CultureInfo.GetCultureInfo("vi-VN"))}", font));
+                Paragraph storeNameParagraph = new Paragraph(storeName, new Font(baseFont, 18, Font.BOLD));
+                storeNameParagraph.Alignment = Element.ALIGN_CENTER; // Set alignment to center
+                document.Add(storeNameParagraph); // Add the paragraph to the document
+                Paragraph addressParagraph = new Paragraph(storeAddress, font) { Alignment = Element.ALIGN_CENTER };
+                document.Add(addressParagraph);
+                document.Add(new Paragraph($"Nhân viên: {invoice.UserName}", font));
+                document.Add(new Paragraph($"In lúc: {DateTime.Now.ToString(CultureInfo.GetCultureInfo("vi-VN"))}", font));
                 document.Add(new Paragraph(" ")); // Add a blank line
 
                 // Add Items
                 PdfPTable table = new PdfPTable(3);
-                table.AddCell(new PdfPCell(new Phrase("Tên món", font)) { HorizontalAlignment = Element.ALIGN_CENTER });
-                table.AddCell(new PdfPCell(new Phrase("Số lượng", font)) { HorizontalAlignment = Element.ALIGN_CENTER });
-                table.AddCell(new PdfPCell(new Phrase("Giá tiền", font)) { HorizontalAlignment = Element.ALIGN_CENTER });
 
-                foreach (var item in CurrentOrder?.ListOrderDetail ?? new List<OrderDetail>())
+                Font boldFont = new Font(font.BaseFont, font.Size, Font.BOLD);
+                table.AddCell(new PdfPCell(new Phrase("Tên món", boldFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
+                table.AddCell(new PdfPCell(new Phrase("Số lượng", boldFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
+                table.AddCell(new PdfPCell(new Phrase("Giá tiền", boldFont)) { HorizontalAlignment = Element.ALIGN_CENTER });
+
+
+                //foreach (var item in CurrentOrder?.ListOrderDetail ?? new List<OrderDetail>())
+                //{
+                //    foreach (var detail in item.ListNormalDetailItem)
+                //    {
+                //        table.AddCell(new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_LEFT });
+                //        table.AddCell(new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER });
+                //        table.AddCell(new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C", CultureInfo.GetCultureInfo("vi-VN")), font)) { HorizontalAlignment = Element.ALIGN_RIGHT });
+                //    }
+                //}
+
+
+                if (CurrentOrder?.ListOrderDetail != null)
                 {
-                    foreach (var detail in item.ListNormalDetailItem)
+                    foreach (var item in CurrentOrder.ListOrderDetail)
                     {
-                        table.AddCell(new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_LEFT });
-                        table.AddCell(new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER });
-                        table.AddCell(new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C", CultureInfo.GetCultureInfo("vi-VN")), font)) { HorizontalAlignment = Element.ALIGN_RIGHT });
+                        if (item.ListNormalDetailItem != null)
+                        {
+                            foreach (var detail in item.ListNormalDetailItem)
+                            {
+                                table.AddCell(new PdfPCell(new Phrase(detail.DishName, font)) { HorizontalAlignment = Element.ALIGN_LEFT });
+                                table.AddCell(new PdfPCell(new Phrase(item.Quantity.ToString(), font)) { HorizontalAlignment = Element.ALIGN_CENTER });
+                                table.AddCell(new PdfPCell(new Phrase(detail.Amount.GetValueOrDefault().ToString("C", CultureInfo.GetCultureInfo("vi-VN")), font)) { HorizontalAlignment = Element.ALIGN_RIGHT });
+                            }
+                        }
                     }
                 }
+
 
                 document.Add(table);
 
                 // Add Total Amount
                 string totalAmountText = "Tổng tiền: ";
-                string thankNote = "Cảm ơn đã dùng bữa tại cửa hàng!";
-                document.Add(new Paragraph(totalAmountText + CurrentOrder.Amount.GetValueOrDefault().ToString("C", CultureInfo.GetCultureInfo("vi-VN")), new Font(baseFont, 14, Font.BOLD)));
+                string totalPromotionAmountText = "Khuyến mãi: ";
+                string thankNote = "Cảm ơn đã dùng bữa tại nhà hàng!";
+                document.Add(new Paragraph(" ")); // Add a blank line
+                if (PromotionAmount.PromotionAmount != null)
+                {
+                    // Dòng khuyến mãi
+                    // Create a table with 2 columns for the promotion amount
+                    PdfPTable promotionAmountTable = new PdfPTable(2);
+                    promotionAmountTable.WidthPercentage = 100; // Make the table span the width of the document
 
-                document.Add(new Paragraph(thankNote, new Font(baseFont, 12, Font.ITALIC)));
+                    // Create the left cell for the text
+                    PdfPCell promotionTextCell = new PdfPCell(new Phrase(totalPromotionAmountText, new Font(baseFont, 14, Font.BOLD))) { Border = PdfPCell.NO_BORDER, HorizontalAlignment = Element.ALIGN_LEFT };
+                    promotionAmountTable.AddCell(promotionTextCell);
+
+                    // Create the right cell for the amount
+                    string formattedPromotionAmount = PromotionAmount.PromotionAmount.GetValueOrDefault().ToString("C", CultureInfo.GetCultureInfo("vi-VN"));
+                    PdfPCell promotionAmountCell = new PdfPCell(new Phrase(formattedPromotionAmount, new Font(baseFont, 14, Font.BOLD))) { Border = PdfPCell.NO_BORDER, HorizontalAlignment = Element.ALIGN_RIGHT };
+                    promotionAmountTable.AddCell(promotionAmountCell);
+
+                    // Add the table to the document instead of the paragraph
+                    document.Add(promotionAmountTable);
+
+                }
+
+                // Dòng tổng tiền
+                //Paragraph totalAmountParagraph = new Paragraph(totalAmountText + CurrentOrder.Amount.GetValueOrDefault().ToString("C", CultureInfo.GetCultureInfo("vi-VN")), new Font(baseFont, 14, Font.BOLD));
+                //totalAmountParagraph.Alignment = Element.ALIGN_RIGHT; // Set alignment to right
+                //document.Add(totalAmountParagraph); // Add the paragraph to the document
+                // Create a table with 2 columns
+                PdfPTable totalAmountTable = new PdfPTable(2);
+                totalAmountTable.WidthPercentage = 100; // Make the table span the width of the document
+
+                // Create the left cell for the text
+                PdfPCell textCell = new PdfPCell(new Phrase(totalAmountText, new Font(baseFont, 14, Font.BOLD))) { Border = PdfPCell.NO_BORDER, HorizontalAlignment = Element.ALIGN_LEFT };
+                totalAmountTable.AddCell(textCell);
+
+                // Create the right cell for the amount
+                string formattedAmount = CurrentOrder.Amount.GetValueOrDefault().ToString("C", CultureInfo.GetCultureInfo("vi-VN"));
+                PdfPCell amountCell = new PdfPCell(new Phrase(formattedAmount, new Font(baseFont, 14, Font.BOLD))) { Border = PdfPCell.NO_BORDER, HorizontalAlignment = Element.ALIGN_RIGHT };
+                totalAmountTable.AddCell(amountCell);
+
+                // Add the table to the document instead of the paragraph
+                document.Add(totalAmountTable);
+
+                document.Add(new Paragraph(" ")); // Add a blank line
+                Font boldCenterFont = new Font(baseFont, 12, Font.BOLD);
+                Paragraph dottedLine = new Paragraph("............................", boldCenterFont) { Alignment = Element.ALIGN_CENTER };
+                document.Add(dottedLine);
+                Paragraph thankNoteParagraph = new Paragraph(thankNote, new Font(baseFont, 12, Font.BOLD));
+                thankNoteParagraph.Alignment = Element.ALIGN_CENTER; // Set alignment to center
+                document.Add(thankNoteParagraph); // Add the paragraph to the document
             }
             catch (DocumentException docEx)
             {
